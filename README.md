@@ -86,25 +86,23 @@ This project is licensed under the [GNU General Public License v3.0](https://www
 <div align="center" style="background-color: black; padding: 1px; max-width: 10000px;">
   <a href="https://github.com/mohamedashraf-eng" style="text-decoration: none;">
     <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Logo" style="vertical-align: middle;">
-    <span style="color: white; margin-left: 5px; vertical-align: middle;">@mohamedashraf-eng</span>
+    <span style="color: white; margin-left: 5px; vertical-align: middle;"></span>
   </a>
   
 </div>
 
 <div align="center">
-<br>
 
 [![LinkedIn Connect](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mohamed-ashraf-wx/) [![Buy Me a Coffee](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=white)](https://www.linkedin.com/in/mohamed-ashraf-wx/)
 
 <div align="center" style="background-color: black; padding: 1px; max-width: 10000px;">
   <a href="https://github.com/mohamedashraf-eng" style="text-decoration: none;">
     <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Logo" style="vertical-align: middle;">
-    <span style="color: white; margin-left: 5px; vertical-align: middle;">@abdolotfy</span>
+    <span style="color: white; margin-left: 5px; vertical-align: middle;"></span>
   </a>
   
 </div>
 <div align="center">
-<br>
 
 [![LinkedIn Connect](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mohamed-ashraf-wx/) [![Buy Me a Coffee](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=white)](https://www.linkedin.com/in/mohamed-ashraf-wx/)
 
