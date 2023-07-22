@@ -59,5 +59,6 @@ This project is licensed under the GNU General Public License v3.0 - see the LIC
 
 ## Acknowledgments  
 
-* @mohamedashraf-eng
-[<img src="https://icons8.com/icon/9pFq5Dj6Mz1d/linkedin" height="30" width="30">](https://www.linkedin.com/in/mohamed-ashraf-wx/)
+* @mohamedashraf-eng  
+
+[![LinkedIn Connect](https://icons8.com/icon/9pFq5Dj6Mz1d/linkedin)](https://www.linkedin.com/in/mohamed-ashraf-wx/)
