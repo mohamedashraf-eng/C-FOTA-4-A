@@ -13,9 +13,7 @@
 
 ## Overview 
 
-[![SQLITE3](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/index.html)  
-[![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)](https://www.gnu.org/home.en.html)  
-[![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org)  
+[![SQLITE3](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/index.html) [![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)](https://www.gnu.org/home.en.html) [![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org)  
 
 FOTA (Firmware Over-The-Air) is a cutting-edge repository for managing firmware updates over the air. The repository facilitates seamless and secure firmware updates for embedded devices, ensuring your devices are always up to date with the latest features and fixes.
 
@@ -65,5 +63,4 @@ This project is licensed under the GNU General Public License v3.0 - see the LIC
 
 * @mohamedashraf-eng  
 
-[![LinkedIn Connect](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mohamed-ashraf-wx/)
-[![Buy Me a Coffe](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white)](https://www.linkedin.com/in/mohamed-ashraf-wx/)
+[![LinkedIn Connect](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mohamed-ashraf-wx/) [![Buy Me a Coffe](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white)](https://www.linkedin.com/in/mohamed-ashraf-wx/)
