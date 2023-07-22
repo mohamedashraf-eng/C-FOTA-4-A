@@ -1,6 +1,6 @@
 # C-FOTA-4-A
 
-![FOTA Icon](https://drive.google.com/file/d/1MFp7VN9MsPGyLOsrque3-omyOkk9QqCG/view?usp=sharing)
+![FOTA Icon](https://ibb.co/VTk0kVT)
 
 [![License](https://img.shields.io/badge/License-GPL%203.0-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 [![GitHub Issues](https://img.shields.io/github/issues/mohamedashraf-eng/C-FOTA-4-A)](https://github.com/mohamedashraf-eng/C-FOTA-4-A/issues)
@@ -38,10 +38,10 @@ FOTA (Firmware Over-The-Air) is a cutting-edge repository for managing firmware 
 ## Contributing  
 We welcome contributions to the FOTA project! If you'd like to contribute, please follow these guidelines.
 
-Fork the repository and create a new branch.
-Improve existing code or add new features following the repository's coding style.
-Ensure your code is well-tested.
-Submit a pull request to the main branch.
+* Fork the repository and create a new branch.
+* Improve existing code or add new features following the repository's coding style.
+* Ensure your code is well-tested.
+* Submit a pull request to the main branch.
 
 ## Bugs & Issues
 
