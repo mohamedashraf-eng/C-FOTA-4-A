@@ -403,7 +403,7 @@ class prj_foem_sqlite:
         self.__create_db()
 
 
-# SQLite - Inh - firmware
+# SQLite3 - Inh - firmware
 class prj_foem_sqlite_firmware(prj_foem_sqlite):
     def __init__(self, firmware_fp, yaml_sql_cfg):
         # super cfg
@@ -420,7 +420,7 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
 
         self.__firmware_hex_fetch()
         self.__firmware_in_json = json.dumps(self.__firmware_hex)
-        
+
     def __firmware_hex_fetch(self):
         try:
             with open(self.__firmware_fp, "r") as hex_file:
@@ -498,45 +498,38 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
         firmware_hash = sha256_hash.hexdigest()
         self.__hash = firmware_hash.upper()  # Convert to uppercase for consistency
         logging.error(f"Error: File '{self.__firmware_fp}' not found.")
+
     def insert_row(self, **row):
         assert row is not None, f"row should not be None"
-
         self._prj_foem_sqlite__insert_new_row_in_table(self.__table_name, **row)
 
     def get_row(self):
-
         self._prj_foem_sqlite__get_row_in_table(self.__table_name, self.__row_id)
 
     @property
     def version(self):
-
         data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "version"
         )
-
         return data
 
     @version.setter
     def version(self, version: str):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "version", version
         )
 
     @property
     def firmware_in_hex(self):
-
         data = json.loads(
             self._prj_foem_sqlite__get_value_from_table(
                 self.__row_id, self.__table_name, "firmware_in_hex"
             )
         )
-
         return data
 
     @firmware_in_hex.setter
     def firmware_in_hex(self, firmware_in_hex: list):
-
         firmware_in_hex = json.dumps(firmware_in_hex)
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "firmware_in_hex", firmware_in_hex
@@ -544,48 +537,39 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
 
     @property
     def update_size(self):
-
         data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "update_size"
         )
-
         return data
 
     @update_size.setter
     def update_size(self, update_size: int):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "update_size", update_size
         )
 
     @property
     def update_hash(self):
-
         data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "update_hash"
         )
-
         return data
 
     @update_hash.setter
     def update_hash(self, update_hash: str):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "update_hash", update_hash
         )
 
     @property
     def update_notes(self):
-
         data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "update_notes"
         )
-
         return data
 
     @update_notes.setter
     def update_notes(self, update_notes: str):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "update_notes", update_notes
         )
@@ -597,19 +581,21 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
         self.__firmware_calculate_size()
         self.__firmware_cvt2bin()
 
+        # Test
         myquery = {
             "version": "1.0.0",
-            "firmware_in_hex": self.__firmware_in_json,
+            "firmware_in_hex": "self.__firmware_in_json",
             "update_size": self.__firmware_size,
             "update_hash": self.__firmware_hash,
-            "update_notes": "nothing"
+            "update_notes": "nothing",
         }
-        
+
         self.insert_row(**myquery)
 
         self.print_table()
 
-# SQLite - Inh - vehicle
+
+# SQLite3 - Inh - vehicle
 class prj_foem_sqlite_vehicle(prj_foem_sqlite):
     all = []
 
@@ -622,71 +608,65 @@ class prj_foem_sqlite_vehicle(prj_foem_sqlite):
         self.__row_id = 1
 
     def insert_row(self, **values):
-
         self._prj_foem_sqlite__insert_new_row_in_table(self.__table_name, **values)
 
     def get_row(self):
-
         self._prj_foem_sqlite__get_row_in_table(self.__table_name, self.__row_id)
 
     @property
     def vehicle_id(self):
-
-        self._prj_foem_sqlite__get_value_from_table(
+        data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "vehicle_id"
         )
+        return data
 
     @vehicle_id.setter
     def vehicle_id(self, vehicle_id):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "vehicle_id", vehicle_id
         )
 
     @property
     def vehicle_name(self):
-
-        self._prj_foem_sqlite__get_value_from_table(
+        data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "vehicle_name"
         )
+        return data
 
     @vehicle_name.setter
     def vehicle_name(self, vehicle_name):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "vehicle_name", vehicle_name
         )
 
     @property
     def vehicle_type(self):
-
-        self._prj_foem_sqlite__get_value_from_table(
+        data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "vehicle_type"
         )
+        return data
 
     @vehicle_type.setter
     def vehicle_type(self, vehicle_type):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "vehicle_type", vehicle_type
         )
 
     @property
     def vehicle_status(self):
-
-        self._prj_foem_sqlite__get_value_from_table(
+        data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "vehicle_status"
         )
+        return data
 
     @vehicle_status.setter
     def vehicle_status(self, vehicle_status):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "vehicle_status", vehicle_status
         )
 
 
-# SQLite - Inh - ECU's
+# SQLite3 - Inh - ECU's
 class prj_foem_sqlite_ecu(prj_foem_sqlite):
     all = []
 
@@ -699,7 +679,7 @@ class prj_foem_sqlite_ecu(prj_foem_sqlite):
         self.__table_name = "ecu_data"
 
 
-# SQLite - Inh - fota
+# SQLite3 - Inh - fota
 class prj_foem_sqlite_fota(prj_foem_sqlite):
     all = []
 
@@ -713,48 +693,39 @@ class prj_foem_sqlite_fota(prj_foem_sqlite):
 
     @property
     def vehicle_id(self):
-
         data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "vehicle_id"
         )
-
         return data
 
     @vehicle_id.setter
     def vehicle_id(self, vehicle_id: int):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "vehicle_id", vehicle_id
         )
 
     @property
     def firmware_id(self):
-
         data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "firmware_id"
         )
-
         return data
 
     @firmware_id.setter
     def firmware_id(self, firmware_id: int):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "firmware_id", firmware_id
         )
 
     @property
     def ecu_id(self):
-
         data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "ecu_id"
         )
-
         return data
 
     @ecu_id.setter
     def ecu_id(self, ecu_id: str):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "ecu_id", ecu_id
         )
@@ -765,23 +736,19 @@ class prj_foem_sqlite_fota(prj_foem_sqlite):
         data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "update_available"
         )
-
         return data
 
     @update_available.setter
     def update_available(self, update_available: int):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "update_available", update_available
         )
 
     @property
     def update_status(self):
-
         data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "update_status"
         )
-
         return data
 
     @update_status.setter
@@ -793,32 +760,26 @@ class prj_foem_sqlite_fota(prj_foem_sqlite):
 
     @property
     def last_update_time(self):
-
         data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "last_update_time"
         )
-
         return data
 
     @last_update_time.setter
     def last_update_time(self, last_update_time: str):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "last_update_time", last_update_time
         )
 
     @property
     def update_success(self):
-
         data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "update_success"
         )
-
         return data
 
     @update_success.setter
     def update_success(self, update_success: int):
-
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "update_success", update_success
         )
@@ -872,7 +833,6 @@ def main():
     main_firmware.run()
     main_vehicle = prj_foem_sqlite_vehicle(main_yaml.get_sqlcfg)
     main_fota = prj_foem_sqlite_fota(main_yaml.get_sqlcfg)
-
     # MQTT
     main_mqtt = prj_foem_mqtt(yaml_mqtt_cfg=main_yaml.get_mqttcfg, manual_mqtt_cfg=None)
     # main_mqtt.run()
