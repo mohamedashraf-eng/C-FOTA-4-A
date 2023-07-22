@@ -294,6 +294,7 @@ class prj_foem_sqlite:
     def __fetch_cfg(self):
         self.__db_path = self.__sqlcfg.get("db_path", "")
         self.__db_name = self.__sqlcfg.get("db_name", "")
+        self.__db_ecuschema = self.__sqlcfg.get("ecu_schema", "")
         self.__db_firmwareschema = self.__sqlcfg.get("firmware_schema", "")
         self.__db_vehicleschema = self.__sqlcfg.get("vehicle_schema", "")
         self.__db_fotaschema = self.__sqlcfg.get("fota_schema", "")
@@ -301,17 +302,18 @@ class prj_foem_sqlite:
         self.__firmware_hash_type = self.__sqlcfg.get("firmware_hash_type", "")
         logging.info("fetched sqlite configuration succefully.")
 
-    def __connect_db(self):
+    def _connect_db(self):
         self.__db_connector = sql.connect(self.__db_fp)
         logging.info(f"connected to {self.__db_fp} successfully")
 
-    def __close_db(self):
+    def _close_db(self):
         self.__db_connector.close()
         logging.info(f"disconnected from {self.__db_fp} successfully")
 
     def __create_db(self):
         # Create a new db
         self.__db_cursor = self.__db_connector.cursor()
+        self.__db_cursor.execute(self.__db_ecuschema)
         self.__db_cursor.execute(self.__db_firmwareschema)
         self.__db_cursor.execute(self.__db_vehicleschema)
         self.__db_cursor.execute(self.__db_fotaschema)
@@ -323,7 +325,7 @@ class prj_foem_sqlite:
         self.__table_id = id
 
     def __insert_new_row_in_table(self, table_name: str, **values):
-        self.__connect_db()
+        self._connect_db()
 
         column_names = ", ".join(values.keys())
         value_placeholders = ", ".join(["?" for _ in values])
@@ -335,11 +337,11 @@ class prj_foem_sqlite:
         values_to_insert = tuple(values.values())
 
         self.__db_cursor.execute(insert_query, values_to_insert)
-        self.__close_db()
+        self._close_db()
         logging.info(f"Inserted a new row in table {table_name}")
 
     def __fetch_from_table(self, table_name: str, column_name: str, row_id: int):
-        self.__connect_db()
+        self._connect_db()
 
         select_query = f"""
             SELECT {column_name} FROM "{table_name}" WHERE id=?
@@ -348,23 +350,23 @@ class prj_foem_sqlite:
         self.__db_cursor.execute(select_query, (row_id,))
         row = self.__db_cursor.fetchall()
 
-        self.__close_db()
+        self._close_db()
         logging.info(
             f"Fetched from table {table_name} column {column_name}, row_id={row_id}"
         )
         return row
 
     def __get_row_in_table(self, table_name: str, row_id: int):
-        self.__connect_db()
+        self._connect_db()
         row = self.__fetch_from_table(table_name, "*", row_id)
-        self.__close_db()
+        self._close_db()
         logging.info(f"Fetched row from table {table_name} column, row_id={row_id}")
         return row
 
     def __get_value_from_table(self, row_id: int, table_name: str, column_name: str):
-        self.__connect_db()
+        self._connect_db()
         data = self.__fetch_from_table(table_name, column_name, row_id)
-        self.__close_db()
+        self._close_db()
         logging.info(
             f"Fetched value from table {table_name} colummn {column_name}, row_id={row_id}"
         )
@@ -373,12 +375,12 @@ class prj_foem_sqlite:
     def __set_value_in_table(
         self, row_id: int, table_name: str, column_name: str, value
     ):
-        self.__connect_db()
+        self._connect_db()
         self.__set_current_id(row_id)
         # Update the specific column value with the provided value
         update_query = f'UPDATE {table_name} SET "{column_name}"=? WHERE "id"=?'
         self.__db_cursor.execute(update_query, (value, row_id))
-        self.__close_db()
+        self._close_db()
         logging.info(
             f"Setted value to table {table_name} colummn {column_name}, row_id={row_id} | value {value}"
         )
@@ -396,15 +398,18 @@ class prj_foem_sqlite:
         return fetched[0][0]
 
     def run(self):
-        self.__connect_db()
+        self._connect_db()
         self.__fetch_cfg()
         self.__create_db()
-        self.__close_db()
 
 
 # SQLite - Inh - firmware
 class prj_foem_sqlite_firmware(prj_foem_sqlite):
-    def __init__(self, firmware_fp):
+    def __init__(self, firmware_fp, yaml_sql_cfg):
+        # super cfg
+        super().__init__(yaml_sql_cfg)
+        super().run()
+        # child cfg
         self.__firmware_fp = firmware_fp
         self.__firmware_in_hex = []
         self.__firmware_sha256 = None
@@ -490,287 +495,317 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
 
     def insert_row(self, **row):
         assert row is not None, f"row should not be None"
-        super().__connect_db()
-        super().__insert_new_row_in_table(self.__table_name, **row)
-        super().__close_db()
+
+        self._prj_foem_sqlite__insert_new_row_in_table(self.__table_name, **row)
 
     def get_row(self):
-        super().__connect_db()
-        super().__get_row_in_table(self.__table_name, self.__row_id)
-        super().__close_db()
+
+        self._prj_foem_sqlite__get_row_in_table(self.__table_name, self.__row_id)
 
     @property
     def version(self):
-        super().__connect_db()
-        data = super().__get_value_from_table(
+
+        data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "version"
         )
-        super().__close_db()
+
         return data
 
     @version.setter
     def version(self, version: str):
-        super().__connect_db()
-        super().__set_value_in_table(
+
+        self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "version", version
         )
-        super().__close_db()
 
     @property
     def firmware_in_hex(self):
-        super().__connect_db()
+
         data = json.loads(
-            super().__get_value_from_table(
+            self._prj_foem_sqlite__get_value_from_table(
                 self.__row_id, self.__table_name, "firmware_in_hex"
             )
         )
-        super().__close_db()
+
         return data
 
     @firmware_in_hex.setter
     def firmware_in_hex(self, firmware_in_hex: list):
-        super().__connect_db()
+
         firmware_in_hex = json.dumps(firmware_in_hex)
-        super().__set_value_in_table(
+        self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "firmware_in_hex", firmware_in_hex
         )
-        super().__close_db()
 
     @property
     def update_size(self):
-        super().__connect_db()
-        data = super().__get_value_from_table(
+
+        data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "update_size"
         )
-        super().__close_db()
+
         return data
 
     @update_size.setter
     def update_size(self, update_size: int):
-        super().__connect_db()
-        super().__set_value_in_table(
+
+        self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "update_size", update_size
         )
-        super().__close_db()
 
     @property
     def update_hash(self):
-        super().__connect_db()
-        data = super().__get_value_from_table(
+
+        data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "update_hash"
         )
-        super().__close_db()
+
         return data
 
     @update_hash.setter
     def update_hash(self, update_hash: str):
-        super().__connect_db()
-        super().__set_value_in_table(
+
+        self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "update_hash", update_hash
         )
-        super().__close_db()
 
     @property
     def update_notes(self):
-        super().__connect_db()
-        data = super().__get_value_from_table(
+
+        data = self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "update_notes"
         )
-        super().__close_db()
+
         return data
 
     @update_notes.setter
     def update_notes(self, update_notes: str):
-        super().__connect_db()
-        super().__set_value_in_table(
+
+        self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "update_notes", update_notes
         )
-        super().__close_db()
 
     def print_table(self):
-        return super().__print_table(self.__table_name)
+        return self._prj_foem_sqlite__print_table(self.__table_name)
 
     def run(self):
         self.__firmware_calculate_size()
         self.__firmware_cvt2bin()
 
+        self.update_hash = self.__firmware_sha256
 
 
 # SQLite - Inh - vehicle
 class prj_foem_sqlite_vehicle(prj_foem_sqlite):
     all = []
 
-    def __init__(self):
+    def __init__(self, yaml_sql_cfg):
+        # super cfg
+        super().__init__(yaml_sql_cfg)
+        super().run()
+        # child cfg
         self.__table_name = "vehicle_data"
         self.__row_id = 1
 
     def insert_row(self, **values):
-        super().__connect_db()
-        super().__insert_new_row_in_table(self.__table_name, **values)
-        super().__close_db()
+
+        self._prj_foem_sqlite__insert_new_row_in_table(self.__table_name, **values)
 
     def get_row(self):
-        super().__connect_db()
-        super().__get_row_in_table(self.__table_name, self.__row_id)
-        super().__close_db()
+
+        self._prj_foem_sqlite__get_row_in_table(self.__table_name, self.__row_id)
 
     @property
     def vehicle_id(self):
-        super().__connect_db()
-        super().__get_value_from_table(self.__row_id, self.__table_name, "vehicle_id")
-        super().__close_db()
+
+        self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "vehicle_id"
+        )
 
     @vehicle_id.setter
     def vehicle_id(self, vehicle_id):
-        super().__connect_db()
-        super().__set_value_in_table(
+
+        self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "vehicle_id", vehicle_id
         )
-        super().__close_db()
 
     @property
     def vehicle_name(self):
-        super().__connect_db()
-        super().__get_value_from_table(self.__row_id, self.__table_name, "vehicle_name")
-        super().__close_db()
+
+        self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "vehicle_name"
+        )
 
     @vehicle_name.setter
     def vehicle_name(self, vehicle_name):
-        super().__connect_db()
-        super().__set_value_in_table(
+
+        self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "vehicle_name", vehicle_name
         )
-        super().__close_db()
 
     @property
     def vehicle_type(self):
-        super().__connect_db()
-        super().__get_value_from_table(self.__row_id, self.__table_name, "vehicle_type")
-        super().__close_db()
+
+        self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "vehicle_type"
+        )
 
     @vehicle_type.setter
     def vehicle_type(self, vehicle_type):
-        super().__connect_db()
-        super().__set_value_in_table(
+
+        self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "vehicle_type", vehicle_type
         )
-        super().__close_db()
 
     @property
     def vehicle_status(self):
-        super().__connect_db()
-        super().__get_value_from_table(
+
+        self._prj_foem_sqlite__get_value_from_table(
             self.__row_id, self.__table_name, "vehicle_status"
         )
-        super().__close_db()
 
     @vehicle_status.setter
     def vehicle_status(self, vehicle_status):
-        super().__connect_db()
-        super().__set_value_in_table(
+
+        self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "vehicle_status", vehicle_status
         )
-        super().__close_db()
 
+# SQLite - Inh - ECU's
+class prj_foem_sqlite_ecu(prj_foem_sqlite):
+    all = []
+    def __init__(self, yaml_cfg_file):
+        # super cfg
+        super().__init__(yaml_cfg_file)
+        super().run()
+        # child cfg
+        self.__row_id = 1
+        self.__table_name = "ecu_data"
 
 # SQLite - Inh - fota
 class prj_foem_sqlite_fota(prj_foem_sqlite):
     all = []
 
-    def __init__(self):
+    def __init__(self, yaml_sql_cfg):
+        # super cfg
+        super().__init__(yaml_sql_cfg)
+        super().run()
+        # child cfg
         self.__table_name = "fota_data"
         self.__row_id = 1
-    
+
     @property
     def vehicle_id(self):
-        super().__connect_db()
-        data = super().__get_value_from_table(self.__row_id, self.__table_name, "vehicle_id")
-        super().__close_db()
+
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "vehicle_id"
+        )
+
         return data
 
     @vehicle_id.setter
-    def vehicle_id(self, vehicle_id: str):
-        super().__connect_db()
-        super().__set_value_in_table(self.__row_id, self.__table_name, "vehicle_id", vehicle_id)
-        super().__close_db()
+    def vehicle_id(self, vehicle_id: int):
+
+        self._prj_foem_sqlite__set_value_in_table(
+            self.__row_id, self.__table_name, "vehicle_id", vehicle_id
+        )
 
     @property
     def firmware_id(self):
-        super().__connect_db()
-        data = super().__get_value_from_table(self.__row_id, self.__table_name, "firmware_id")
-        super().__close_db()
+
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "firmware_id"
+        )
+
         return data
 
     @firmware_id.setter
-    def firmware_id(self, firmware_id: str):
-        super().__connect_db()
-        super().__set_value_in_table(self.__row_id, self.__table_name, "firmware_id", firmware_id)
-        super().__close_db()
+    def firmware_id(self, firmware_id: int):
+
+        self._prj_foem_sqlite__set_value_in_table(
+            self.__row_id, self.__table_name, "firmware_id", firmware_id
+        )
 
     @property
     def ecu_id(self):
-        super().__connect_db()
-        data = super().__get_value_from_table(self.__row_id, self.__table_name, "ecu_id")
-        super().__close_db()
+
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "ecu_id"
+        )
+
         return data
-    
+
     @ecu_id.setter
     def ecu_id(self, ecu_id: str):
-        super().__connect_db()
-        super().__set_value_in_table(self.__row_id, self.__table_name, "ecu_id", ecu_id)
-        super().__close_db()
+
+        self._prj_foem_sqlite__set_value_in_table(
+            self.__row_id, self.__table_name, "ecu_id", ecu_id
+        )
 
     @property
     def update_available(self):
-        super().__connect_db()
-        data = super().__get_value_from_table(self.__row_id, self.__table_name, "update_available")
-        super().__close_db()
+
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "update_available"
+        )
+
         return data
-    
+
     @update_available.setter
     def update_available(self, update_available: int):
-        super().__connect_db()
-        super().__set_value_in_table(self.__row_id, self.__table_name, "update_available", update_available)
-        super().__close_db()
-    
+
+        self._prj_foem_sqlite__set_value_in_table(
+            self.__row_id, self.__table_name, "update_available", update_available
+        )
+
     @property
     def update_status(self):
-        super().__connect_db()
-        data = super().__get_value_from_table(self.__row_id, self.__table_name, "update_status")
-        super().__close_db()
+
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "update_status"
+        )
+
         return data
-    
+
     @update_status.setter
     def update_status(self, update_status: str):
-        super().__connect_db()
-        super().__set_value_in_table(self.__row_id, self.__table_name, "update_status", update_status)
-        super().__close_db()
+
+        self._prj_foem_sqlite__set_value_in_table(
+            self.__row_id, self.__table_name, "update_status", update_status
+        )
 
     @property
     def last_update_time(self):
-        super().__connect_db()
-        data = super().__get_value_from_table(self.__row_id, self.__table_name, "last_update_time")
-        super().__close_db()
+
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "last_update_time"
+        )
+
         return data
-    
+
     @last_update_time.setter
     def last_update_time(self, last_update_time: str):
-        super().__connect_db()
-        super().__set_value_in_table(self.__row_id, self.__table_name, "last_update_time", last_update_time)
-        super().__close_db()
+
+        self._prj_foem_sqlite__set_value_in_table(
+            self.__row_id, self.__table_name, "last_update_time", last_update_time
+        )
 
     @property
     def update_success(self):
-        super().__connect_db()
-        data = super().__get_value_from_table(self.__row_id, self.__table_name, "update_success")
-        super().__close_db()
+
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "update_success"
+        )
+
         return data
-    
+
     @update_success.setter
     def update_success(self, update_success: int):
-        super().__connect_db()
-        super().__set_value_in_table(self.__row_id, self.__table_name, "update_success", update_success)
-        super().__close_db()
+
+        self._prj_foem_sqlite__set_value_in_table(
+            self.__row_id, self.__table_name, "update_success", update_success
+        )
+
 
 # CMD_ANALYZER - CLASS:
 class prj_foem_cmd:
@@ -817,10 +852,11 @@ def main():
     # SQL
     main_sql = prj_foem_sqlite(yaml_sql_cfg=main_yaml.get_sqlcfg)
     main_sql.run()
-    main_firmware = prj_foem_sqlite_firmware("test.hex")
+    main_ecu = prj_foem_sqlite_ecu(main_yaml.get_sqlcfg)
+    main_firmware = prj_foem_sqlite_firmware("test.hex", main_yaml.get_sqlcfg)
     main_firmware.run()
-    main_vehicle = prj_foem_sqlite_vehicle()
-    main_fota = prj_foem_sqlite_fota()
+    main_vehicle = prj_foem_sqlite_vehicle(main_yaml.get_sqlcfg)
+    main_fota = prj_foem_sqlite_fota(main_yaml.get_sqlcfg)
 
     # MQTT
     main_mqtt = prj_foem_mqtt(yaml_mqtt_cfg=main_yaml.get_mqttcfg, manual_mqtt_cfg=None)
