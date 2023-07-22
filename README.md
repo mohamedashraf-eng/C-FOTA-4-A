@@ -23,6 +23,10 @@ FOTA (Firmware Over-The-Air) is a cutting-edge repository for managing firmware 
 
 - **Over-The-Air Updates**: Effortlessly update firmware on remote devices, reducing maintenance costs and minimizing downtime.
 
+- **Easy to use**: Easy to use and understand for begginers; Introduction to this world.
+
+- **Automotive Compliant**: It is mainly made for automotive vehicles scenarios.  
+
 - **Secure Communication**: FOTA uses encrypted communication to ensure the integrity and authenticity of firmware updates.
 
 - **Version Control**: Keep track of firmware versions, changes, and updates using version control mechanisms.
