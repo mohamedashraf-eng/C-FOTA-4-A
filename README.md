@@ -1,7 +1,7 @@
 # C-FOTA-4-A
 
 <div style="display: flex; justify-content: center;">
-  <a href="https://ibb.co/vdc293P">
+  <a href="https://ibb.co/cw8jVNM">
     <img src="https://i.ibb.co/vdc293P/Automotive-Connectivity-OTA-Stage-Header.jpg" alt="Automotive-Connectivity-OTA-Stage-Header" style="width: 50%; height: 100%;" />
   </a>
 </div>
@@ -59,7 +59,7 @@ We welcome contributions to the FOTA project! If you'd like to contribute, pleas
 
 ## Bugs & Issues
 
-If you encounter any bugs or issues with FOTA, please let us know by creating an issue.
+If you encounter any bugs or issues with FOTA, please let us know by creating an [[issue]()](https://github.com/mohamedashraf-eng/C-FOTA-4-A/issues).
 ## License  
 This project is licensed under the GNU General Public License v3.0 - see the LICENSE file for details.
 
