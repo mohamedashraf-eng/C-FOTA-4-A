@@ -1,11 +1,11 @@
 # C-FOTA-4-A
 
-![FOTA Icon](insert_icon_url_here)
+![FOTA Icon](https://drive.google.com/file/d/1MFp7VN9MsPGyLOsrque3-omyOkk9QqCG/view?usp=sharing)
 
 [![License](https://img.shields.io/badge/License-GPL%203.0-blue.svg)](https://opensource.org/licenses/GPL-3.0)
-[![GitHub Issues](https://img.shields.io/github/issues/mohamedashraf-eng/FOTA)](https://github.com/mohamedashraf-eng/FOTA/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/mohamedashraf-eng/FOTA)](https://github.com/mohamedashraf-eng/FOTA/pulls)
-[![Contributors](https://img.shields.io/github/contributors/mohamedashraf-eng/FOTA)](https://github.com/mohamedashraf-eng/FOTA/graphs/contributors)
+[![GitHub Issues](https://img.shields.io/github/issues/mohamedashraf-eng/C-FOTA-4-A)](https://github.com/mohamedashraf-eng/C-FOTA-4-A/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/mohamedashraf-eng/C-FOTA-4-A)](https://github.com/mohamedashraf-eng/C-FOTA-4-A/pulls)
+[![Contributors](https://img.shields.io/github/contributors/mohamedashraf-eng/C-FOTA-4-A)](https://github.com/mohamedashraf-eng/C-FOTA-4-A/graphs/contributors)
 
 ## Overview
 
