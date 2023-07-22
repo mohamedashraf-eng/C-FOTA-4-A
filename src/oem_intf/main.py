@@ -12,6 +12,10 @@ import pkg_resources
 import sqlite3 as sql
 import paho.mqtt.client as mqtt
 import hashlib
+import hmac
+from Crypto.Cipher import AES
+from Crypto.Hash import CMAC
+from Crypto.Protocol.KDF import PBKDF2
 
 # Configure logging
 log_filename = "main.log"
@@ -406,6 +410,9 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
         self.__firmware_size = None
         self.__table_name = "firmware_data"
         self.__row_id = 1
+        self.__hmac_secret_key = b"mohamedashraf&abdolotfy&drsalma"
+        self.__cmac_secret_key = b"mohamedashraf&abdolotfy&drsalma"
+        self.__cmac_salt = b"mohamedashraf"
 
         self.__firmware_hex_fetch()
         self.__firmware_in_json = json.dumps(self.__firmware_hex)
@@ -445,22 +452,38 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
         except FileNotFoundError:
             logging.error("Error: The specified hex file was not found.")
 
+    def __calculate_sha256(self):
+        sha256_hash = hashlib.sha256(self.__firmware_in_bin).hexdigest()
+        return sha256_hash
+
+    def __calculate_cmac(self):
+        cmac_key = PBKDF2(self.__cmac_secret_key, self.__cmac_salt, dkLen=16)
+        cmac_cipher = CMAC.new(cmac_key, ciphermod=AES)
+        cmac_cipher.update(self.__firmware_in_bin)
+        cmac_digest = cmac_cipher.digest()
+        return cmac_digest
+
+    def __calculate_hmac(self):
+        hmac_obj = hmac.new(
+            self.__hmac_secret_key, self.__firmware_in_bin, hashlib.sha256
+        )
+        hmac_digest = hmac_obj.hexdigest()
+        return hmac_digest
+
     def __frimware_calculate_hash(self):
-        hash_type = self._prj_foem_sqlite__firmware_hash_type
         assert self.__firmware_in_bin is not None, f"firmware in binary not found"
+        hash_type = self._prj_foem_sqlite__firmware_hash_type
         if hash_type == "SHA2-256":
-            # Calculate SHA-256 hash of the binary data
-            sha256_hash = hashlib.sha256(self.__firmware_in_bin).hexdigest()
-            self.__firmware_hash = sha256_hash
+            self.__firmware_hash = self.__calculate_sha256()
             logging.info(
                 f"created a hash [SHA2-256] for firmware {self.__firmware_hash}"
             )
         elif hash_type == "CMAC":
-            # TODO: Implement
-            pass
+            self.__firmware_hash = self.__calculate_cmac()
+            logging.info(f"created a hash [CMAC] for firmware {self.__firmware_hash}")
         elif hash_type == "HMAC":
-            # TODO: Implement
-            pass
+            self.__firmware_hash = self.__calculate_hmac()
+            logging.info(f"created a hash [HMAC] for firmware {self.__firmware_hash}")
         else:
             logging.critical(
                 f"unsupported hash type {self._prj_foem_sqlite__firmware_hash_type}"
@@ -479,17 +502,19 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
                         firmware_size += len(hex_line) // 2
 
                 self.__firmware_size = firmware_size
-
+            logging.info(f"Calculated firmware size successfully.")
         except FileNotFoundError:
             logging.error(f"Error: File '{self.__firmware_fp}' not found.")
             return None
 
-    def insert_row(self, **row):
+    @property
+    def row(self):
+        return self._prj_foem_sqlite__get_row_in_table(self.__table_name, self.__row_id)
+
+    @row.setter
+    def row(self, row):
         assert row is not None, f"row should not be None"
         self._prj_foem_sqlite__insert_new_row_in_table(self.__table_name, **row)
-
-    def get_row(self):
-        return self._prj_foem_sqlite__get_row_in_table(self.__table_name, self.__row_id)
 
     @property
     def version(self):
@@ -505,19 +530,16 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
         )
 
     @property
-    def firmware_in_hex(self):
-        data = json.loads(
-            self._prj_foem_sqlite__get_value_from_table(
-                self.__row_id, self.__table_name, "firmware_in_hex"
-            )
+    def firmware(self):
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "firmware"
         )
         return data
 
-    @firmware_in_hex.setter
-    def firmware_in_hex(self, firmware_in_hex: list):
-        firmware_in_hex = json.dumps(firmware_in_hex)
+    @firmware.setter
+    def firmware(self, firmware_in_hex: list):
         self._prj_foem_sqlite__set_value_in_table(
-            self.__row_id, self.__table_name, "firmware_in_hex", firmware_in_hex
+            self.__row_id, self.__table_name, "firmware", firmware_in_hex
         )
 
     @property
@@ -563,6 +585,7 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
         return self._prj_foem_sqlite__print_table(self.__table_name)
 
     def run(self):
+        logging.error(f"prj_foem_sqlite_firmware main thread .run()")
         self.__firmware_calculate_size()
         self.__firmware_cvt2bin()
         self.__frimware_calculate_hash()
@@ -570,15 +593,14 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
         # Test
         myquery = {
             "version": "1.0.0",
-            "firmware_in_hex": "self.__firmware_in_json",
+            "firmware": "self.__firmware_in_json",
             "update_size": self.__firmware_size,
             "update_hash": self.__firmware_hash,
             "update_notes": "nothing",
         }
+        self.row = myquery
 
-        self.insert_row(**myquery)
-
-        print(self.get_row())
+        print(self.row)
         # self.print_table()
 
 
