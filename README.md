@@ -1,20 +1,38 @@
-# C-FOTA-4-A
 
-<div style="display: flex; justify-content: center;">
-  <a href="https://ibb.co/cw8jVNM">
-    <img src="https://ibb.co/cw8jVNM" alt="Automotive-Connectivity-OTA-Stage-Header" style="width: 50%; height: 100%;" />
-  </a>
+<p align="center">
+  <a href="https://imgbb.com/"><img src="https://i.ibb.co/7RNX7Jg/x-removebg-preview.png" alt="x-removebg-preview" border="0" width="350"></a>
+</p>
+<div align="center">
+
+# Custom FOTA For Automotive
+
 </div>
 
-[![License](https://img.shields.io/badge/License-GPL%203.0-blue.svg)](https://opensource.org/licenses/GPL-3.0)
-[![GitHub Issues](https://img.shields.io/github/issues/mohamedashraf-eng/C-FOTA-4-A)](https://github.com/mohamedashraf-eng/C-FOTA-4-A/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/mohamedashraf-eng/C-FOTA-4-A)](https://github.com/mohamedashraf-eng/C-FOTA-4-A/pulls)
-[![Contributors](https://img.shields.io/github/contributors/mohamedashraf-eng/C-FOTA-4-A)](https://github.com/mohamedashraf-eng/C-FOTA-4-A/graphs/contributors)
+<p align="center">
+  <a href="https://img.shields.io/badge/License-GPL%203.0-blue.svg"><img src="https://img.shields.io/badge/License-GPL%203.0-blue.svg" alt="License"></a>
+  <a href="https://github.com/mohamedashraf-eng/C-FOTA-4-A/pulls"><img src="https://img.shields.io/github/issues-pr/mohamedashraf-eng/C-FOTA-4-A" alt="GitHub Pull Requests"></a>
+  <a href="https://github.com/mohamedashraf-eng/C-FOTA-4-A/contributors"><img src="https://img.shields.io/github/contributors/mohamedashraf-eng/C-FOTA-4-A" alt="Contributors"></a>
+  <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/mohamedashraf-eng/C-FOTA-4-A">
+</p>
+
+</p>
+<p align="center">
+  <b> 
+  <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/mohamedashraf-eng/C-FOTA-4-A"> 
+  </b>
+  <b>
+  <img alt="Docker Cloud Automated build" src="https://img.shields.io/docker/cloud/automated/mohamedashraf-eng/C-FOTA-4-A">
+  </b>
+</p>
+
+
+<p align="center">
+  <a href="https://www.sqlite.org/index.html"><img src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite3"></a>
+  <a href="https://www.gnu.org/home.en.html"><img src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white" alt="C"></a>
+  <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" alt="Python"></a>
+</p>
 
 ## Overview 
-
-[![SQLITE3](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/index.html) [![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)](https://www.gnu.org/home.en.html) [![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org)  
-
 FOTA (Firmware Over-The-Air) is a cutting-edge repository for managing firmware updates over the air. The repository facilitates seamless and secure firmware updates for embedded devices, ensuring your devices are always up to date with the latest features and fixes.
 
 ![FOTA Demo](insert_demo_gif_or_screenshot_here)
@@ -59,12 +77,35 @@ We welcome contributions to the FOTA project! If you'd like to contribute, pleas
 
 ## Bugs & Issues
 
-If you encounter any bugs or issues with FOTA, please let us know by creating an [[issue]()](https://github.com/mohamedashraf-eng/C-FOTA-4-A/issues).
+If you encounter any bugs or issues with FOTA, please let us know by creating an ![issue]()
 ## License  
 This project is licensed under the GNU General Public License v3.0 - see the LICENSE file for details.
 
 ## Acknowledgments  
 
-* @mohamedashraf-eng  
+<div align="center" style="background-color: black; padding: 1px; max-width: 10000px;">
+  <a href="https://github.com/mohamedashraf-eng" style="text-decoration: none;">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Logo" style="vertical-align: middle;">
+    <span style="color: white; margin-left: 5px; vertical-align: middle;">@mohamedashraf-eng</span>
+  </a>
+  
+</div>
 
-[![LinkedIn Connect](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mohamed-ashraf-wx/) [![Buy Me a Coffe](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white)](https://www.linkedin.com/in/mohamed-ashraf-wx/)
+<div align="center">
+<br>
+
+[![LinkedIn Connect](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mohamed-ashraf-wx/) [![Buy Me a Coffee](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=white)](https://www.linkedin.com/in/mohamed-ashraf-wx/)
+
+<div align="center" style="background-color: black; padding: 1px; max-width: 10000px;">
+  <a href="https://github.com/mohamedashraf-eng" style="text-decoration: none;">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Logo" style="vertical-align: middle;">
+    <span style="color: white; margin-left: 5px; vertical-align: middle;">@abdolotfy</span>
+  </a>
+  
+</div>
+<div align="center">
+<br>
+
+[![LinkedIn Connect](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mohamed-ashraf-wx/) [![Buy Me a Coffee](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=white)](https://www.linkedin.com/in/mohamed-ashraf-wx/)
+
+</div>
