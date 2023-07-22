@@ -31,9 +31,19 @@ sql_cfg:
   db_path: ""
   db_name: alpha_0_fota.db
   firmware_hash_type: SHA2-256
+  firmware_schema: >
+    CREATE TABLE IF NOT EXISTS firmware_data (
+      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+      version TEXT NOT NULL,
+      firmware_in_hex TEXT NOT NULL,
+      update_size INTEGER NOT NULL,
+      update_hash TEXT NOT NULL UNIQUE,
+      update_notes TEXT NOT NULL
+    )
+
   ecu_schema: >
     CREATE TABLE IF NOT EXISTS ecu_data (
-      id INTEGER NOT NULL PRIMARY KEY UNIQUE,
+      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
       manufacturer VARCHAR(100) NOT NULL,
       model VARCHAR(100) NOT NULL,
       software_version VARCHAR(50) NOT NULL,
@@ -42,20 +52,10 @@ sql_cfg:
       vehicle_id INTEGER
     )
 
-  firmware_schema: >
-    CREATE TABLE IF NOT EXISTS firmware_data (
-      id INTEGER NOT NULL PRIMARY KEY UNIQUE,
-      version TEXT NOT NULL,
-      firmware_in_hex TEXT NOT NULL,
-      update_size INTEGER NOT NULL,
-      update_hash TEXT NOT NULL UNIQUE,
-      update_notes TEXT NOT NULL
-    )
-
   vehicle_schema: >
     CREATE TABLE IF NOT EXISTS vehicle_data (
-      id INTEGER NOT NULL PRIMARY KEY UNIQUE,
-      vehicle_id TEXT NOT NULL UNIQUE,
+      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+      vehicle_id TEXT NOT NULL,
       vehicle_name TEXT NOT NULL,
       vehicle_type TEXT NOT NULL,
       vehicle_status TEXT NOT NULL
@@ -63,9 +63,9 @@ sql_cfg:
 
   fota_schema: >
     CREATE TABLE IF NOT EXISTS fota_data (
-      id INTEGER NOT NULL PRIMARY KEY UNIQUE,
-      vehicle_id INTEGER NOT NULL UNIQUE,
-      firmware_id INTEGER NOT NULL UNIQUE,
+      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+      vehicle_id INTEGER NOT NULL,
+      firmware_id INTEGER NOT NULL,
       ecu_id TEXT NOT NULL,
       update_available INTEGER NOT NULL,
       update_status TEXT NOT NULL,

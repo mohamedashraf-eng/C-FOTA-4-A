@@ -302,11 +302,11 @@ class prj_foem_sqlite:
         self.__firmware_hash_type = self.__sqlcfg.get("firmware_hash_type", "")
         logging.info("fetched sqlite configuration succefully.")
 
-    def _connect_db(self):
+    def __connect_db(self):
         self.__db_connector = sql.connect(self.__db_fp)
         logging.info(f"connected to {self.__db_fp} successfully")
 
-    def _close_db(self):
+    def __close_db(self):
         self.__db_connector.close()
         logging.info(f"disconnected from {self.__db_fp} successfully")
 
@@ -325,7 +325,7 @@ class prj_foem_sqlite:
         self.__table_id = id
 
     def __insert_new_row_in_table(self, table_name: str, **values):
-        self._connect_db()
+        self.__connect_db()
 
         column_names = ", ".join(values.keys())
         value_placeholders = ", ".join(["?" for _ in values])
@@ -337,11 +337,11 @@ class prj_foem_sqlite:
         values_to_insert = tuple(values.values())
 
         self.__db_cursor.execute(insert_query, values_to_insert)
-        self._close_db()
+        self.__close_db()
         logging.info(f"Inserted a new row in table {table_name}")
 
     def __fetch_from_table(self, table_name: str, column_name: str, row_id: int):
-        self._connect_db()
+        self.__connect_db()
 
         select_query = f"""
             SELECT {column_name} FROM "{table_name}" WHERE id=?
@@ -350,23 +350,23 @@ class prj_foem_sqlite:
         self.__db_cursor.execute(select_query, (row_id,))
         row = self.__db_cursor.fetchall()
 
-        self._close_db()
+        self.__close_db()
         logging.info(
             f"Fetched from table {table_name} column {column_name}, row_id={row_id}"
         )
         return row
 
     def __get_row_in_table(self, table_name: str, row_id: int):
-        self._connect_db()
+        self.__connect_db()
         row = self.__fetch_from_table(table_name, "*", row_id)
-        self._close_db()
+        self.__close_db()
         logging.info(f"Fetched row from table {table_name} column, row_id={row_id}")
         return row
 
     def __get_value_from_table(self, row_id: int, table_name: str, column_name: str):
-        self._connect_db()
+        self.__connect_db()
         data = self.__fetch_from_table(table_name, column_name, row_id)
-        self._close_db()
+        self.__close_db()
         logging.info(
             f"Fetched value from table {table_name} colummn {column_name}, row_id={row_id}"
         )
@@ -375,12 +375,12 @@ class prj_foem_sqlite:
     def __set_value_in_table(
         self, row_id: int, table_name: str, column_name: str, value
     ):
-        self._connect_db()
+        self.__connect_db()
         self.__set_current_id(row_id)
         # Update the specific column value with the provided value
         update_query = f'UPDATE {table_name} SET "{column_name}"=? WHERE "id"=?'
         self.__db_cursor.execute(update_query, (value, row_id))
-        self._close_db()
+        self.__close_db()
         logging.info(
             f"Setted value to table {table_name} colummn {column_name}, row_id={row_id} | value {value}"
         )
@@ -398,7 +398,7 @@ class prj_foem_sqlite:
         return fetched[0][0]
 
     def run(self):
-        self._connect_db()
+        self.__connect_db()
         self.__fetch_cfg()
         self.__create_db()
 
@@ -411,22 +411,27 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
         super().run()
         # child cfg
         self.__firmware_fp = firmware_fp
-        self.__firmware_in_hex = []
-        self.__firmware_sha256 = None
+        self.__firmware_hex = []
+        self.__firmware_in_json = None
+        self.__firmware_hash = None
         self.__firmware_size = None
         self.__table_name = "firmware_data"
         self.__row_id = 1
 
+        self.__firmware_hex_fetch()
+        self.__firmware_in_json = json.dumps(self.__firmware_hex)
+        
     def __firmware_hex_fetch(self):
         try:
             with open(self.__firmware_fp, "r") as hex_file:
-                self.__firmware_in_hex = hex_file.readlines().rstrip()
+                self.__firmware_hex.append(hex_file.readlines())
             logging.info(f"Fetched the hex file successfully.")
         except FileNotFoundError:
             logging.error(f"Error: File '{self.__firmware_fp}' not found.")
             return None
 
     def __firmware_cvt2bin(self):
+        # Sup function
         def hex_to_binary(hex_string):
             # Function to convert a string of hex characters to binary data
             hex_string = "".join(
@@ -450,9 +455,9 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
 
             # Calculate SHA-256 hash of the binary data
             sha256_hash = hashlib.sha256(binary_data).hexdigest()
-            self.__firmware_sha256 = sha256_hash
+            self.__firmware_hash = sha256_hash
             logging.info(
-                f"created a hash [SHA2-256] for firmware {self.__firmware_sha256}"
+                f"created a hash [SHA2-256] for firmware {self.__firmware_hash}"
             )
         except FileNotFoundError:
             logging.error("Error: The specified hex file was not found.")
@@ -492,7 +497,7 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
         # Get the final hash in hexadecimal format
         firmware_hash = sha256_hash.hexdigest()
         self.__hash = firmware_hash.upper()  # Convert to uppercase for consistency
-
+        logging.error(f"Error: File '{self.__firmware_fp}' not found.")
     def insert_row(self, **row):
         assert row is not None, f"row should not be None"
 
@@ -592,8 +597,17 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
         self.__firmware_calculate_size()
         self.__firmware_cvt2bin()
 
-        self.update_hash = self.__firmware_sha256
+        myquery = {
+            "version": "1.0.0",
+            "firmware_in_hex": self.__firmware_in_json,
+            "update_size": self.__firmware_size,
+            "update_hash": self.__firmware_hash,
+            "update_notes": "nothing"
+        }
+        
+        self.insert_row(**myquery)
 
+        self.print_table()
 
 # SQLite - Inh - vehicle
 class prj_foem_sqlite_vehicle(prj_foem_sqlite):
@@ -671,9 +685,11 @@ class prj_foem_sqlite_vehicle(prj_foem_sqlite):
             self.__row_id, self.__table_name, "vehicle_status", vehicle_status
         )
 
+
 # SQLite - Inh - ECU's
 class prj_foem_sqlite_ecu(prj_foem_sqlite):
     all = []
+
     def __init__(self, yaml_cfg_file):
         # super cfg
         super().__init__(yaml_cfg_file)
@@ -681,6 +697,7 @@ class prj_foem_sqlite_ecu(prj_foem_sqlite):
         # child cfg
         self.__row_id = 1
         self.__table_name = "ecu_data"
+
 
 # SQLite - Inh - fota
 class prj_foem_sqlite_fota(prj_foem_sqlite):
@@ -850,8 +867,6 @@ def main():
     main_yaml = prj_foem_yaml("main.yaml")
     main_yaml.run()
     # SQL
-    main_sql = prj_foem_sqlite(yaml_sql_cfg=main_yaml.get_sqlcfg)
-    main_sql.run()
     main_ecu = prj_foem_sqlite_ecu(main_yaml.get_sqlcfg)
     main_firmware = prj_foem_sqlite_firmware("test.hex", main_yaml.get_sqlcfg)
     main_firmware.run()
