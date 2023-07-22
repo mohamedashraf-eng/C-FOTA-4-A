@@ -20,9 +20,6 @@
   <b> 
   <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/mohamedashraf-eng/C-FOTA-4-A"> 
   </b>
-  <b>
-  <img alt="Docker Cloud Automated build" src="https://img.shields.io/docker/cloud/automated/mohamedashraf-eng/C-FOTA-4-A">
-  </b>
 </p>
 
 
@@ -57,6 +54,11 @@ FOTA (Firmware Over-The-Air) is a cutting-edge repository for managing firmware 
 1. Clone the repository  
 ```bash
 git clone https://github.com/mohamedashraf-eng/C-FOTA-4-A.git
+```  
+2. Install base requirements (Make sure you have pip installed)
+```bash
+cd /src/oem_intf
+python -m pip install -r requirements.txt
 ```  
 
 ## Quick Start  
