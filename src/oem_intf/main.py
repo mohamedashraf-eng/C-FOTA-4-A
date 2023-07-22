@@ -424,7 +424,6 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
             logging.info(f"Fetched the hex file successfully.")
         except FileNotFoundError:
             logging.error(f"Error: File '{self.__firmware_fp}' not found.")
-            return None
 
     def __firmware_cvt2bin(self):
         # Sup function
@@ -616,11 +615,13 @@ class prj_foem_sqlite_vehicle(prj_foem_sqlite):
         self.__table_name = "vehicle_data"
         self.__row_id = 1
 
-    def insert_row(self, **values):
-        self._prj_foem_sqlite__insert_new_row_in_table(self.__table_name, **values)
-
-    def get_row(self):
+    @property
+    def row(self):
         return self._prj_foem_sqlite__get_row_in_table(self.__table_name, self.__row_id)
+
+    @row.setter
+    def row(self, values):
+        self._prj_foem_sqlite__insert_new_row_in_table(self.__table_name, **values)
 
     @property
     def vehicle_id(self):
@@ -687,6 +688,82 @@ class prj_foem_sqlite_ecu(prj_foem_sqlite):
         self.__row_id = 1
         self.__table_name = "ecu_data"
 
+    @property
+    def row(self):
+        return self._prj_foem_sqlite__get_row_in_table(self.__table_name, self.__row_id)
+
+    @row.setter
+    def row(self, values):
+        self._prj_foem_sqlite__insert_new_row_in_table(self.__table_name, **values)
+
+    @property
+    def manufacturer(self):
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "manufacturer"
+        )
+        return data
+
+    @manufacturer.setter
+    def manufacturer(self, manufacturer):
+        self._prj_foem_sqlite__set_value_in_table(
+            self.__row_id, self.__table_name, "manufacturer", manufacturer
+        )
+
+    @property
+    def software_version(self):
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "software_version"
+        )
+        return data
+
+    @software_version.setter
+    def software_version(self, software_version):
+        self._prj_foem_sqlite__set_value_in_table(
+            self.__row_id, self.__table_name, "software_version", software_version
+        )
+
+    @property
+    def installation_date(self):
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "installation_date"
+        )
+        return data
+
+    @installation_date.setter
+    def installation_date(self, installation_date):
+        self._prj_foem_sqlite__set_value_in_table(
+            self.__row_id, self.__table_name, "installation_date", installation_date
+        )
+
+    @property
+    def last_update_date(self):
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "last_update_date"
+        )
+        return data
+
+    @last_update_date.setter
+    def last_update_date(self, last_update_date):
+        self._prj_foem_sqlite__set_value_in_table(
+            self.__row_id, self.__table_name, "last_update_date", last_update_date
+        )
+
+    @property
+    def vehicles(self):
+        data = self._prj_foem_sqlite__get_value_from_table(
+            self.__row_id, self.__table_name, "vehicles"
+        )
+        return data
+
+    @vehicles.setter
+    def vehicles(self, vehicles):
+        self._prj_foem_sqlite__set_value_in_table(
+            self.__row_id, self.__table_name, "vehicles", vehicles
+        )
+
+    def run(self):
+        pass
+
 
 # SQLite3 - Inh - fota
 class prj_foem_sqlite_fota(prj_foem_sqlite):
@@ -699,6 +776,14 @@ class prj_foem_sqlite_fota(prj_foem_sqlite):
         # child cfg
         self.__table_name = "fota_data"
         self.__row_id = 1
+
+    @property
+    def row(self):
+        return self._prj_foem_sqlite__get_row_in_table(self.__table_name, self.__row_id)
+
+    @row.setter
+    def row(self, values):
+        self._prj_foem_sqlite__insert_new_row_in_table(self.__table_name, **values)
 
     @property
     def vehicle_id(self):
@@ -792,6 +877,9 @@ class prj_foem_sqlite_fota(prj_foem_sqlite):
         self._prj_foem_sqlite__set_value_in_table(
             self.__row_id, self.__table_name, "update_success", update_success
         )
+
+    def run(self):
+        pass
 
 
 # CMD_ANALYZER - CLASS:
