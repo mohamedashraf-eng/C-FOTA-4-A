@@ -77,7 +77,7 @@ We welcome contributions to the FOTA project! If you'd like to contribute, pleas
 
 ## Bugs & Issues
 
-If you encounter any bugs or issues with FOTA, please let us know by creating an ![issue]()
+If you encounter any bugs or issues with FOTA, please let us know by creating an ![issues](https://github.com/mohamedashraf-eng/C-FOTA-4-A/issues)
 ## License  
 This project is licensed under the GNU General Public License v3.0 - see the LICENSE file for details.
 
