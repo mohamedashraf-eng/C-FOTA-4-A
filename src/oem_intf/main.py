@@ -680,9 +680,97 @@ class prj_foem_sqlite_fota(prj_foem_sqlite):
     def __init__(self):
         self.__table_name = "fota_data"
         self.__row_id = 1
+    
+    @property
+    def vehicle_id(self):
+        super().__connect_db()
+        data = super().__get_value_from_table(self.__row_id, self.__table_name, "vehicle_id")
+        super().__close_db()
+        return data
 
-    # TODO: Implement setters/getters
+    @vehicle_id.setter
+    def vehicle_id(self, vehicle_id: str):
+        super().__connect_db()
+        super().__set_value_in_table(self.__row_id, self.__table_name, "vehicle_id", vehicle_id)
+        super().__close_db()
 
+    @property
+    def firmware_id(self):
+        super().__connect_db()
+        data = super().__get_value_from_table(self.__row_id, self.__table_name, "firmware_id")
+        super().__close_db()
+        return data
+
+    @firmware_id.setter
+    def firmware_id(self, firmware_id: str):
+        super().__connect_db()
+        super().__set_value_in_table(self.__row_id, self.__table_name, "firmware_id", firmware_id)
+        super().__close_db()
+
+    @property
+    def ecu_id(self):
+        super().__connect_db()
+        data = super().__get_value_from_table(self.__row_id, self.__table_name, "ecu_id")
+        super().__close_db()
+        return data
+    
+    @ecu_id.setter
+    def ecu_id(self, ecu_id: str):
+        super().__connect_db()
+        super().__set_value_in_table(self.__row_id, self.__table_name, "ecu_id", ecu_id)
+        super().__close_db()
+
+    @property
+    def update_available(self):
+        super().__connect_db()
+        data = super().__get_value_from_table(self.__row_id, self.__table_name, "update_available")
+        super().__close_db()
+        return data
+    
+    @update_available.setter
+    def update_available(self, update_available: int):
+        super().__connect_db()
+        super().__set_value_in_table(self.__row_id, self.__table_name, "update_available", update_available)
+        super().__close_db()
+    
+    @property
+    def update_status(self):
+        super().__connect_db()
+        data = super().__get_value_from_table(self.__row_id, self.__table_name, "update_status")
+        super().__close_db()
+        return data
+    
+    @update_status.setter
+    def update_status(self, update_status: str):
+        super().__connect_db()
+        super().__set_value_in_table(self.__row_id, self.__table_name, "update_status", update_status)
+        super().__close_db()
+
+    @property
+    def last_update_time(self):
+        super().__connect_db()
+        data = super().__get_value_from_table(self.__row_id, self.__table_name, "last_update_time")
+        super().__close_db()
+        return data
+    
+    @last_update_time.setter
+    def last_update_time(self, last_update_time: str):
+        super().__connect_db()
+        super().__set_value_in_table(self.__row_id, self.__table_name, "last_update_time", last_update_time)
+        super().__close_db()
+
+    @property
+    def update_success(self):
+        super().__connect_db()
+        data = super().__get_value_from_table(self.__row_id, self.__table_name, "update_success")
+        super().__close_db()
+        return data
+    
+    @update_success.setter
+    def update_success(self, update_success: int):
+        super().__connect_db()
+        super().__set_value_in_table(self.__row_id, self.__table_name, "update_success", update_success)
+        super().__close_db()
 
 # CMD_ANALYZER - CLASS:
 class prj_foem_cmd:
