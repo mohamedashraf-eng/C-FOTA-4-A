@@ -57,5 +57,7 @@ If you encounter any bugs or issues with FOTA, please let us know by creating an
 ## License  
 This project is licensed under the GNU General Public License v3.0 - see the LICENSE file for details.
 
-## Acknowledgments
-[<img src="path/to/linkedin_connect_icon.png" height="30" width="30">](https://www.linkedin.com/in/mohamed-ashraf-wx/)
+## Acknowledgments  
+
+* @mohamedashraf-eng
+[<img src="https://icons8.com/icon/9pFq5Dj6Mz1d/linkedin" height="30" width="30">](https://www.linkedin.com/in/mohamed-ashraf-wx/)
