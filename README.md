@@ -1,6 +1,7 @@
 # C-FOTA-4-A
 
-![FOTA Icon](https://ibb.co/VTk0kVT)
+
+<a href="https://ibb.co/vdc293P"><img src="https://i.ibb.co/vdc293P/Automotive-Connectivity-OTA-Stage-Header.jpg" alt="Automotive-Connectivity-OTA-Stage-Header" border="0" /></a>
 
 [![License](https://img.shields.io/badge/License-GPL%203.0-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 [![GitHub Issues](https://img.shields.io/github/issues/mohamedashraf-eng/C-FOTA-4-A)](https://github.com/mohamedashraf-eng/C-FOTA-4-A/issues)
@@ -27,7 +28,7 @@ FOTA (Firmware Over-The-Air) is a cutting-edge repository for managing firmware 
 
 ## Installation
 1. Clone the repository  
-```git bash
+```bash
 git clone https://github.com/mohamedashraf-eng/C-FOTA-4-A.git
 ```  
 
@@ -52,3 +53,6 @@ We welcome contributions to the FOTA project! If you'd like to contribute, pleas
 If you encounter any bugs or issues with FOTA, please let us know by creating an issue.
 ## License  
 This project is licensed under the GNU General Public License v3.0 - see the LICENSE file for details.
+
+## Acknowledgments
+[<img src="path/to/linkedin_connect_icon.png" height="30" width="30">](https://www.linkedin.com/in/mohamed-ashraf-wx/)
