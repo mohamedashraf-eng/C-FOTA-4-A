@@ -1,8 +1,10 @@
 # C-FOTA-4-A
 
-<a href="https://ibb.co/vdc293P">
-  <img src="https://i.ibb.co/vdc293P/Automotive-Connectivity-OTA-Stage-Header.jpg" alt="Automotive-Connectivity-OTA-Stage-Header" style="width: 50%; height: 300px;" />
-</a>
+<div style="display: flex; justify-content: center;">
+  <a href="https://ibb.co/vdc293P">
+    <img src="https://i.ibb.co/vdc293P/Automotive-Connectivity-OTA-Stage-Header.jpg" alt="Automotive-Connectivity-OTA-Stage-Header" style="width: 100%; height: 200px;" />
+  </a>
+</div>
 
 [![License](https://img.shields.io/badge/License-GPL%203.0-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 [![GitHub Issues](https://img.shields.io/github/issues/mohamedashraf-eng/C-FOTA-4-A)](https://github.com/mohamedashraf-eng/C-FOTA-4-A/issues)
