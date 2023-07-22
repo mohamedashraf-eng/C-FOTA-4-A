@@ -2,7 +2,7 @@
 
 <div style="display: flex; justify-content: center;">
   <a href="https://ibb.co/vdc293P">
-    <img src="https://i.ibb.co/vdc293P/Automotive-Connectivity-OTA-Stage-Header.jpg" alt="Automotive-Connectivity-OTA-Stage-Header" style="width: 100%; height: 200px;" />
+    <img src="https://i.ibb.co/vdc293P/Automotive-Connectivity-OTA-Stage-Header.jpg" alt="Automotive-Connectivity-OTA-Stage-Header" style="width: 50%; height: 400px;" />
   </a>
 </div>
 
