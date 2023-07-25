@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1> Database </h1>
+{% if fotas %}
+    {% for fota in fotas %}
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th class="text-center" scope="col">ID</th>
+          <th class="text-center" scope="col">Firmware ID</th>
+          <th class="text-center" scope="col">Ecu ID</th>
+          <th class="text-center" scope="col">Vehicle ID</th>
+          <th class="text-center" scope="col">Availability Flag</th>
+          <th class="text-center" scope="col">Update Ready Flag</th>
+          <th class="text-center" scope="col">Status</th>
+          <th class="text-center" scope="col">Started at</th>
+          <th class="text-center" scope="col">Completed at</th>
+          <th class="text-center" scope="col">Time taken (minutes)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center">{{ fota.fota_id }}</td>
+          <td class="text-center"><a href="{% url 'firmware_database' fota.firmware.firmware_id %}"> {{ fota.firmware.firmware_id }} </a> </td>
+          <td class="text-center"><a href="{% url 'ecu_database' fota.ecu.ecu_id %}">{{ fota.ecu.ecu_id }}</a> </td>
+          <td class="text-center"><a href="{% url 'vehicle_database' fota.vehicle.vehicle_id %}">{{ fota.vehicle.vehicle_id }}</a> </td>
+          <td class="text-center">{{ fota.availability_flag }}</td>
+          <td class="text-center">{{ fota.update_ready_flag }}</td>
+          <td class="text-center">{{ fota.status }}</td>
+          <td class="text-center">{{ fota.started_at }}</td>
+          <td class="text-center">{{ fota.completed_at }}</td>
+          <td class="text-center">{{ fota.minutes_taken }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <br/>
+    {% endfor %}
+{% endif %}
+
+{% endblock content %}
