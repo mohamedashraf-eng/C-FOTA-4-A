@@ -29,7 +29,7 @@ mqtt_cfg:
 # SQL cfg
 sql_cfg:
   db_path: ""
-  db_name: alpha_0_fota.db
+  db_name: alpha_1_fota.db
   firmware_hash_type: SHA2-256
   firmware_schema: >
     CREATE TABLE IF NOT EXISTS firmware_data (

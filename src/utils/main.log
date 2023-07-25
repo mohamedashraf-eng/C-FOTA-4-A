@@ -5940,3 +5940,538 @@
 2023-07-22 00:33:12,834 - INFO - getters: ['a', 'b', 'c'] - .\main.py:707 - __get_cmdcfg
 2023-07-22 00:33:12,834 - INFO - setters: ['x', 'y', 'z'] - .\main.py:707 - __get_cmdcfg
 2023-07-22 00:33:12,835 - INFO - requests: ['k', 'o', 'p'] - .\main.py:707 - __get_cmdcfg
+2023-07-22 23:13:07,541 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:13:07,542 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:13:07,543 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:13:07,543 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:13:07,543 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:13:07,544 - INFO - Database alpha_0_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:13:07,544 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:13:07,544 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:13:07,544 - INFO - Database alpha_0_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:13:07,545 - INFO - Fetched the hex file successfully. - .\main.py:424 - __firmware_hex_fetch
+2023-07-22 23:13:07,545 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:587 - run
+2023-07-22 23:13:07,545 - INFO - Calculated firmware size successfully. - .\main.py:504 - __firmware_calculate_size
+2023-07-22 23:13:07,549 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:447 - __firmware_cvt2bin
+2023-07-22 23:13:07,549 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:477 - __frimware_calculate_hash
+2023-07-22 23:13:43,118 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:13:43,119 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:13:43,120 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:13:43,120 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:13:43,120 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:13:43,121 - INFO - Database alpha_0_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:13:43,121 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:13:43,121 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:13:43,122 - INFO - Database alpha_0_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:13:43,122 - INFO - Fetched the hex file successfully. - .\main.py:424 - __firmware_hex_fetch
+2023-07-22 23:13:43,122 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:587 - run
+2023-07-22 23:13:43,123 - INFO - Calculated firmware size successfully. - .\main.py:504 - __firmware_calculate_size
+2023-07-22 23:13:43,127 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:447 - __firmware_cvt2bin
+2023-07-22 23:13:43,127 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:477 - __frimware_calculate_hash
+2023-07-22 23:13:43,127 - INFO - Inserted a new row in table firmware_data - .\main.py:342 - __insert_new_row_in_table
+2023-07-22 23:13:43,127 - INFO - Fetched from table firmware_data column *, row_id=1 - .\main.py:352 - __fetch_from_table
+2023-07-22 23:13:43,127 - INFO - Fetched row from table firmware_data column, row_id=1 - .\main.py:359 - __get_row_in_table
+2023-07-22 23:13:43,127 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:13:43,127 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:13:43,128 - INFO - Database alpha_0_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:13:43,128 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:13:43,128 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:13:43,129 - INFO - Database alpha_0_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:13:43,129 - INFO - yaml mqtt cfg fetched - .\main.py:111 - __init__
+2023-07-22 23:13:43,129 - INFO - getters: ['a', 'b', 'c'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:13:43,129 - INFO - setters: ['x', 'y', 'z'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:13:43,129 - INFO - requests: ['k', 'o', 'p'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:13:57,823 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:13:57,824 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:13:57,825 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:13:57,825 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:13:57,825 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:13:57,826 - INFO - Database alpha_0_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:13:57,826 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:13:57,826 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:13:57,826 - INFO - Database alpha_0_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:13:57,827 - INFO - Fetched the hex file successfully. - .\main.py:424 - __firmware_hex_fetch
+2023-07-22 23:13:57,827 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:587 - run
+2023-07-22 23:13:57,828 - INFO - Calculated firmware size successfully. - .\main.py:504 - __firmware_calculate_size
+2023-07-22 23:13:57,831 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:447 - __firmware_cvt2bin
+2023-07-22 23:13:57,831 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:477 - __frimware_calculate_hash
+2023-07-22 23:13:57,832 - INFO - Inserted a new row in table firmware_data - .\main.py:342 - __insert_new_row_in_table
+2023-07-22 23:13:57,832 - INFO - Fetched from table firmware_data column *, row_id=1 - .\main.py:352 - __fetch_from_table
+2023-07-22 23:13:57,832 - INFO - Fetched row from table firmware_data column, row_id=1 - .\main.py:359 - __get_row_in_table
+2023-07-22 23:13:57,832 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:13:57,832 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:13:57,833 - INFO - Database alpha_0_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:13:57,833 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:13:57,833 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:13:57,833 - INFO - Database alpha_0_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:13:57,833 - INFO - yaml mqtt cfg fetched - .\main.py:111 - __init__
+2023-07-22 23:13:57,833 - INFO - getters: ['a', 'b', 'c'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:13:57,833 - INFO - setters: ['x', 'y', 'z'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:13:57,833 - INFO - requests: ['k', 'o', 'p'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:14:12,283 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:14:12,284 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:14:12,285 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:14:12,285 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:14:12,285 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:14:12,286 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:14:12,286 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:14:12,286 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:14:12,287 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:14:12,287 - INFO - Fetched the hex file successfully. - .\main.py:424 - __firmware_hex_fetch
+2023-07-22 23:14:12,287 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:587 - run
+2023-07-22 23:14:12,288 - INFO - Calculated firmware size successfully. - .\main.py:504 - __firmware_calculate_size
+2023-07-22 23:14:12,292 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:447 - __firmware_cvt2bin
+2023-07-22 23:14:12,292 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:477 - __frimware_calculate_hash
+2023-07-22 23:14:12,292 - INFO - Inserted a new row in table firmware_data - .\main.py:342 - __insert_new_row_in_table
+2023-07-22 23:14:12,292 - INFO - Fetched from table firmware_data column *, row_id=1 - .\main.py:352 - __fetch_from_table
+2023-07-22 23:14:12,292 - INFO - Fetched row from table firmware_data column, row_id=1 - .\main.py:359 - __get_row_in_table
+2023-07-22 23:14:12,292 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:14:12,292 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:14:12,293 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:14:12,293 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:14:12,293 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:14:12,293 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:14:12,293 - INFO - yaml mqtt cfg fetched - .\main.py:111 - __init__
+2023-07-22 23:14:12,293 - INFO - getters: ['a', 'b', 'c'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:14:12,293 - INFO - setters: ['x', 'y', 'z'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:14:12,293 - INFO - requests: ['k', 'o', 'p'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:14:35,440 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:14:35,441 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:14:35,442 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:14:35,442 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:14:35,442 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:14:35,443 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:14:35,636 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:14:35,636 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:14:35,636 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:14:35,637 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:14:35,637 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:14:35,638 - INFO - Fetched the hex file successfully. - .\main.py:424 - __firmware_hex_fetch
+2023-07-22 23:14:35,638 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:587 - run
+2023-07-22 23:14:35,639 - INFO - Calculated firmware size successfully. - .\main.py:504 - __firmware_calculate_size
+2023-07-22 23:14:35,645 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:447 - __firmware_cvt2bin
+2023-07-22 23:14:35,645 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:477 - __frimware_calculate_hash
+2023-07-22 23:14:35,647 - INFO - Inserted a new row in table firmware_data - .\main.py:342 - __insert_new_row_in_table
+2023-07-22 23:14:35,647 - INFO - Fetched from table firmware_data column *, row_id=1 - .\main.py:352 - __fetch_from_table
+2023-07-22 23:14:35,647 - INFO - Fetched row from table firmware_data column, row_id=1 - .\main.py:359 - __get_row_in_table
+2023-07-22 23:14:35,647 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:14:35,648 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:14:35,648 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:14:35,648 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:14:35,649 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:14:35,649 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:14:35,649 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:14:35,650 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:14:35,650 - INFO - yaml mqtt cfg fetched - .\main.py:111 - __init__
+2023-07-22 23:14:35,650 - INFO - getters: ['a', 'b', 'c'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:14:35,650 - INFO - setters: ['x', 'y', 'z'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:14:35,650 - INFO - requests: ['k', 'o', 'p'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:15:08,216 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:15:08,217 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:15:08,218 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:15:08,218 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:15:08,218 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:15:08,218 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:15:08,219 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:15:08,219 - INFO - Fetched the hex file successfully. - .\main.py:424 - __firmware_hex_fetch
+2023-07-22 23:15:08,219 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:587 - run
+2023-07-22 23:15:08,220 - INFO - Calculated firmware size successfully. - .\main.py:504 - __firmware_calculate_size
+2023-07-22 23:15:08,224 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:447 - __firmware_cvt2bin
+2023-07-22 23:15:08,224 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:477 - __frimware_calculate_hash
+2023-07-22 23:15:08,225 - INFO - Inserted a new row in table firmware_data - .\main.py:342 - __insert_new_row_in_table
+2023-07-22 23:15:08,225 - INFO - Fetched from table firmware_data column *, row_id=1 - .\main.py:352 - __fetch_from_table
+2023-07-22 23:15:08,225 - INFO - Fetched row from table firmware_data column, row_id=1 - .\main.py:359 - __get_row_in_table
+2023-07-22 23:15:08,225 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:15:08,225 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:15:08,226 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:15:08,227 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:15:08,227 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:15:08,227 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:15:08,227 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:15:08,228 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:15:08,228 - INFO - yaml mqtt cfg fetched - .\main.py:111 - __init__
+2023-07-22 23:15:08,228 - INFO - getters: ['a', 'b', 'c'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:15:08,229 - INFO - setters: ['x', 'y', 'z'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:15:08,229 - INFO - requests: ['k', 'o', 'p'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:15:19,187 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:15:19,188 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:15:19,189 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:15:19,189 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:15:19,189 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:15:19,190 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:15:19,190 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:15:19,190 - INFO - Fetched the hex file successfully. - .\main.py:424 - __firmware_hex_fetch
+2023-07-22 23:15:19,191 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:587 - run
+2023-07-22 23:15:19,191 - INFO - Calculated firmware size successfully. - .\main.py:504 - __firmware_calculate_size
+2023-07-22 23:15:19,195 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:447 - __firmware_cvt2bin
+2023-07-22 23:17:58,393 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:17:58,393 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:17:58,394 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:17:58,394 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:17:58,394 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:17:58,395 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:17:58,395 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:17:58,396 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:17:58,396 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:17:58,396 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:17:58,396 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:17:58,397 - INFO - Fetched the hex file successfully. - .\main.py:424 - __firmware_hex_fetch
+2023-07-22 23:17:58,397 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:587 - run
+2023-07-22 23:17:58,397 - INFO - Calculated firmware size successfully. - .\main.py:504 - __firmware_calculate_size
+2023-07-22 23:17:58,401 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:447 - __firmware_cvt2bin
+2023-07-22 23:17:58,401 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:477 - __frimware_calculate_hash
+2023-07-22 23:17:58,402 - INFO - Inserted a new row in table firmware_data - .\main.py:342 - __insert_new_row_in_table
+2023-07-22 23:17:58,403 - INFO - Fetched from table firmware_data column *, row_id=1 - .\main.py:352 - __fetch_from_table
+2023-07-22 23:17:58,403 - INFO - Fetched row from table firmware_data column, row_id=1 - .\main.py:359 - __get_row_in_table
+2023-07-22 23:17:58,403 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:17:58,403 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:17:58,403 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:17:58,404 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:17:58,404 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:17:58,404 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:17:58,404 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:17:58,405 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:17:58,405 - INFO - yaml mqtt cfg fetched - .\main.py:111 - __init__
+2023-07-22 23:17:58,405 - INFO - getters: ['a', 'b', 'c'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:17:58,405 - INFO - setters: ['x', 'y', 'z'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:17:58,405 - INFO - requests: ['k', 'o', 'p'] - .\main.py:903 - __get_cmdcfg
+2023-07-22 23:18:41,725 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:18:41,726 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:18:41,727 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:18:41,727 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:18:41,727 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:18:41,727 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:18:41,728 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:18:41,728 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:18:41,728 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:18:41,728 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:18:41,729 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:18:41,729 - INFO - Fetched the hex file successfully. - .\main.py:424 - __firmware_hex_fetch
+2023-07-22 23:18:41,729 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:589 - run
+2023-07-22 23:18:41,730 - INFO - Calculated firmware size successfully. - .\main.py:504 - __firmware_calculate_size
+2023-07-22 23:18:41,734 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:447 - __firmware_cvt2bin
+2023-07-22 23:18:41,734 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:477 - __frimware_calculate_hash
+2023-07-22 23:19:10,547 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:19:10,548 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:19:10,549 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:19:10,549 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:19:10,549 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:19:10,550 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:19:10,550 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:19:10,550 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:19:10,550 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:19:10,551 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:19:10,551 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:19:10,551 - INFO - Fetched the hex file successfully. - .\main.py:424 - __firmware_hex_fetch
+2023-07-22 23:19:10,552 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:589 - run
+2023-07-22 23:19:10,552 - INFO - Calculated firmware size successfully. - .\main.py:504 - __firmware_calculate_size
+2023-07-22 23:19:10,556 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:447 - __firmware_cvt2bin
+2023-07-22 23:19:10,557 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:477 - __frimware_calculate_hash
+2023-07-22 23:20:33,088 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:20:33,088 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:20:33,089 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:20:33,090 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:33,090 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:20:33,090 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:33,090 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:20:33,091 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:33,091 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:20:33,091 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:33,091 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:20:33,092 - INFO - Fetched the hex file successfully. - .\main.py:429 - __firmware_hex_fetch
+2023-07-22 23:20:33,092 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:593 - run
+2023-07-22 23:20:33,092 - INFO - Calculated firmware size successfully. - .\main.py:509 - __firmware_calculate_size
+2023-07-22 23:20:33,096 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:452 - __firmware_cvt2bin
+2023-07-22 23:20:33,096 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:482 - __frimware_calculate_hash
+2023-07-22 23:20:42,890 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:20:42,890 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:20:42,891 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:20:42,892 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:42,892 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:20:42,892 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:42,893 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:20:42,893 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:42,893 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:20:42,893 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:42,893 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:20:42,894 - INFO - Fetched the hex file successfully. - .\main.py:429 - __firmware_hex_fetch
+2023-07-22 23:20:42,894 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:592 - run
+2023-07-22 23:20:42,895 - INFO - Calculated firmware size successfully. - .\main.py:509 - __firmware_calculate_size
+2023-07-22 23:20:42,899 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:452 - __firmware_cvt2bin
+2023-07-22 23:20:42,899 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:482 - __frimware_calculate_hash
+2023-07-22 23:20:42,899 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:42,900 - INFO - Inserted a new row in table firmware_data - .\main.py:343 - __insert_new_row_in_table
+2023-07-22 23:20:42,901 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:42,901 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:42,901 - INFO - Fetched from table firmware_data column *, row_id=1 - .\main.py:354 - __fetch_from_table
+2023-07-22 23:20:42,901 - INFO - Fetched row from table firmware_data column, row_id=1 - .\main.py:362 - __get_row_in_table
+2023-07-22 23:20:42,902 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:42,902 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:20:42,902 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:42,903 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:20:42,903 - INFO - connected to  successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:42,903 - INFO - fetched sqlite configuration succefully. - .\main.py:307 - __fetch_cfg
+2023-07-22 23:20:42,903 - INFO - connected to alpha_1_fota.db successfully - .\main.py:311 - __connect_db
+2023-07-22 23:20:42,904 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:325 - __create_db
+2023-07-22 23:20:42,904 - INFO - yaml mqtt cfg fetched - .\main.py:111 - __init__
+2023-07-22 23:20:42,904 - INFO - getters: ['a', 'b', 'c'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:20:42,904 - INFO - setters: ['x', 'y', 'z'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:20:42,904 - INFO - requests: ['k', 'o', 'p'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:21:11,584 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:21:11,584 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:21:11,585 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:21:11,585 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:21:11,586 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:21:11,586 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:21:11,586 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:21:11,587 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:21:11,587 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:21:11,587 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:21:11,587 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:21:11,588 - INFO - Fetched the hex file successfully. - .\main.py:429 - __firmware_hex_fetch
+2023-07-22 23:21:11,588 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:592 - run
+2023-07-22 23:21:11,588 - INFO - Calculated firmware size successfully. - .\main.py:509 - __firmware_calculate_size
+2023-07-22 23:21:11,593 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:452 - __firmware_cvt2bin
+2023-07-22 23:21:11,593 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:482 - __frimware_calculate_hash
+2023-07-22 23:21:11,593 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:21:11,594 - INFO - Inserted a new row in table firmware_data - .\main.py:344 - __insert_new_row_in_table
+2023-07-22 23:21:11,595 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:21:11,595 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:21:11,595 - INFO - Fetched from table firmware_data column *, row_id=1 - .\main.py:355 - __fetch_from_table
+2023-07-22 23:21:11,595 - INFO - Fetched row from table firmware_data column, row_id=1 - .\main.py:363 - __get_row_in_table
+2023-07-22 23:21:11,595 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:21:11,596 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:21:11,596 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:21:11,597 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:21:11,597 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:21:11,597 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:21:11,597 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:21:11,598 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:21:11,598 - INFO - yaml mqtt cfg fetched - .\main.py:111 - __init__
+2023-07-22 23:21:11,598 - INFO - getters: ['a', 'b', 'c'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:21:11,598 - INFO - setters: ['x', 'y', 'z'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:21:11,598 - INFO - requests: ['k', 'o', 'p'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:25:47,557 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:25:47,557 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:25:47,558 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:25:47,558 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:25:47,558 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:25:47,559 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:25:47,559 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:25:47,559 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:25:47,560 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:25:47,560 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:25:47,560 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:25:47,561 - INFO - Fetched the hex file successfully. - .\main.py:429 - __firmware_hex_fetch
+2023-07-22 23:25:47,561 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:592 - run
+2023-07-22 23:25:47,562 - INFO - Calculated firmware size successfully. - .\main.py:509 - __firmware_calculate_size
+2023-07-22 23:25:47,566 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:452 - __firmware_cvt2bin
+2023-07-22 23:25:47,566 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:482 - __frimware_calculate_hash
+2023-07-22 23:25:47,566 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:25:47,568 - INFO - Inserted a new row in table firmware_data - .\main.py:344 - __insert_new_row_in_table
+2023-07-22 23:25:47,568 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:25:47,569 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:25:47,569 - INFO - Fetched from table firmware_data column *, row_id=1 - .\main.py:355 - __fetch_from_table
+2023-07-22 23:25:47,569 - INFO - Fetched row from table firmware_data column, row_id=1 - .\main.py:363 - __get_row_in_table
+2023-07-22 23:25:47,569 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:25:47,569 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:25:47,570 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:25:47,570 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:25:47,570 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:25:47,570 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:25:47,571 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:25:47,571 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:25:47,571 - INFO - yaml mqtt cfg fetched - .\main.py:111 - __init__
+2023-07-22 23:25:47,571 - INFO - getters: ['a', 'b', 'c'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:25:47,571 - INFO - setters: ['x', 'y', 'z'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:25:47,571 - INFO - requests: ['k', 'o', 'p'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:26:47,987 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:26:47,988 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:26:47,989 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:26:47,989 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:26:47,989 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:26:47,990 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:26:47,990 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:26:47,990 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:26:47,990 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:26:47,990 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:26:47,991 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:26:47,991 - INFO - Fetched the hex file successfully. - .\main.py:429 - __firmware_hex_fetch
+2023-07-22 23:26:47,991 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:592 - run
+2023-07-22 23:26:47,992 - INFO - Calculated firmware size successfully. - .\main.py:509 - __firmware_calculate_size
+2023-07-22 23:26:47,996 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:452 - __firmware_cvt2bin
+2023-07-22 23:26:47,996 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:482 - __frimware_calculate_hash
+2023-07-22 23:26:47,996 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:14,861 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:27:14,862 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:27:14,863 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:27:14,863 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:14,863 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:27:14,863 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:14,864 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:27:14,864 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:14,864 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:27:14,864 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:14,865 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:27:14,865 - INFO - Fetched the hex file successfully. - .\main.py:429 - __firmware_hex_fetch
+2023-07-22 23:27:14,865 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:592 - run
+2023-07-22 23:27:14,866 - INFO - Calculated firmware size successfully. - .\main.py:509 - __firmware_calculate_size
+2023-07-22 23:27:14,870 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:452 - __firmware_cvt2bin
+2023-07-22 23:27:14,870 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:482 - __frimware_calculate_hash
+2023-07-22 23:27:14,870 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:14,871 - INFO - Inserted a new row in table firmware_data - .\main.py:344 - __insert_new_row_in_table
+2023-07-22 23:27:14,872 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:14,872 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:14,872 - INFO - Fetched from table firmware_data column *, row_id=1 - .\main.py:355 - __fetch_from_table
+2023-07-22 23:27:14,872 - INFO - Fetched row from table firmware_data column, row_id=1 - .\main.py:363 - __get_row_in_table
+2023-07-22 23:27:14,873 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:14,873 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:27:14,873 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:14,874 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:27:14,874 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:14,874 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:27:14,874 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:14,875 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:27:14,875 - INFO - yaml mqtt cfg fetched - .\main.py:111 - __init__
+2023-07-22 23:27:14,875 - INFO - getters: ['a', 'b', 'c'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:27:14,875 - INFO - setters: ['x', 'y', 'z'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:27:14,875 - INFO - requests: ['k', 'o', 'p'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:27:24,478 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:27:24,478 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:27:24,480 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:27:24,480 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:24,480 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:27:24,480 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:24,481 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:27:24,481 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:24,481 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:27:24,481 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:24,482 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:27:24,482 - INFO - Fetched the hex file successfully. - .\main.py:429 - __firmware_hex_fetch
+2023-07-22 23:27:24,482 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:592 - run
+2023-07-22 23:27:24,483 - INFO - Calculated firmware size successfully. - .\main.py:509 - __firmware_calculate_size
+2023-07-22 23:27:24,486 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:452 - __firmware_cvt2bin
+2023-07-22 23:27:24,487 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:482 - __frimware_calculate_hash
+2023-07-22 23:27:24,487 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:24,488 - INFO - Inserted a new row in table firmware_data - .\main.py:344 - __insert_new_row_in_table
+2023-07-22 23:27:24,488 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:24,488 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:24,488 - INFO - Fetched from table firmware_data column *, row_id=1 - .\main.py:355 - __fetch_from_table
+2023-07-22 23:27:24,489 - INFO - Fetched row from table firmware_data column, row_id=1 - .\main.py:363 - __get_row_in_table
+2023-07-22 23:27:24,489 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:24,489 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:27:24,489 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:24,490 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:27:24,490 - INFO - connected to  successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:24,490 - INFO - fetched sqlite configuration succefully. - .\main.py:308 - __fetch_cfg
+2023-07-22 23:27:24,491 - INFO - connected to alpha_1_fota.db successfully - .\main.py:312 - __connect_db
+2023-07-22 23:27:24,491 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:326 - __create_db
+2023-07-22 23:27:24,491 - INFO - yaml mqtt cfg fetched - .\main.py:111 - __init__
+2023-07-22 23:27:24,491 - INFO - getters: ['a', 'b', 'c'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:27:24,491 - INFO - setters: ['x', 'y', 'z'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:27:24,491 - INFO - requests: ['k', 'o', 'p'] - .\main.py:908 - __get_cmdcfg
+2023-07-22 23:28:40,255 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:28:40,256 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:28:40,257 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:28:40,257 - INFO - connected to  successfully - .\main.py:313 - __connect_db
+2023-07-22 23:28:40,257 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:28:40,257 - INFO - fetched sqlite configuration succefully. - .\main.py:309 - __fetch_cfg
+2023-07-22 23:28:40,257 - INFO - connected to alpha_1_fota.db successfully - .\main.py:313 - __connect_db
+2023-07-22 23:28:40,258 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:28:40,258 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:328 - __create_db
+2023-07-22 23:28:40,258 - INFO - connected to  successfully - .\main.py:313 - __connect_db
+2023-07-22 23:28:40,258 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:28:40,258 - INFO - fetched sqlite configuration succefully. - .\main.py:309 - __fetch_cfg
+2023-07-22 23:28:40,258 - INFO - connected to alpha_1_fota.db successfully - .\main.py:313 - __connect_db
+2023-07-22 23:28:40,259 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:28:40,259 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:328 - __create_db
+2023-07-22 23:28:40,259 - INFO - Fetched the hex file successfully. - .\main.py:435 - __firmware_hex_fetch
+2023-07-22 23:28:40,259 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:598 - run
+2023-07-22 23:28:40,260 - INFO - Calculated firmware size successfully. - .\main.py:515 - __firmware_calculate_size
+2023-07-22 23:28:40,263 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:458 - __firmware_cvt2bin
+2023-07-22 23:28:40,264 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:488 - __frimware_calculate_hash
+2023-07-22 23:28:40,264 - INFO - connected to alpha_1_fota.db successfully - .\main.py:313 - __connect_db
+2023-07-22 23:28:59,101 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:28:59,101 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:28:59,102 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:28:59,103 - INFO - connected to  successfully - .\main.py:313 - __connect_db
+2023-07-22 23:28:59,103 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:28:59,103 - INFO - fetched sqlite configuration succefully. - .\main.py:309 - __fetch_cfg
+2023-07-22 23:28:59,103 - INFO - connected to alpha_1_fota.db successfully - .\main.py:313 - __connect_db
+2023-07-22 23:28:59,104 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:28:59,104 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:328 - __create_db
+2023-07-22 23:28:59,104 - INFO - connected to  successfully - .\main.py:313 - __connect_db
+2023-07-22 23:28:59,104 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:28:59,104 - INFO - fetched sqlite configuration succefully. - .\main.py:309 - __fetch_cfg
+2023-07-22 23:28:59,104 - INFO - connected to alpha_1_fota.db successfully - .\main.py:313 - __connect_db
+2023-07-22 23:28:59,105 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:28:59,105 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:328 - __create_db
+2023-07-22 23:28:59,105 - INFO - Fetched the hex file successfully. - .\main.py:436 - __firmware_hex_fetch
+2023-07-22 23:28:59,106 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:599 - run
+2023-07-22 23:28:59,106 - INFO - Calculated firmware size successfully. - .\main.py:516 - __firmware_calculate_size
+2023-07-22 23:28:59,110 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:459 - __firmware_cvt2bin
+2023-07-22 23:28:59,110 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:489 - __frimware_calculate_hash
+2023-07-22 23:28:59,110 - INFO - connected to alpha_1_fota.db successfully - .\main.py:313 - __connect_db
+2023-07-22 23:29:13,298 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:29:13,298 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:29:13,299 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:29:13,300 - INFO - connected to  successfully - .\main.py:313 - __connect_db
+2023-07-22 23:29:13,300 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:29:13,300 - INFO - fetched sqlite configuration succefully. - .\main.py:309 - __fetch_cfg
+2023-07-22 23:29:13,300 - INFO - connected to alpha_1_fota.db successfully - .\main.py:313 - __connect_db
+2023-07-22 23:29:13,301 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:29:13,301 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:328 - __create_db
+2023-07-22 23:29:13,301 - INFO - connected to  successfully - .\main.py:313 - __connect_db
+2023-07-22 23:29:13,301 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:29:13,301 - INFO - fetched sqlite configuration succefully. - .\main.py:309 - __fetch_cfg
+2023-07-22 23:29:13,301 - INFO - connected to alpha_1_fota.db successfully - .\main.py:313 - __connect_db
+2023-07-22 23:29:13,302 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:29:13,302 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:328 - __create_db
+2023-07-22 23:29:13,302 - INFO - Fetched the hex file successfully. - .\main.py:436 - __firmware_hex_fetch
+2023-07-22 23:29:13,302 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:599 - run
+2023-07-22 23:29:13,303 - INFO - Calculated firmware size successfully. - .\main.py:516 - __firmware_calculate_size
+2023-07-22 23:29:13,306 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:459 - __firmware_cvt2bin
+2023-07-22 23:29:13,307 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:489 - __frimware_calculate_hash
+2023-07-22 23:29:13,307 - INFO - connected to alpha_1_fota.db successfully - .\main.py:313 - __connect_db
+2023-07-22 23:29:51,429 - INFO - PyYAML is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:29:51,429 - INFO - types-setuptools is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:29:51,430 - INFO - types-paho-mqtt is already installed. - .\main.py:59 - __get_dependencies
+2023-07-22 23:29:51,431 - INFO - connected to  successfully - .\main.py:313 - __connect_db
+2023-07-22 23:29:51,431 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:29:51,431 - INFO - fetched sqlite configuration succefully. - .\main.py:309 - __fetch_cfg
+2023-07-22 23:29:51,431 - INFO - connected to alpha_1_fota.db successfully - .\main.py:313 - __connect_db
+2023-07-22 23:29:51,432 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:29:51,432 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:328 - __create_db
+2023-07-22 23:29:51,432 - INFO - connected to  successfully - .\main.py:313 - __connect_db
+2023-07-22 23:29:51,432 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:29:51,432 - INFO - fetched sqlite configuration succefully. - .\main.py:309 - __fetch_cfg
+2023-07-22 23:29:51,432 - INFO - connected to alpha_1_fota.db successfully - .\main.py:313 - __connect_db
+2023-07-22 23:29:51,433 - INFO - disconnected from alpha_1_fota.db successfully - .\main.py:317 - __close_db
+2023-07-22 23:29:51,433 - INFO - Database alpha_1_fota.db created successfully! - .\main.py:328 - __create_db
+2023-07-22 23:29:51,433 - INFO - Fetched the hex file successfully. - .\main.py:436 - __firmware_hex_fetch
+2023-07-22 23:29:51,433 - ERROR - prj_foem_sqlite_firmware main thread .run() - .\main.py:599 - run
+2023-07-22 23:29:51,434 - INFO - Calculated firmware size successfully. - .\main.py:516 - __firmware_calculate_size
+2023-07-22 23:29:51,437 - INFO - Conversion successful. Binary file created:test.bin - .\main.py:459 - __firmware_cvt2bin
+2023-07-22 23:29:51,438 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - .\main.py:489 - __frimware_calculate_hash
+2023-07-22 23:29:51,438 - INFO - connected to alpha_1_fota.db successfully - .\main.py:313 - __connect_db
+2023-07-25 22:13:32,390 - INFO - PyYAML is already installed. - main.py:59 - __get_dependencies
+2023-07-25 22:13:32,404 - INFO - types-setuptools is already installed. - main.py:59 - __get_dependencies
+2023-07-25 22:13:32,405 - INFO - types-paho-mqtt is already installed. - main.py:59 - __get_dependencies
+2023-07-25 22:13:32,405 - INFO - connected to  successfully - main.py:313 - __connect_db
+2023-07-25 22:13:32,406 - INFO - disconnected from alpha_1_fota.db successfully - main.py:317 - __close_db
+2023-07-25 22:13:32,406 - INFO - fetched sqlite configuration succefully. - main.py:309 - __fetch_cfg
+2023-07-25 22:13:32,412 - INFO - connected to alpha_1_fota.db successfully - main.py:313 - __connect_db
+2023-07-25 22:13:32,413 - INFO - disconnected from alpha_1_fota.db successfully - main.py:317 - __close_db
+2023-07-25 22:13:32,413 - INFO - Database alpha_1_fota.db created successfully! - main.py:328 - __create_db
+2023-07-25 22:13:32,413 - INFO - connected to  successfully - main.py:313 - __connect_db
+2023-07-25 22:13:32,413 - INFO - disconnected from alpha_1_fota.db successfully - main.py:317 - __close_db
+2023-07-25 22:13:32,413 - INFO - fetched sqlite configuration succefully. - main.py:309 - __fetch_cfg
+2023-07-25 22:13:32,413 - INFO - connected to alpha_1_fota.db successfully - main.py:313 - __connect_db
+2023-07-25 22:13:32,414 - INFO - disconnected from alpha_1_fota.db successfully - main.py:317 - __close_db
+2023-07-25 22:13:32,418 - INFO - Database alpha_1_fota.db created successfully! - main.py:328 - __create_db
+2023-07-25 22:13:32,419 - INFO - Fetched the hex file successfully. - main.py:436 - __firmware_hex_fetch
+2023-07-25 22:13:32,419 - ERROR - prj_foem_sqlite_firmware main thread .run() - main.py:599 - run
+2023-07-25 22:13:32,419 - INFO - Calculated firmware size successfully. - main.py:516 - __firmware_calculate_size
+2023-07-25 22:13:32,427 - INFO - Conversion successful. Binary file created:test.bin - main.py:459 - __firmware_cvt2bin
+2023-07-25 22:13:32,428 - INFO - created a hash [SHA2-256] for firmware 5224487789e0966b15b3ec2286b3796c02fcde67ef970da588c4456afdcca5d0 - main.py:489 - __frimware_calculate_hash
+2023-07-25 22:13:32,428 - INFO - connected to alpha_1_fota.db successfully - main.py:313 - __connect_db

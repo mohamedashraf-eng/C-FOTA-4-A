@@ -57,11 +57,7 @@ FOTA (Firmware Over-The-Air) is a cutting-edge repository for managing firmware 
 ```bash
 git clone https://github.com/mohamedashraf-eng/C-FOTA-4-A.git
 ```  
-2. Install base requirements (Make sure you have pip installed)
-```bash
-cd /src/oem_intf
-python -m pip install -r requirements.txt
-```  
+
 
 ## Quick Start  
 

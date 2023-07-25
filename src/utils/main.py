@@ -296,6 +296,7 @@ class prj_foem_sqlite:
 
     # Private methods
     def __fetch_cfg(self):
+        self.__connect_db()
         self.__db_path = self.__sqlcfg.get("db_path", "")
         self.__db_name = self.__sqlcfg.get("db_name", "")
         self.__db_ecuschema = self.__sqlcfg.get("ecu_schema", "")
@@ -304,6 +305,7 @@ class prj_foem_sqlite:
         self.__db_fotaschema = self.__sqlcfg.get("fota_schema", "")
         self.__db_fp = os.path.join(self.__db_path, self.__db_name)
         self.__firmware_hash_type = self.__sqlcfg.get("firmware_hash_type", "")
+        self.__close_db()
         logging.info("fetched sqlite configuration succefully.")
 
     def __connect_db(self):
@@ -315,13 +317,14 @@ class prj_foem_sqlite:
         logging.info(f"disconnected from {self.__db_fp} successfully")
 
     def __create_db(self):
-        # Create a new db
+        self.__connect_db()
         self.__db_cursor = self.__db_connector.cursor()
         self.__db_cursor.execute(self.__db_ecuschema)
         self.__db_cursor.execute(self.__db_firmwareschema)
         self.__db_cursor.execute(self.__db_vehicleschema)
         self.__db_cursor.execute(self.__db_fotaschema)
         self.__db_connector.commit()
+        self.__close_db()
         logging.info(f"Database {self.__db_fp} created successfully!")
 
     def __set_current_id(self, id: int):
@@ -329,6 +332,7 @@ class prj_foem_sqlite:
         self.__table_id = id
 
     def __insert_new_row_in_table(self, table_name: str, **values):
+        self.__connect_db()
         column_names = ", ".join(values.keys())
         value_placeholders = ", ".join(["?" for _ in values])
 
@@ -339,9 +343,11 @@ class prj_foem_sqlite:
         values_to_insert = tuple(values.values())
 
         self.__db_cursor.execute(insert_query, values_to_insert)
+        self.__close_db()
         logging.info(f"Inserted a new row in table {table_name}")
 
     def __fetch_from_table(self, table_name: str, column_name: str, row_id: int):
+        self.__connect_db()
         select_query = f"""
             SELECT {column_name} FROM "{table_name}" WHERE id=?
         """
@@ -352,11 +358,14 @@ class prj_foem_sqlite:
         logging.info(
             f"Fetched from table {table_name} column {column_name}, row_id={row_id}"
         )
+        self.__close_db()
         return row
 
     def __get_row_in_table(self, table_name: str, row_id: int):
+        self.__connect_db()
         row = self.__fetch_from_table(table_name, "*", row_id)
         logging.info(f"Fetched row from table {table_name} column, row_id={row_id}")
+        self.__close_db()
         return row
 
     def __get_value_from_table(self, row_id: int, table_name: str, column_name: str):
@@ -364,11 +373,13 @@ class prj_foem_sqlite:
         logging.info(
             f"Fetched value from table {table_name} colummn {column_name}, row_id={row_id}"
         )
+        self.__close_db()
         return self.__raw(data)
 
     def __set_value_in_table(
         self, row_id: int, table_name: str, column_name: str, value
     ):
+        self.__connect_db()
         self.__set_current_id(row_id)
         # Update the specific column value with the provided value
         update_query = f'UPDATE {table_name} SET "{column_name}"=? WHERE "id"=?'
@@ -376,13 +387,15 @@ class prj_foem_sqlite:
         logging.info(
             f"Setted value to table {table_name} colummn {column_name}, row_id={row_id} | value {value}"
         )
+        self.__close_db()
 
     def __print_table(self, table_name):
+        self.__connect_db()
         self.__db_cursor.execute(f"SELECT * FROM {table_name}")
         rows = self.__db_cursor.fetchall()
         for row in rows:
             print(row)
-
+        self.__close_db()
         logging.info(f"table {table_name} printed")
 
     @staticmethod
@@ -390,7 +403,6 @@ class prj_foem_sqlite:
         return fetched[0][0]
 
     def run(self):
-        self.__connect_db()
         self.__fetch_cfg()
         self.__create_db()
 
@@ -592,7 +604,7 @@ class prj_foem_sqlite_firmware(prj_foem_sqlite):
         # Test
         myquery = {
             "version": "1.0.0",
-            "firmware": "self.__firmware_in_json",
+            "firmware_in_hex": "self.__firmware_in_json",
             "update_size": self.__firmware_size,
             "update_hash": self.__firmware_hash,
             "update_notes": "nothing",
