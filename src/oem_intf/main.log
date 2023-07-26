@@ -1,0 +1,56 @@
+2023-07-26 19:32:54,244 - INFO - PyYAML is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:32:54,245 - INFO - types-setuptools is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:32:54,245 - INFO - types-paho-mqtt is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:33:01,929 - INFO - PyYAML is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:33:01,929 - INFO - types-setuptools is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:33:01,929 - INFO - types-paho-mqtt is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:33:15,215 - INFO - PyYAML is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:33:15,217 - INFO - types-setuptools is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:33:15,217 - INFO - types-paho-mqtt is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:33:39,208 - INFO - PyYAML is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:33:39,209 - INFO - types-setuptools is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:33:39,209 - INFO - types-paho-mqtt is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:34:06,091 - INFO - PyYAML is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:34:06,091 - INFO - types-setuptools is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:34:06,092 - INFO - types-paho-mqtt is already installed. - .\mqtt_utils.py:51 - __get_dependencies
+2023-07-26 19:34:06,092 - INFO - yaml mqtt cfg fetched - .\mqtt_utils.py:103 - __init__
+2023-07-26 19:34:18,672 - INFO - PyYAML is already installed. - .\mqtt_utils.py:52 - __get_dependencies
+2023-07-26 19:34:18,672 - INFO - types-setuptools is already installed. - .\mqtt_utils.py:52 - __get_dependencies
+2023-07-26 19:34:18,673 - INFO - types-paho-mqtt is already installed. - .\mqtt_utils.py:52 - __get_dependencies
+2023-07-26 19:34:18,673 - INFO - yaml mqtt cfg fetched - .\mqtt_utils.py:104 - __init__
+2023-07-26 19:34:18,673 - INFO - broker_addr: broker.hivemq.com - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,673 - INFO - port: 1883 - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,673 - INFO - client_id: foemv1 - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,673 - INFO - username: mashraf - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,673 - INFO - password: Gttllee1332 - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,673 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,673 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,673 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,673 - INFO - keep_alive: 60 - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,673 - INFO - qos: 1 - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,673 - INFO - encryption: False - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,673 - INFO - retain: True - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,673 - INFO - timeout: 10 - .\mqtt_utils.py:123 - __get_cfg
+2023-07-26 19:34:18,674 - INFO - mqtt configuration fetched. - .\mqtt_utils.py:138 - __get_cfg
+2023-07-26 19:34:18,823 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt_utils.py:221 - connect
+2023-07-26 19:34:18,824 - INFO - published: `Hello from delta foem v1.0.0` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt_utils.py:237 - publish
+2023-07-26 19:34:18,892 - INFO - Successfully connected with code: 0 - .\mqtt_utils.py:144 - on_connect
+2023-07-26 19:34:18,892 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt_utils.py:244 - subscribe
+2023-07-26 19:34:18,892 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt_utils.py:246 - subscribe
+2023-07-26 19:34:18,998 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `hello 4` - .\mqtt_utils.py:162 - on_message
+2023-07-26 19:34:19,055 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt_utils.py:162 - on_message
+2023-07-26 19:34:21,825 - INFO - published: `Hello from delta foem v1.0.0` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt_utils.py:237 - publish
+2023-07-26 19:34:24,827 - INFO - published: `Hello from delta foem v1.0.0` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt_utils.py:237 - publish
+2023-07-26 19:34:27,835 - INFO - published: `Hello from delta foem v1.0.0` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt_utils.py:237 - publish
+2023-07-26 19:34:30,845 - INFO - published: `Hello from delta foem v1.0.0` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt_utils.py:237 - publish
+2023-07-26 19:34:31,382 - INFO - Disconnected with result code: `0` - .\mqtt_utils.py:151 - on_disconnect
+2023-07-26 19:40:55,648 - ERROR - Error: File '' not found. - .\firmware_utils.py:42 - __firmware_hex_fetch
+2023-07-26 19:40:55,649 - ERROR - Error: The specified hex file was not found. - .\firmware_utils.py:68 - __firmware_cvt2bin
+2023-07-26 19:40:55,649 - ERROR - Error: File '' not found. - .\firmware_utils.py:103 - __firmware_calculate_size
+2023-07-26 19:41:25,046 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
+2023-07-26 19:41:25,069 - INFO - Conversion successful. Binary file created:test.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
+2023-07-26 19:42:03,840 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
+2023-07-26 19:42:03,846 - INFO - Conversion successful. Binary file created:test.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
+2023-07-26 19:44:34,318 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:39 - __firmware_hex_fetch
+2023-07-26 19:44:43,423 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
+2023-07-26 19:44:43,427 - INFO - Conversion successful. Binary file created:test.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
