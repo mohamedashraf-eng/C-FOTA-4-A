@@ -52,13 +52,6 @@ FOTA (Firmware Over-The-Air) is a cutting-edge repository for managing firmware 
 
 - **Flexible Integration**: Easily integrate FOTA functionality into your existing firmware and device management systems.
 
-## Installation
-1. Clone the repository  
-```bash
-git clone https://github.com/mohamedashraf-eng/C-FOTA-4-A.git
-```  
-
-
 ## Quick Start  
 
 ## Usage  
