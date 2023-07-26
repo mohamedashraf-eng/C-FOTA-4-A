@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1> Fota Database @{{ fotas.fota_id }}</h2>
+
+{% if fotas %}
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th class="text-center" scope="col">ID</th>
+          <th class="text-center" scope="col">Firmware ID</th>
+          <th class="text-center" scope="col">Ecu ID</th>
+          <th class="text-center" scope="col">Vehicle ID</th>
+          <th class="text-center" scope="col">Availability Flag</th>
+          <th class="text-center" scope="col">Update Ready Flag</th>
+          <th class="text-center" scope="col">Status</th>
+          <th class="text-center" scope="col">Started at</th>
+          <th class="text-center" scope="col">Completed at</th>
+          <th class="text-center" scope="col">Time taken (minutes)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center">{{ fotas.fota_id }}</td>
+          <td class="text-center"><a href="{% url 'firmware_database' fotas.firmware.firmware_id %}"> {{ fotas.firmware.firmware_id }} </a> </td>
+          <td class="text-center"><a href="{% url 'ecu_database' fotas.ecu.ecu_id %}">{{ fotas.ecu.ecu_id }}</a> </td>
+          <td class="text-center"><a href="{% url 'vehicle_database' fotas.vehicle.vehicle_id %}">{{ fotas.vehicle.vehicle_id }}</a> </td>
+          <td class="text-center">{{ fotas.availability_flag }}</td>
+          <td class="text-center">{{ fotas.update_ready_flag }}</td>
+          <td class="text-center">{{ fotas.status }}</td>
+          <td class="text-center">{{ fotas.started_at }}</td>
+          <td class="text-center">{{ fotas.completed_at }}</td>
+          <td class="text-center">{{ fotas.minutes_taken }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <br/>
+  <div class="row">
+    <div class="col text-center">
+      <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Deleting</button>
+      </form>
+    </div>
+    <div class="col text-center">
+      <a href="{% url 'update_fota_record' 1%}" class="btn btn-primary">Modifying</a>
+    </div>
+  </div>
+{% endif %}
+
+{% endblock content %}

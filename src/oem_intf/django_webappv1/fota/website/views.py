@@ -4,6 +4,7 @@ from django.contrib import messages
 #
 #
 from .models import Fota_Firmware, Fota_Ecu, Fota_Vehicle, Fota_Fota
+from .forms import FotaUpdateForm
 
 
 def home(request):
@@ -45,6 +46,33 @@ def fota_database(request):
         return redirect('home')
 
 
+def fota_by_id(request, pk):
+    if request.user.is_authenticated:
+        fota_fota = Fota_Fota.objects.get(fota_id=pk)
+        return render(request, 'fota.html', {'fotas': fota_fota})
+    else:
+        messages.success(
+            request, "You must be logged in to view the database")
+        return redirect('home')
+
+
+def update_fota_record(request, pk):
+    if request.user.is_authenticated:
+        current_fota_record = Fota_Fota.objects.get(fota_id=pk)
+        form = FotaUpdateForm(request.POST or None,
+                              instance=current_fota_record)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, "Record has been updated successfully")
+            return redirect('database')
+        return render(request, 'update_fota_record.html', {'form': form, 'fota_id': current_fota_record.fota_id})
+    else:
+        messages.success(
+            request, "You must be logged in")
+        return redirect('home')
+
+
 def firmware_database(request, pk):
     if request.user.is_authenticated:
         fota_firmware = Fota_Firmware.objects.get(firmware_id=pk)
@@ -52,23 +80,6 @@ def firmware_database(request, pk):
     else:
         messages.success(
             request, "You must be logged in to view the database")
-        return redirect('home')
-
-
-def update_firmware_record(request, pk):
-    if request.user.is_authenticated:
-        current_firmware_record = Fota_Firmware.objects.get(firmware_id=pk)
-        form = AddRecordForm(request.POST or None,
-                             instance=current_firmware_record)
-        if form.is_valid():
-            form.save()
-            messages.success(
-                request, "Record has been updated successfully")
-            return redirect('home')
-        return render(request, 'update_firmware_record.html', {'form': form})
-    else:
-        messages.success(
-            request, "You must be logged in")
         return redirect('home')
 
 

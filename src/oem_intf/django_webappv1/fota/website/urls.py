@@ -12,6 +12,8 @@ urlpatterns = [
          views.ecu_database, name='ecu_database'),
     path("database/vehicle_database/<int:pk>",
          views.vehicle_database, name='vehicle_database'),
-    path("database/update_firmware_record",
-         views.update_firmware_record, name='update_firmware_record'),
+    path("database/fota_database/<int:pk>",
+         views.fota_by_id, name='fota_by_id'),
+    path('database/fota/<int:pk>/',
+         views.update_fota_record, name='update_fota_record'),
 ]

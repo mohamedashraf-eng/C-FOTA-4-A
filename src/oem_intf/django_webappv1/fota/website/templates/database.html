@@ -21,7 +21,7 @@
       </thead>
       <tbody>
         <tr>
-          <td class="text-center">{{ fota.fota_id }}</td>
+          <td class="text-center"><a href="{% url 'fota_by_id' fota.fota_id %}"> {{ fota.fota_id }} </a></td>
           <td class="text-center"><a href="{% url 'firmware_database' fota.firmware.firmware_id %}"> {{ fota.firmware.firmware_id }} </a> </td>
           <td class="text-center"><a href="{% url 'ecu_database' fota.ecu.ecu_id %}">{{ fota.ecu.ecu_id }}</a> </td>
           <td class="text-center"><a href="{% url 'vehicle_database' fota.vehicle.vehicle_id %}">{{ fota.vehicle.vehicle_id }}</a> </td>
