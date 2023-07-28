@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <!-- Loop through each mqtt object in the queryset -->
+    {% for mqtt_obj in mqtt %}
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <!-- Mini Box for Viewing Settings -->
+        <div class="card mt-4">
+          <div class="card-header">
+            <h2 class="text-center">Settings</h2>
+          </div>
+          <div class="card-body">
+            <!-- Display properties for each mqtt object -->
+            <p>broker: {{mqtt_obj.broker}}</p>
+            <p>port: {{mqtt_obj.port}}</p>
+            <p>client: {{mqtt_obj.client_id}}</p>
+            <p>publish topic: {{mqtt_obj.pub_topic}}</p>
+            <p>subscribe topic: {{mqtt_obj.sub_topic}}</p>
+            <!-- Add more settings as needed -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- More HTML code... -->
+    {% endfor %}
+  <div class="card mt-4">
+    <div class="card-header">
+      <h2 class="text-center">Message Log</h2>
+    </div>
+    <div class="card-body">
+      {% for mqtt_obj in mqtt %}
+      <div class="message-block">
+        <p>Transmitted: {{mqtt_obj.out_msg}}</p>
+        <p>Received: {{mqtt_obj.in_msg}}</p>
+      </div>
+      {% empty %}
+      <div class="message-block">
+        <p>No messages yet.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}

@@ -58,3 +58,20 @@ class Fota_Fota(models.Model):
 
     def __str__(self):
         return f"FOTA: {self.vehicle} - {self.firmware} - {self.ecu} - Status: {self.status}"
+
+
+class mqtt(models.Model):
+    broker = models.CharField(max_length=255)
+    port = models.PositiveIntegerField()
+    client_id = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+    ka_topic = models.CharField(max_length=255)
+    pub_topic = models.CharField(max_length=255)
+    sub_topic = models.CharField(max_length=255)
+    #
+    out_msg = models.CharField(max_length=1024)
+    in_msg = models.CharField(max_length=1024)
+
+    def __str__(self):
+        return f"broker:{self.broker} | port:{self.port} | sub_topic:{self.sub_topic} | pub_topic:{self.pub_topic}"

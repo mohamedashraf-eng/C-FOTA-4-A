@@ -54,3 +54,7 @@
 2023-07-26 19:44:34,318 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:39 - __firmware_hex_fetch
 2023-07-26 19:44:43,423 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
 2023-07-26 19:44:43,427 - INFO - Conversion successful. Binary file created:test.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
+2023-07-26 20:22:25,241 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
+2023-07-26 20:22:25,260 - INFO - Conversion successful. Binary file created:test.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
+2023-07-27 21:37:37,657 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
+2023-07-27 21:37:37,683 - INFO - Conversion successful. Binary file created:test.bin - .\firmware_utils.py:63 - __firmware_cvt2bin

@@ -12,10 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-
+import sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -124,3 +123,21 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# MQTT CFG
+MQTT_SERVER = 'broker.hivemq.com'
+MQTT_PORT = 1883
+MQTT_CLIENT_ID = 'foemv1'
+MQTT_KEEPALIVE = 60
+MQTT_USER = 'mashraf'
+MQTT_PASSWORD = 'Gttllee1332'
+# Special
+MYMQTT_PUB_TOPIC = "foem/db_py_intf/v1_0_0/o2v"
+MYMQTT_SUB_TOPIC = "foem/db_py_intf/v1_0_0/v2o"
+MYMQTT_KA_TOPIC = "foem/db_py_intf/v1_0_0/ka"
+MYMQTT_QOS = 1
+MYMQTT_ENC = False
+MYMQTT_RETAIN = True
+MYMQTT_TIMEOUT = 10
+#

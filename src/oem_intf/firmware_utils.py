@@ -25,8 +25,8 @@ class prj_foem_firmware:
         self.__firmware_in_json = None
         self.__firmware_in_bin = None
         self.__firmware_size = None
-        self.__hmac_secret_key = b"mohamedashraf&abdolotfy&drsalma"
-        self.__cmac_secret_key = b"mohamedashraf&abdolotfy&drsalma"
+        self.__hmac_secret_key = b"drsalma&mohamedashraf&abdolotfy"
+        self.__cmac_secret_key = b"drsalma&mohamedashraf&abdolotfy"
         self.__cmac_salt = b"mohamedashraf"
 
         self.__firmware_hex_fetch()

@@ -16,4 +16,6 @@ urlpatterns = [
          views.fota_by_id, name='fota_by_id'),
     path('database/fota/<int:pk>/',
          views.update_fota_record, name='update_fota_record'),
+
+    path('communications/', views.comm_intf, name='comm_intf')
 ]

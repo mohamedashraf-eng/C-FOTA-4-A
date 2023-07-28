@@ -1,0 +1,48 @@
+version: 1.0.0
+
+# Project dependencies
+dependencies:
+#  - PyYAML
+#  - types-setuptools
+#  - types-paho-mqtt
+#  - mysql.connector
+
+# MQTT cfg
+mqtt_cfg:
+  broker_addr: broker.hivemq.com
+  port: 1883
+  client_id: foemv1
+  username: mashraf
+  password: Gttllee1332
+  # Topic which oem will send data to vehicle
+  pub_topic: foem/db_py_intf/v1_0_0/o2v
+  # Topic which oem will receive data from vehicle
+  sub_topic: foem/db_py_intf/v1_0_0/v2o
+  # Topic for keeping alive
+  ka_topic: foem/db_py_intf/v1_0_0/ka
+  keep_alive: 60
+  qos: 1
+  encryption: False
+  retain: False
+  timeout: 10
+
+sql_cfg:
+  host: 'localhost'
+  username: 'root'
+  password: ''
+  database: 'myFOTA'
+
+# CMD cfg
+cmd_cfg:
+  getters:
+    - a
+    - b
+    - c
+  setters:
+    - x
+    - y
+    - z
+  requests:
+    - k
+    - o
+    - p

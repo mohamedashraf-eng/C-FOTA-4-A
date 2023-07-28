@@ -1,10 +1,12 @@
+import yaml
+import json
 import logging
 import os
 import queue
-# import yaml import subprocess
+from enum import Enum
 import time
-import yaml
-import pkg_resources
+import subprocess
+import mysql.connector
 import paho.mqtt.client as mqtt
 
 # Configure logging
@@ -14,8 +16,6 @@ log_format = (
 )
 logging.basicConfig(filename=log_filename,
                     level=logging.INFO, format=log_format)
-
-# YAML - CLASS
 
 
 class prj_foem_yaml:
@@ -95,10 +95,96 @@ class prj_foem_yaml:
         self.__get_dependencies(self.__yaml_data)
 
 
+# MYSQL - CLASS
+class prj_foem_mysql:
+    def __init__(self, yaml_sql_cfg):
+        self.__host = yaml_sql_cfg.get('host', "")
+        self.__username = yaml_sql_cfg.get('username', "")
+        self.__password = yaml_sql_cfg.get('password', "")
+        self.__database = yaml_sql_cfg.get('database', "")
+        self.__cnx = mysql.connector.connect(user=self.__username, password=self.__password,
+                                             host=self.__host, database=self.__database)
+        self.__cursor = self.__cnx.cursor()
+
+    def connect(self):
+        self.__cnx = mysql.connector.connect(user=self.__username, password=self.__password,
+                                             host=self.__host, database=self.__database)
+        self.__cursor = self.__cnx.cursor()
+
+    def update(self, table_name, id_column, id_value, col, value):
+        self.connect()
+        update_stmt = f"UPDATE {table_name} SET {col} = %s WHERE {id_column} = %s"
+        data = (value, id_value)
+        self.__cursor.execute(update_stmt, data)
+        self.__cnx.commit()
+        self.close()
+
+    def insert(self, table_name, value_dict):
+        self.connect()
+        columns = ', '.join(value_dict.keys())
+        placeholders = ', '.join(['%s'] * len(value_dict))
+        insert_query = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
+        self.__cursor.execute(insert_query, tuple(value_dict.values()))
+        self.__cnx.commit()
+        self.close()
+
+    def fetch(self, table_name, id_col, id, col):
+        self.connect()
+        fetch_query = f'SELECT {col} FROM {table_name} WHERE {id} = %s'
+        self.__cursor.execute(fetch_query, (id,))
+        data = self.__cursor.fetchone()
+        self.close()
+        return data[0]
+
+    def close(self):
+        self.__cursor.close()
+        self.__cnx.close()
+
+
+# Commands defined
+OEM_CMD_DEFINTION = {}
+VEHICLE_CMD_DEFINTION = {}
+#
+
+
+class oem_cmd(Enum):
+    UPDATE_REQUEST = 1
+
+
+OEM_CMD_DEFINTION[oem_cmd.UPDATE_REQUEST] = "Requesting new firmware update"
+
+
+class vehicle_cmd(Enum):
+    DETAILS_REQUEST = '1'
+
+
+def e_v(enum_):
+    return enum_.value
+
+
+# CMD handlers
+def cmd_handle_GET_():
+    pass
+
+
+def cmd_handle_REQUEST_():
+    pass
+
+# CMD Switcher
+
+
+def vehicle_cmd_switch(cmd):
+    return {
+        e_v(vehicle_cmd.DETAILS_REQUEST): lambda: print(f'{vehicle_cmd.DETAILS_REQUEST}')
+    }.get(cmd, lambda: (logging.info(f'Invalid received cmd | {cmd}'),
+                        print(f'Invalid received cmd | {cmd}')))()
+
+
+#
 # MQTT - CLASS
 class prj_foem_mqtt:
     # Class methods
-    def __init__(self, yaml_mqtt_cfg):
+    def __init__(self, yaml_mqtt_cfg, yaml_mysql_cfg):
         if yaml_mqtt_cfg != None:
             self.__mqtt_cfg = yaml_mqtt_cfg
             logging.info(f"yaml mqtt cfg fetched")
@@ -107,6 +193,9 @@ class prj_foem_mqtt:
             raise ValueError(f"no mqtt cfg provided.")
 
         self.__mqtt_msgsQ = queue.Queue()
+        #
+        self.__mysql_obj = prj_foem_mysql(yaml_sql_cfg=yaml_mysql_cfg)
+        self.__tablename = 'website_mqtt'
 
     def __repr__(self):
         pass
@@ -137,6 +226,21 @@ class prj_foem_mqtt:
         self.__retain = self.__mqtt_cfg.get("retain", False)
         logging.info(f"mqtt configuration fetched.")
 
+    def __save_sql_cfg(self):
+        mqtt_cfg = {
+            "broker": self.__brokeraddr,
+            "port": self.__port,
+            "client_id": self.__clientid,
+            "username": self.__username,
+            "password": self.__password,
+            "ka_topic": self.__katopic,
+            "pub_topic": self.__pubtopic,
+            "sub_topic": self.__subtopic,
+            "out_msg": '',
+            "in_msg": '',
+        }
+        self.__mysql_obj.insert(self.__tablename, mqtt_cfg)
+
     def __set_pmqtt_cfg(self):
         # Paho-MQTT settings
         def on_connect(client, userdata, flags, rc):
@@ -165,6 +269,9 @@ class prj_foem_mqtt:
             print(
                 f"Received message from topic: `{msg.topic}` msg: `{self.__mqtt_currmsg}`"
             )
+            # Update value in mysql
+            self.__mysql_obj.update(
+                self.__tablename, 'id', 1, 'in_msg', self.__mqtt_currmsg)
             # Logging message in a queue
             self.__mqtt_msgsQ.put(str(self.__mqtt_currmsg))
 
@@ -176,9 +283,6 @@ class prj_foem_mqtt:
         self.__pmqtt_client.username_pw_set(
             username=self.__username, password=self.__password
         )
-
-    def __get_msgsQ(self):
-        return self.__mqtt_msgsQ
 
     def __attempt_reconnect(self):
         retries = 0
@@ -233,12 +337,15 @@ class prj_foem_mqtt:
     def disconnect(self):
         self.__pmqtt_client.disconnect()
 
-    def publish(self, msg: str = "ashraf"):
-        logging.info(f"published: `{msg}` on topic `{self.__pubtopic}`")
-        print(f"published: `{msg}` on topic `{self.__pubtopic}`")
+    def publish(self, msg):
+        assert msg is not None, f'msg must not be None value'
         self.__pmqtt_client.publish(
             topic=self.__pubtopic, qos=self.__qos, retain=self.__retain, payload=msg
         )
+        logging.info(f"published: `{msg}` on topic `{self.__pubtopic}`")
+        print(f"published: `{msg}` on topic `{self.__pubtopic}`")
+        self.__mysql_obj.update(self.__tablename, "id",
+                                1, 'out_msg', msg)
 
     def subscribe(self):
         logging.info(f"to subscribing to topic: `{self.__subtopic}`")
@@ -246,9 +353,15 @@ class prj_foem_mqtt:
         logging.info(f"to subscribing to topic: `{self.__katopic}`")
         self.__pmqtt_client.subscribe(topic=self.__katopic, qos=self.__qos)
 
-    @property
-    def msgsQ(self):
-        return self.__get_msgsQ()
+    def oem_cmd_handle(self):
+        #
+        # TODO(Wx): Implement the handler
+        if not self.__mqtt_msgsQ.empty():
+            vehicle_msg = self.__mqtt_msgsQ.get()
+            vehicle_cmd_switch(vehicle_msg)
+
+        else:
+            pass
 
     # Main class sequence runner
     def run(self):
@@ -256,22 +369,33 @@ class prj_foem_mqtt:
         self.__get_cfg()
         # Set Paho-MQTT configurations
         self.__set_pmqtt_cfg()
-        # Dummy Demo
-        # TODO(wx): Change logic for the mqtt listener
+        # Save first SQL
+        # self.__save_sql_cfg()
         try:
             self.connect()
             self.loop_start()
-
+            #
             while True:
-                self.publish("Hello from delta foem v1.0.0")
-                time.sleep(3)
+                update_ready = self.__mysql_obj.fetch(
+                    'website_fota_fota', 'fota_id', 1, 'update_ready_flag')
+
+                if update_ready == 1:
+                    self.publish(f'{ e_v(oem_cmd.UPDATE_REQUEST) }')
+                    self.oem_cmd_handle()
+                else:
+                    print(f'Nothing new | {update_ready}')
+                time.sleep(2)
+            #
         except KeyboardInterrupt:
             self.disconnect()
             self.loop_stop()
+            self.__mysql_obj.close()
 
 
 if __name__ == '__main__':
-    myYaml = prj_foem_yaml('main.yaml')
-    myYaml.run()
-    myMqtt = prj_foem_mqtt(yaml_mqtt_cfg=myYaml.get_mqttcfg)
-    myMqtt.run()
+    myyaml = prj_foem_yaml('main.yaml')
+    myyaml.run()
+
+    mymqtt = prj_foem_mqtt(yaml_mqtt_cfg=myyaml.get_mqttcfg,
+                           yaml_mysql_cfg=myyaml.get_sqlcfg)
+    mymqtt.run()

@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 #
 #
-from .models import Fota_Firmware, Fota_Ecu, Fota_Vehicle, Fota_Fota
+from .models import Fota_Firmware, Fota_Ecu, Fota_Vehicle, Fota_Fota, mqtt
 from .forms import FotaUpdateForm
 
 
@@ -100,4 +100,14 @@ def vehicle_database(request, pk):
     else:
         messages.success(
             request, "You must be logged in to view the database")
+        return redirect('home')
+
+
+def comm_intf(request):
+    if request.user.is_authenticated:
+        mymqtt = mqtt.objects.all()
+        return render(request, 'comm_intf.html', {'mqtt': mymqtt})
+    else:
+        messages.success(
+            request, "You must be logged in to view the communications")
         return redirect('home')
