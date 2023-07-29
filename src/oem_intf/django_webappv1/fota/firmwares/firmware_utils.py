@@ -75,7 +75,7 @@ class prj_foem_firmware:
         cmac_key = PBKDF2(self.__cmac_secret_key, self.__cmac_salt, dkLen=16)
         cmac_cipher = CMAC.new(cmac_key, ciphermod=AES)
         cmac_cipher.update(self.__firmware_in_bin)
-        cmac_digest = cmac_cipher.digest()
+        cmac_digest = cmac_cipher.hexdigest()
         return cmac_digest
 
     def __calculate_hmac(self):

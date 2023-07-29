@@ -14411,3 +14411,850 @@
 2023-07-28 22:59:57,397 - INFO - published: `1` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:336 - publish
 2023-07-28 22:59:57,399 - INFO - Invalid received cmd | belks is impolite - .\mqtt.py:168 - <lambda>
 2023-07-28 22:59:58,166 - INFO - Disconnected with result code: `0` - .\mqtt.py:246 - on_disconnect
+2023-07-28 23:09:34,584 - INFO - yaml mqtt cfg fetched - .\mqtt.py:203 - __init__
+2023-07-28 23:09:34,594 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,594 - INFO - port: 1883 - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,594 - INFO - client_id: foemv1 - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,594 - INFO - username: mashraf - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,594 - INFO - password: Gttllee1332 - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,594 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,594 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,595 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,595 - INFO - keep_alive: 60 - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,595 - INFO - qos: 1 - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,595 - INFO - encryption: False - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,595 - INFO - retain: False - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,595 - INFO - timeout: 10 - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:34,595 - INFO - mqtt configuration fetched. - .\mqtt.py:240 - __get_cfg
+2023-07-28 23:09:34,698 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:338 - connect
+2023-07-28 23:09:34,703 - INFO - published: `1` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:358 - publish
+2023-07-28 23:09:34,754 - INFO - Connected with result code: `5` - .\mqtt.py:264 - on_connect
+2023-07-28 23:09:34,754 - INFO - Attempting reconnection, retry 1/5 - .\mqtt.py:306 - __attempt_reconnect
+2023-07-28 23:09:34,812 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:338 - connect
+2023-07-28 23:09:36,819 - INFO - Attempting reconnection, retry 2/5 - .\mqtt.py:306 - __attempt_reconnect
+2023-07-28 23:09:36,877 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:338 - connect
+2023-07-28 23:09:40,890 - INFO - Attempting reconnection, retry 3/5 - .\mqtt.py:306 - __attempt_reconnect
+2023-07-28 23:09:40,952 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:338 - connect
+2023-07-28 23:09:46,312 - INFO - yaml mqtt cfg fetched - .\mqtt.py:203 - __init__
+2023-07-28 23:09:46,346 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,346 - INFO - port: 1883 - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,346 - INFO - client_id: foemv1 - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,347 - INFO - username: mashraf - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,347 - INFO - password: Gttllee1332 - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,347 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,347 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,347 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,347 - INFO - keep_alive: 60 - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,347 - INFO - qos: 1 - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,347 - INFO - encryption: False - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,347 - INFO - retain: False - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,347 - INFO - timeout: 10 - .\mqtt.py:225 - __get_cfg
+2023-07-28 23:09:46,347 - INFO - mqtt configuration fetched. - .\mqtt.py:240 - __get_cfg
+2023-07-28 23:09:46,405 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:338 - connect
+2023-07-28 23:09:46,409 - INFO - published: `1` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:358 - publish
+2023-07-28 23:09:46,462 - INFO - Successfully connected with code: 0 - .\mqtt.py:261 - on_connect
+2023-07-28 23:09:46,462 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:364 - subscribe
+2023-07-28 23:09:46,462 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:366 - subscribe
+2023-07-28 23:09:46,584 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:279 - on_message
+2023-07-28 23:09:46,621 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:279 - on_message
+2023-07-28 23:09:48,418 - INFO - published: `1` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:358 - publish
+2023-07-28 23:09:48,420 - INFO - Invalid received cmd | belks is impolite - .\mqtt.py:192 - <lambda>
+2023-07-28 23:09:50,436 - INFO - published: `1` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:358 - publish
+2023-07-28 23:09:50,439 - INFO - Invalid received cmd | KEEP_ALIVE - .\mqtt.py:192 - <lambda>
+2023-07-28 23:09:52,447 - INFO - published: `1` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:358 - publish
+2023-07-28 23:09:54,460 - INFO - published: `1` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:358 - publish
+2023-07-28 23:09:56,474 - INFO - published: `1` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:358 - publish
+2023-07-28 23:09:56,962 - INFO - Disconnected with result code: `0` - .\mqtt.py:268 - on_disconnect
+2023-07-29 01:24:43,633 - INFO - yaml mqtt cfg fetched - .\mqtt.py:169 - __init__
+2023-07-29 01:24:43,679 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,679 - INFO - port: 1883 - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,679 - INFO - client_id: foemv1 - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,679 - INFO - username: mashraf - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,679 - INFO - password: Gttllee1332 - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,679 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,680 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,680 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,680 - INFO - keep_alive: 60 - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,680 - INFO - qos: 1 - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,680 - INFO - encryption: False - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,680 - INFO - retain: False - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,680 - INFO - timeout: 10 - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:24:43,680 - INFO - mqtt configuration fetched. - .\mqtt.py:206 - __get_cfg
+2023-07-29 01:24:43,751 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:310 - connect
+2023-07-29 01:25:08,771 - INFO - yaml mqtt cfg fetched - .\mqtt.py:169 - __init__
+2023-07-29 01:25:08,781 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,781 - INFO - port: 1883 - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,781 - INFO - client_id: foemv1 - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,782 - INFO - username: mashraf - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,782 - INFO - password: Gttllee1332 - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,782 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,782 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,782 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,782 - INFO - keep_alive: 60 - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,782 - INFO - qos: 1 - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,782 - INFO - encryption: False - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,782 - INFO - retain: False - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,782 - INFO - timeout: 10 - .\mqtt.py:191 - __get_cfg
+2023-07-29 01:25:08,782 - INFO - mqtt configuration fetched. - .\mqtt.py:206 - __get_cfg
+2023-07-29 01:25:08,886 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:310 - connect
+2023-07-29 01:25:55,945 - INFO - yaml mqtt cfg fetched - .\mqtt.py:168 - __init__
+2023-07-29 01:25:55,956 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,956 - INFO - port: 1883 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,956 - INFO - client_id: foemv1 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,956 - INFO - username: mashraf - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,956 - INFO - password: Gttllee1332 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,956 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,956 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,957 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,957 - INFO - keep_alive: 60 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,957 - INFO - qos: 1 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,957 - INFO - encryption: False - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,957 - INFO - retain: False - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,957 - INFO - timeout: 10 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:25:55,957 - INFO - mqtt configuration fetched. - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:25:56,040 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:309 - connect
+2023-07-29 01:26:50,437 - INFO - yaml mqtt cfg fetched - .\mqtt.py:167 - __init__
+2023-07-29 01:26:50,448 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - port: 1883 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - client_id: foemv1 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - username: mashraf - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - password: Gttllee1332 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - keep_alive: 60 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - qos: 1 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - encryption: False - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - retain: False - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - timeout: 10 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:26:50,448 - INFO - mqtt configuration fetched. - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:26:50,515 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:309 - connect
+2023-07-29 01:26:50,521 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:26:50,572 - INFO - Successfully connected with code: 0 - .\mqtt.py:226 - on_connect
+2023-07-29 01:26:50,572 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:335 - subscribe
+2023-07-29 01:26:50,572 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:337 - subscribe
+2023-07-29 01:26:50,688 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:244 - on_message
+2023-07-29 01:26:50,747 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:244 - on_message
+2023-07-29 01:26:52,586 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:27:35,590 - INFO - yaml mqtt cfg fetched - .\mqtt.py:167 - __init__
+2023-07-29 01:27:35,610 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,610 - INFO - port: 1883 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,610 - INFO - client_id: foemv1 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,610 - INFO - username: mashraf - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,610 - INFO - password: Gttllee1332 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,611 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,611 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,611 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,611 - INFO - keep_alive: 60 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,611 - INFO - qos: 1 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,611 - INFO - encryption: False - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,611 - INFO - retain: False - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,611 - INFO - timeout: 10 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:35,611 - INFO - mqtt configuration fetched. - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:27:35,669 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:309 - connect
+2023-07-29 01:27:35,673 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:27:35,733 - INFO - Successfully connected with code: 0 - .\mqtt.py:226 - on_connect
+2023-07-29 01:27:35,734 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:335 - subscribe
+2023-07-29 01:27:35,734 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:337 - subscribe
+2023-07-29 01:27:35,853 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:244 - on_message
+2023-07-29 01:27:35,953 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:244 - on_message
+2023-07-29 01:27:37,693 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:27:50,355 - INFO - yaml mqtt cfg fetched - .\mqtt.py:167 - __init__
+2023-07-29 01:27:50,366 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,366 - INFO - port: 1883 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,366 - INFO - client_id: foemv1 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,366 - INFO - username: mashraf - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,366 - INFO - password: Gttllee1332 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,366 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,366 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,366 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,366 - INFO - keep_alive: 60 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,367 - INFO - qos: 1 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,367 - INFO - encryption: False - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,367 - INFO - retain: False - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,367 - INFO - timeout: 10 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:27:50,367 - INFO - mqtt configuration fetched. - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:27:50,470 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:309 - connect
+2023-07-29 01:27:50,475 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:27:50,567 - INFO - Successfully connected with code: 0 - .\mqtt.py:226 - on_connect
+2023-07-29 01:27:50,567 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:335 - subscribe
+2023-07-29 01:27:50,568 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:337 - subscribe
+2023-07-29 01:27:50,955 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:244 - on_message
+2023-07-29 01:27:51,086 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:244 - on_message
+2023-07-29 01:27:52,488 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:28:23,232 - INFO - yaml mqtt cfg fetched - .\mqtt.py:167 - __init__
+2023-07-29 01:28:23,242 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,242 - INFO - port: 1883 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,242 - INFO - client_id: foemv1 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,242 - INFO - username: mashraf - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,242 - INFO - password: Gttllee1332 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,242 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,242 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,242 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,242 - INFO - keep_alive: 60 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,242 - INFO - qos: 1 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,243 - INFO - encryption: False - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,243 - INFO - retain: False - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,243 - INFO - timeout: 10 - .\mqtt.py:190 - __get_cfg
+2023-07-29 01:28:23,243 - INFO - mqtt configuration fetched. - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:28:24,309 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:309 - connect
+2023-07-29 01:28:24,313 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:28:24,369 - INFO - Successfully connected with code: 0 - .\mqtt.py:226 - on_connect
+2023-07-29 01:28:24,369 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:335 - subscribe
+2023-07-29 01:28:24,369 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:337 - subscribe
+2023-07-29 01:28:24,485 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:244 - on_message
+2023-07-29 01:28:24,521 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:244 - on_message
+2023-07-29 01:28:26,323 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:28:26,326 - INFO - Invalid received cmd | belks is impolite - .\mqtt.py:348 - <lambda>
+2023-07-29 01:28:28,335 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:28:28,336 - INFO - Invalid received cmd | KEEP_ALIVE - .\mqtt.py:348 - <lambda>
+2023-07-29 01:28:30,345 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:28:32,364 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:28:34,378 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:28:36,393 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:28:38,405 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:28:40,416 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:329 - publish
+2023-07-29 01:28:40,930 - INFO - Disconnected with result code: `0` - .\mqtt.py:233 - on_disconnect
+2023-07-29 01:36:25,717 - ERROR - Error: File 'src/oem_intf/test.hex' not found. - .\firmware_utils.py:168 - __firmware_hex_fetch
+2023-07-29 01:36:25,728 - ERROR - Error: The specified hex file was not found. - .\firmware_utils.py:194 - __firmware_cvt2bin
+2023-07-29 01:36:50,290 - ERROR - Error: File 'src/oem_intf/test.hex' not found. - .\firmware_utils.py:169 - __firmware_hex_fetch
+2023-07-29 01:36:50,290 - ERROR - Error: The specified hex file was not found. - .\firmware_utils.py:195 - __firmware_cvt2bin
+2023-07-29 01:36:50,304 - ERROR - Error: File 'src/oem_intf/test.hex' not found. - .\firmware_utils.py:230 - __firmware_calculate_size
+2023-07-29 01:44:19,627 - INFO - yaml mqtt cfg fetched - .\mqtt.py:175 - __init__
+2023-07-29 01:44:19,637 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,637 - INFO - port: 1883 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,638 - INFO - client_id: foemv1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,638 - INFO - username: mashraf - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,638 - INFO - password: Gttllee1332 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,638 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,638 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,638 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,638 - INFO - keep_alive: 60 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,638 - INFO - qos: 1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,638 - INFO - encryption: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,638 - INFO - retain: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,638 - INFO - timeout: 10 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:44:19,638 - INFO - mqtt configuration fetched. - .\mqtt.py:213 - __get_cfg
+2023-07-29 01:44:19,707 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:317 - connect
+2023-07-29 01:44:19,712 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:337 - publish
+2023-07-29 01:44:19,765 - INFO - Successfully connected with code: 0 - .\mqtt.py:234 - on_connect
+2023-07-29 01:44:19,765 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:343 - subscribe
+2023-07-29 01:44:19,766 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:345 - subscribe
+2023-07-29 01:44:19,878 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:252 - on_message
+2023-07-29 01:44:19,979 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:252 - on_message
+2023-07-29 01:44:21,723 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:337 - publish
+2023-07-29 01:44:21,725 - INFO - Invalid received cmd | belks is impolite - .\mqtt.py:356 - <lambda>
+2023-07-29 01:44:22,254 - INFO - Disconnected with result code: `0` - .\mqtt.py:241 - on_disconnect
+2023-07-29 01:45:02,979 - INFO - yaml mqtt cfg fetched - .\mqtt.py:175 - __init__
+2023-07-29 01:45:09,638 - INFO - yaml mqtt cfg fetched - .\mqtt.py:175 - __init__
+2023-07-29 01:45:09,647 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,647 - INFO - port: 1883 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,647 - INFO - client_id: foemv1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,648 - INFO - username: mashraf - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,648 - INFO - password: Gttllee1332 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,648 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,648 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,648 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,648 - INFO - keep_alive: 60 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,648 - INFO - qos: 1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,648 - INFO - encryption: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,648 - INFO - retain: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,648 - INFO - timeout: 10 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:09,648 - INFO - mqtt configuration fetched. - .\mqtt.py:213 - __get_cfg
+2023-07-29 01:45:34,659 - INFO - yaml mqtt cfg fetched - .\mqtt.py:174 - __init__
+2023-07-29 01:45:34,673 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,673 - INFO - port: 1883 - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,673 - INFO - client_id: foemv1 - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,673 - INFO - username: mashraf - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,673 - INFO - password: Gttllee1332 - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,673 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,673 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,673 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,674 - INFO - keep_alive: 60 - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,674 - INFO - qos: 1 - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,674 - INFO - encryption: False - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,674 - INFO - retain: False - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,674 - INFO - timeout: 10 - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:34,674 - INFO - mqtt configuration fetched. - .\mqtt.py:212 - __get_cfg
+2023-07-29 01:45:51,069 - INFO - yaml mqtt cfg fetched - .\mqtt.py:174 - __init__
+2023-07-29 01:45:51,080 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,080 - INFO - port: 1883 - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,080 - INFO - client_id: foemv1 - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,080 - INFO - username: mashraf - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,080 - INFO - password: Gttllee1332 - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,081 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,081 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,081 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,081 - INFO - keep_alive: 60 - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,081 - INFO - qos: 1 - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,081 - INFO - encryption: False - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,081 - INFO - retain: False - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,081 - INFO - timeout: 10 - .\mqtt.py:197 - __get_cfg
+2023-07-29 01:45:51,081 - INFO - mqtt configuration fetched. - .\mqtt.py:212 - __get_cfg
+2023-07-29 01:45:57,451 - INFO - yaml mqtt cfg fetched - .\mqtt.py:175 - __init__
+2023-07-29 01:45:57,460 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,460 - INFO - port: 1883 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,460 - INFO - client_id: foemv1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,461 - INFO - username: mashraf - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,461 - INFO - password: Gttllee1332 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,461 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,461 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,461 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,461 - INFO - keep_alive: 60 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,461 - INFO - qos: 1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,461 - INFO - encryption: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,461 - INFO - retain: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,461 - INFO - timeout: 10 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:45:57,461 - INFO - mqtt configuration fetched. - .\mqtt.py:213 - __get_cfg
+2023-07-29 01:45:57,548 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:317 - connect
+2023-07-29 01:45:57,553 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:337 - publish
+2023-07-29 01:45:57,605 - INFO - Successfully connected with code: 0 - .\mqtt.py:234 - on_connect
+2023-07-29 01:45:57,605 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:343 - subscribe
+2023-07-29 01:45:57,605 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:345 - subscribe
+2023-07-29 01:45:57,718 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:252 - on_message
+2023-07-29 01:45:57,792 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:252 - on_message
+2023-07-29 01:45:59,566 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:337 - publish
+2023-07-29 01:45:59,569 - INFO - Invalid received cmd | belks is impolite - .\mqtt.py:356 - <lambda>
+2023-07-29 01:46:00,288 - INFO - Disconnected with result code: `0` - .\mqtt.py:241 - on_disconnect
+2023-07-29 01:46:10,502 - INFO - yaml mqtt cfg fetched - .\mqtt.py:175 - __init__
+2023-07-29 01:46:10,512 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - port: 1883 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - client_id: foemv1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - username: mashraf - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - password: Gttllee1332 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - keep_alive: 60 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - qos: 1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - encryption: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - retain: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - timeout: 10 - .\mqtt.py:198 - __get_cfg
+2023-07-29 01:46:10,513 - INFO - mqtt configuration fetched. - .\mqtt.py:213 - __get_cfg
+2023-07-29 01:46:11,574 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:317 - connect
+2023-07-29 01:46:11,578 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:337 - publish
+2023-07-29 01:46:11,647 - INFO - Successfully connected with code: 0 - .\mqtt.py:234 - on_connect
+2023-07-29 01:46:11,647 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:343 - subscribe
+2023-07-29 01:46:11,647 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:345 - subscribe
+2023-07-29 01:46:11,749 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:252 - on_message
+2023-07-29 01:46:11,860 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:252 - on_message
+2023-07-29 01:46:12,314 - INFO - Disconnected with result code: `0` - .\mqtt.py:241 - on_disconnect
+2023-07-29 01:46:49,762 - INFO - yaml mqtt cfg fetched - .\mqtt.py:176 - __init__
+2023-07-29 01:46:49,770 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,770 - INFO - port: 1883 - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,770 - INFO - client_id: foemv1 - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,771 - INFO - username: mashraf - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,771 - INFO - password: Gttllee1332 - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,771 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,771 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,771 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,771 - INFO - keep_alive: 60 - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,771 - INFO - qos: 1 - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,771 - INFO - encryption: False - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,771 - INFO - retain: False - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,771 - INFO - timeout: 10 - .\mqtt.py:199 - __get_cfg
+2023-07-29 01:46:49,771 - INFO - mqtt configuration fetched. - .\mqtt.py:214 - __get_cfg
+2023-07-29 01:46:49,891 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:318 - connect
+2023-07-29 01:46:49,895 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:338 - publish
+2023-07-29 01:46:49,950 - INFO - Successfully connected with code: 0 - .\mqtt.py:235 - on_connect
+2023-07-29 01:46:49,951 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:344 - subscribe
+2023-07-29 01:46:49,951 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:346 - subscribe
+2023-07-29 01:46:50,069 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:253 - on_message
+2023-07-29 01:46:50,199 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:253 - on_message
+2023-07-29 01:46:50,856 - INFO - Disconnected with result code: `0` - .\mqtt.py:242 - on_disconnect
+2023-07-29 01:47:51,179 - INFO - yaml mqtt cfg fetched - .\mqtt.py:181 - __init__
+2023-07-29 01:47:51,189 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,189 - INFO - port: 1883 - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,189 - INFO - client_id: foemv1 - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,189 - INFO - username: mashraf - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,189 - INFO - password: Gttllee1332 - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,189 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,189 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,189 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,190 - INFO - keep_alive: 60 - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,190 - INFO - qos: 1 - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,190 - INFO - encryption: False - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,190 - INFO - retain: False - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,190 - INFO - timeout: 10 - .\mqtt.py:204 - __get_cfg
+2023-07-29 01:47:51,190 - INFO - mqtt configuration fetched. - .\mqtt.py:219 - __get_cfg
+2023-07-29 01:47:51,190 - ERROR - firmware filepath doesnt exist src/oem_intf/test.hex - .\mqtt.py:152 - get_firmware_in_hex
+2023-07-29 01:47:51,302 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:323 - connect
+2023-07-29 01:47:51,306 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:343 - publish
+2023-07-29 01:47:51,362 - INFO - Successfully connected with code: 0 - .\mqtt.py:240 - on_connect
+2023-07-29 01:47:51,362 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:349 - subscribe
+2023-07-29 01:47:51,362 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:351 - subscribe
+2023-07-29 01:47:51,476 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:258 - on_message
+2023-07-29 01:47:51,522 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:258 - on_message
+2023-07-29 01:47:53,322 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:343 - publish
+2023-07-29 01:47:53,324 - INFO - Invalid received cmd | belks is impolite - .\mqtt.py:362 - <lambda>
+2023-07-29 01:47:54,257 - INFO - Disconnected with result code: `0` - .\mqtt.py:247 - on_disconnect
+2023-07-29 01:48:39,053 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 01:48:39,064 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,064 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,064 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,064 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,064 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,064 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,064 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,064 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,064 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,064 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,064 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,064 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,064 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:48:39,065 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 01:48:39,065 - ERROR - firmware filepath doesnt exist src/oem_intf/test.hex - .\mqtt.py:152 - get_firmware_in_hex
+2023-07-29 01:48:39,122 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:324 - connect
+2023-07-29 01:48:39,126 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 01:48:39,179 - INFO - Successfully connected with code: 0 - .\mqtt.py:241 - on_connect
+2023-07-29 01:48:39,179 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:350 - subscribe
+2023-07-29 01:48:39,179 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:352 - subscribe
+2023-07-29 01:48:39,293 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:259 - on_message
+2023-07-29 01:48:39,395 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:259 - on_message
+2023-07-29 01:48:41,147 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 01:48:41,149 - INFO - Invalid received cmd | belks is impolite - .\mqtt.py:363 - <lambda>
+2023-07-29 01:48:41,644 - INFO - Disconnected with result code: `0` - .\mqtt.py:248 - on_disconnect
+2023-07-29 01:49:56,815 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 01:49:56,826 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,826 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,826 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,826 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,826 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,826 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,826 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,826 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,826 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,826 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,827 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,827 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,827 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:49:56,827 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 01:49:56,949 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:324 - connect
+2023-07-29 01:49:56,953 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 01:49:57,012 - INFO - Successfully connected with code: 0 - .\mqtt.py:241 - on_connect
+2023-07-29 01:49:57,012 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:350 - subscribe
+2023-07-29 01:49:57,013 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:352 - subscribe
+2023-07-29 01:49:57,126 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:259 - on_message
+2023-07-29 01:49:57,156 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:259 - on_message
+2023-07-29 01:49:58,773 - INFO - Disconnected with result code: `0` - .\mqtt.py:248 - on_disconnect
+2023-07-29 01:50:50,525 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 01:50:50,535 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,535 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,536 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,536 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,536 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,536 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,536 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,536 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,536 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,536 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,536 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,536 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,536 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:50,536 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 01:50:50,595 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:324 - connect
+2023-07-29 01:50:50,599 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 01:50:50,652 - INFO - Successfully connected with code: 0 - .\mqtt.py:241 - on_connect
+2023-07-29 01:50:50,652 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:350 - subscribe
+2023-07-29 01:50:50,653 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:352 - subscribe
+2023-07-29 01:50:50,779 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:259 - on_message
+2023-07-29 01:50:50,824 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:259 - on_message
+2023-07-29 01:50:51,713 - INFO - Disconnected with result code: `0` - .\mqtt.py:248 - on_disconnect
+2023-07-29 01:50:56,866 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 01:50:56,876 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,876 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,876 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,876 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,876 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,876 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,876 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,876 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,876 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,876 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,876 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,877 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,877 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 01:50:56,877 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 01:50:56,994 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:324 - connect
+2023-07-29 01:50:56,998 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 01:50:57,071 - INFO - Successfully connected with code: 0 - .\mqtt.py:241 - on_connect
+2023-07-29 01:50:57,071 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:350 - subscribe
+2023-07-29 01:50:57,072 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:352 - subscribe
+2023-07-29 01:50:57,167 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:259 - on_message
+2023-07-29 01:50:57,246 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:259 - on_message
+2023-07-29 01:50:57,263 - INFO - Disconnected with result code: `0` - .\mqtt.py:248 - on_disconnect
+2023-07-29 09:42:54,567 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 09:43:18,437 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 09:43:18,450 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,450 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,450 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,450 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,450 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,450 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,450 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,451 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,451 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,451 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,451 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,451 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,451 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 09:43:18,451 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 09:43:18,557 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:324 - connect
+2023-07-29 09:43:18,619 - INFO - Successfully connected with code: 0 - .\mqtt.py:241 - on_connect
+2023-07-29 09:43:18,619 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:350 - subscribe
+2023-07-29 09:43:18,619 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:352 - subscribe
+2023-07-29 09:43:18,641 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 09:43:18,679 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:259 - on_message
+2023-07-29 09:43:18,792 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:259 - on_message
+2023-07-29 09:43:20,676 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 09:43:20,677 - INFO - Invalid received cmd | belks is impolite - .\mqtt.py:363 - <lambda>
+2023-07-29 09:43:22,689 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 09:43:22,690 - INFO - Invalid received cmd | KEEP_ALIVE - .\mqtt.py:363 - <lambda>
+2023-07-29 09:43:24,703 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 09:43:26,716 - INFO - published: `3` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 09:43:28,062 - INFO - Disconnected with result code: `0` - .\mqtt.py:248 - on_disconnect
+2023-07-29 12:31:28,275 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 12:31:28,315 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:31:28,316 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 12:33:07,591 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 12:33:07,598 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,598 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,599 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,599 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,599 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,599 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,599 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,599 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,599 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,599 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,599 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,599 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,599 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:07,599 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 12:33:13,217 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 12:33:13,224 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,224 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,224 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,224 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,224 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,224 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,224 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,224 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,224 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,225 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,225 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,225 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,225 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:33:13,225 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 12:33:13,346 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:324 - connect
+2023-07-29 12:33:13,350 - INFO - published: `4294967295` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 12:33:13,403 - INFO - Connected with result code: `5` - .\mqtt.py:244 - on_connect
+2023-07-29 12:33:13,403 - INFO - Attempting reconnection, retry 1/5 - .\mqtt.py:286 - __attempt_reconnect
+2023-07-29 12:33:13,461 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:324 - connect
+2023-07-29 12:33:15,468 - INFO - Attempting reconnection, retry 2/5 - .\mqtt.py:286 - __attempt_reconnect
+2023-07-29 12:33:15,526 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:324 - connect
+2023-07-29 12:33:19,530 - INFO - Attempting reconnection, retry 3/5 - .\mqtt.py:286 - __attempt_reconnect
+2023-07-29 12:33:19,588 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:324 - connect
+2023-07-29 12:35:58,754 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 12:35:58,761 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,761 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,762 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,762 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,762 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,762 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,762 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,762 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,762 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,762 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,762 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,762 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,762 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:35:58,762 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 12:36:27,791 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 12:36:27,798 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,798 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,798 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,799 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,799 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,799 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,799 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,799 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,799 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,799 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,799 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,799 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,799 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:27,799 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 12:36:34,668 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 12:36:34,676 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:36:34,676 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 12:37:06,806 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 12:37:06,814 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,814 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,814 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,814 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,814 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,814 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,814 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,814 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,815 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,815 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,815 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,815 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,815 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:06,815 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 12:37:14,620 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 12:37:14,628 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,628 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,628 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,629 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,629 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,629 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,629 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,629 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,629 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,629 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,629 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,629 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,629 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:37:14,629 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 12:37:14,767 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:324 - connect
+2023-07-29 12:37:14,770 - INFO - published: `4294967295` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 12:37:14,827 - INFO - Successfully connected with code: 0 - .\mqtt.py:241 - on_connect
+2023-07-29 12:37:14,827 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:350 - subscribe
+2023-07-29 12:37:14,827 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:352 - subscribe
+2023-07-29 12:37:14,952 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:259 - on_message
+2023-07-29 12:37:14,985 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:259 - on_message
+2023-07-29 12:37:15,079 - INFO - Disconnected with result code: `0` - .\mqtt.py:248 - on_disconnect
+2023-07-29 12:38:07,556 - INFO - yaml mqtt cfg fetched - .\mqtt.py:182 - __init__
+2023-07-29 12:38:07,564 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,564 - INFO - port: 1883 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,564 - INFO - client_id: foemv1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,564 - INFO - username: mashraf - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,564 - INFO - password: Gttllee1332 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,564 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,564 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,564 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,565 - INFO - keep_alive: 60 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,565 - INFO - qos: 1 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,565 - INFO - encryption: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,565 - INFO - retain: False - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,565 - INFO - timeout: 10 - .\mqtt.py:205 - __get_cfg
+2023-07-29 12:38:07,565 - INFO - mqtt configuration fetched. - .\mqtt.py:220 - __get_cfg
+2023-07-29 12:38:07,625 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:324 - connect
+2023-07-29 12:38:07,628 - INFO - published: `4294967295` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:344 - publish
+2023-07-29 12:38:07,690 - INFO - Successfully connected with code: 0 - .\mqtt.py:241 - on_connect
+2023-07-29 12:38:07,691 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:350 - subscribe
+2023-07-29 12:38:07,691 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:352 - subscribe
+2023-07-29 12:38:07,842 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:259 - on_message
+2023-07-29 12:38:07,936 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:259 - on_message
+2023-07-29 12:38:08,431 - INFO - Disconnected with result code: `0` - .\mqtt.py:248 - on_disconnect
+2023-07-29 12:41:30,559 - INFO - yaml mqtt cfg fetched - .\mqtt.py:168 - __init__
+2023-07-29 12:41:30,567 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - port: 1883 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - client_id: foemv1 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - username: mashraf - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - password: Gttllee1332 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - keep_alive: 60 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - qos: 1 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - encryption: False - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - retain: False - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - timeout: 10 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:41:30,568 - INFO - mqtt configuration fetched. - .\mqtt.py:206 - __get_cfg
+2023-07-29 12:43:06,199 - INFO - yaml mqtt cfg fetched - .\mqtt.py:168 - __init__
+2023-07-29 12:43:06,206 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - port: 1883 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - client_id: foemv1 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - username: mashraf - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - password: Gttllee1332 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - keep_alive: 60 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - qos: 1 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - encryption: False - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - retain: False - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - timeout: 10 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:06,207 - INFO - mqtt configuration fetched. - .\mqtt.py:206 - __get_cfg
+2023-07-29 12:43:06,326 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:310 - connect
+2023-07-29 12:43:06,329 - INFO - published: `4294967295` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:330 - publish
+2023-07-29 12:43:06,386 - INFO - Successfully connected with code: 0 - .\mqtt.py:227 - on_connect
+2023-07-29 12:43:06,386 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:336 - subscribe
+2023-07-29 12:43:06,386 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:338 - subscribe
+2023-07-29 12:43:06,502 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:245 - on_message
+2023-07-29 12:43:06,614 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:245 - on_message
+2023-07-29 12:43:07,373 - INFO - Disconnected with result code: `0` - .\mqtt.py:234 - on_disconnect
+2023-07-29 12:43:52,741 - INFO - yaml mqtt cfg fetched - .\mqtt.py:168 - __init__
+2023-07-29 12:43:52,749 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,749 - INFO - port: 1883 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,749 - INFO - client_id: foemv1 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,749 - INFO - username: mashraf - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,749 - INFO - password: Gttllee1332 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,749 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,749 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,749 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,749 - INFO - keep_alive: 60 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,749 - INFO - qos: 1 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,749 - INFO - encryption: False - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,750 - INFO - retain: False - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,750 - INFO - timeout: 10 - .\mqtt.py:191 - __get_cfg
+2023-07-29 12:43:52,750 - INFO - mqtt configuration fetched. - .\mqtt.py:206 - __get_cfg
+2023-07-29 12:43:52,811 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:310 - connect
+2023-07-29 12:43:52,814 - INFO - published: `4294967295` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:330 - publish
+2023-07-29 12:43:52,869 - INFO - Successfully connected with code: 0 - .\mqtt.py:227 - on_connect
+2023-07-29 12:43:52,869 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:336 - subscribe
+2023-07-29 12:43:52,869 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:338 - subscribe
+2023-07-29 12:43:52,981 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:245 - on_message
+2023-07-29 12:43:53,085 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:245 - on_message
+2023-07-29 12:43:53,623 - INFO - Disconnected with result code: `0` - .\mqtt.py:234 - on_disconnect
+2023-07-29 12:58:24,220 - INFO - yaml mqtt cfg fetched - .\mqtt.py:174 - __init__
+2023-07-29 12:58:24,228 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,228 - INFO - port: 1883 - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,228 - INFO - client_id: foemv1 - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,228 - INFO - username: mashraf - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,228 - INFO - password: Gttllee1332 - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,228 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,228 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,229 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,229 - INFO - keep_alive: 60 - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,229 - INFO - qos: 1 - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,229 - INFO - encryption: False - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,229 - INFO - retain: False - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,229 - INFO - timeout: 10 - .\mqtt.py:197 - __get_cfg
+2023-07-29 12:58:24,229 - INFO - mqtt configuration fetched. - .\mqtt.py:212 - __get_cfg
+2023-07-29 12:58:24,304 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:316 - connect
+2023-07-29 12:59:33,376 - INFO - yaml mqtt cfg fetched - .\mqtt.py:175 - __init__
+2023-07-29 12:59:33,384 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,384 - INFO - port: 1883 - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,384 - INFO - client_id: foemv1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,384 - INFO - username: mashraf - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,384 - INFO - password: Gttllee1332 - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,384 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,384 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,384 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,384 - INFO - keep_alive: 60 - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,384 - INFO - qos: 1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,385 - INFO - encryption: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,385 - INFO - retain: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,385 - INFO - timeout: 10 - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:33,385 - INFO - mqtt configuration fetched. - .\mqtt.py:213 - __get_cfg
+2023-07-29 12:59:33,515 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:317 - connect
+2023-07-29 12:59:46,104 - INFO - yaml mqtt cfg fetched - .\mqtt.py:175 - __init__
+2023-07-29 12:59:46,112 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,112 - INFO - port: 1883 - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,112 - INFO - client_id: foemv1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,112 - INFO - username: mashraf - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,112 - INFO - password: Gttllee1332 - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,112 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,112 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,112 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,112 - INFO - keep_alive: 60 - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,113 - INFO - qos: 1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,113 - INFO - encryption: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,113 - INFO - retain: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,113 - INFO - timeout: 10 - .\mqtt.py:198 - __get_cfg
+2023-07-29 12:59:46,113 - INFO - mqtt configuration fetched. - .\mqtt.py:213 - __get_cfg
+2023-07-29 12:59:46,173 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:317 - connect
+2023-07-29 12:59:46,178 - INFO - published: `4294967295` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:337 - publish
+2023-07-29 12:59:46,232 - INFO - Successfully connected with code: 0 - .\mqtt.py:234 - on_connect
+2023-07-29 12:59:46,232 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:343 - subscribe
+2023-07-29 12:59:46,232 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:345 - subscribe
+2023-07-29 12:59:46,345 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:252 - on_message
+2023-07-29 12:59:46,435 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:252 - on_message
+2023-07-29 12:59:46,755 - INFO - Disconnected with result code: `0` - .\mqtt.py:241 - on_disconnect
+2023-07-29 13:07:26,070 - INFO - yaml mqtt cfg fetched - .\mqtt.py:175 - __init__
+2023-07-29 13:07:26,078 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,078 - INFO - port: 1883 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,079 - INFO - client_id: foemv1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,079 - INFO - username: mashraf - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,079 - INFO - password: Gttllee1332 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,079 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,079 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,079 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,079 - INFO - keep_alive: 60 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,079 - INFO - qos: 1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,079 - INFO - encryption: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,079 - INFO - retain: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,079 - INFO - timeout: 10 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:07:26,079 - INFO - mqtt configuration fetched. - .\mqtt.py:213 - __get_cfg
+2023-07-29 13:07:26,206 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:317 - connect
+2023-07-29 13:07:26,211 - INFO - published: `4294967295` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:337 - publish
+2023-07-29 13:07:26,264 - INFO - Successfully connected with code: 0 - .\mqtt.py:234 - on_connect
+2023-07-29 13:07:26,264 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:343 - subscribe
+2023-07-29 13:07:26,264 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:345 - subscribe
+2023-07-29 13:07:26,380 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:252 - on_message
+2023-07-29 13:07:26,475 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:252 - on_message
+2023-07-29 13:07:55,590 - INFO - Disconnected with result code: `0` - .\mqtt.py:241 - on_disconnect
+2023-07-29 13:10:51,446 - INFO - yaml mqtt cfg fetched - .\mqtt.py:175 - __init__
+2023-07-29 13:10:51,454 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,454 - INFO - port: 1883 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,454 - INFO - client_id: foemv1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,455 - INFO - username: mashraf - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,455 - INFO - password: Gttllee1332 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,455 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,455 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,455 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,455 - INFO - keep_alive: 60 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,455 - INFO - qos: 1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,455 - INFO - encryption: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,455 - INFO - retain: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,455 - INFO - timeout: 10 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:10:51,455 - INFO - mqtt configuration fetched. - .\mqtt.py:213 - __get_cfg
+2023-07-29 13:10:51,581 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:317 - connect
+2023-07-29 13:10:51,585 - INFO - published: `4294967295` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:337 - publish
+2023-07-29 13:10:51,641 - INFO - Successfully connected with code: 0 - .\mqtt.py:234 - on_connect
+2023-07-29 13:10:51,641 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:343 - subscribe
+2023-07-29 13:10:51,641 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:345 - subscribe
+2023-07-29 13:10:51,757 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:252 - on_message
+2023-07-29 13:10:51,845 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:252 - on_message
+2023-07-29 13:16:10,524 - INFO - Disconnected with result code: `0` - .\mqtt.py:241 - on_disconnect
+2023-07-29 13:16:11,316 - INFO - yaml mqtt cfg fetched - .\mqtt.py:175 - __init__
+2023-07-29 13:16:11,324 - INFO - broker_addr: broker.hivemq.com - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,324 - INFO - port: 1883 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,324 - INFO - client_id: foemv1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,324 - INFO - username: mashraf - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,324 - INFO - password: Gttllee1332 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,324 - INFO - pub_topic: foem/db_py_intf/v1_0_0/o2v - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,324 - INFO - sub_topic: foem/db_py_intf/v1_0_0/v2o - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,324 - INFO - ka_topic: foem/db_py_intf/v1_0_0/ka - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,324 - INFO - keep_alive: 60 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,324 - INFO - qos: 1 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,324 - INFO - encryption: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,325 - INFO - retain: False - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,325 - INFO - timeout: 10 - .\mqtt.py:198 - __get_cfg
+2023-07-29 13:16:11,325 - INFO - mqtt configuration fetched. - .\mqtt.py:213 - __get_cfg
+2023-07-29 13:16:11,445 - INFO - connected to broker_addr: `broker.hivemq.com` with client_id: `foemv1` succesfully | port: `1883` - .\mqtt.py:317 - connect
+2023-07-29 13:16:11,452 - INFO - published: `4294967295` on topic `foem/db_py_intf/v1_0_0/o2v` - .\mqtt.py:337 - publish
+2023-07-29 13:16:11,505 - INFO - Successfully connected with code: 0 - .\mqtt.py:234 - on_connect
+2023-07-29 13:16:11,505 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/v2o` - .\mqtt.py:343 - subscribe
+2023-07-29 13:16:11,505 - INFO - to subscribing to topic: `foem/db_py_intf/v1_0_0/ka` - .\mqtt.py:345 - subscribe
+2023-07-29 13:16:11,621 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/v2o` msg: `belks is impolite` - .\mqtt.py:252 - on_message
+2023-07-29 13:16:11,727 - INFO - Received message from topic: `foem/db_py_intf/v1_0_0/ka` msg: `KEEP_ALIVE` - .\mqtt.py:252 - on_message
+2023-07-29 13:16:14,542 - INFO - Disconnected with result code: `0` - .\mqtt.py:241 - on_disconnect

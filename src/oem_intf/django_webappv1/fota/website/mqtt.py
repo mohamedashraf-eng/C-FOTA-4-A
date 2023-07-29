@@ -102,6 +102,7 @@ class prj_foem_mysql:
         self.__username = yaml_sql_cfg.get('username', "")
         self.__password = yaml_sql_cfg.get('password', "")
         self.__database = yaml_sql_cfg.get('database', "")
+        self.__firmware_in_hex_fp = yaml_sql_cfg.get('firmware_in_hex_fp', "")
         self.__cnx = mysql.connector.connect(user=self.__username, password=self.__password,
                                              host=self.__host, database=self.__database)
         self.__cursor = self.__cnx.cursor()
@@ -136,54 +137,38 @@ class prj_foem_mysql:
         self.close()
         return data[0]
 
+    def fetch_single_value(self, query):
+        self.connect()
+        self.__cursor.execute(query)
+        # fetchone() returns the first row of the results
+        result = self.__cursor.fetchone()
+        return result[0] if result else None
+
     def close(self):
         self.__cursor.close()
         self.__cnx.close()
 
 
-# Commands defined
-OEM_CMD_DEFINTION = {}
-VEHICLE_CMD_DEFINTION = {}
-#
-
-
 class oem_cmd(Enum):
-    UPDATE_REQUEST = 1
-
-
-OEM_CMD_DEFINTION[oem_cmd.UPDATE_REQUEST] = "Requesting new firmware update"
+    DEFAULT = 0xFFFFFFFF
+    UPDATE_REQUEST = 0x00000003
 
 
 class vehicle_cmd(Enum):
-    DETAILS_REQUEST = '1'
+    UPDATE_REQUEST_NACK = 0x00000000
+    UPDATE_REQUEST_ACK = 0x00000001
 
 
 def e_v(enum_):
     return enum_.value
 
-
-# CMD handlers
-def cmd_handle_GET_():
-    pass
-
-
-def cmd_handle_REQUEST_():
-    pass
-
-# CMD Switcher
-
-
-def vehicle_cmd_switch(cmd):
-    return {
-        e_v(vehicle_cmd.DETAILS_REQUEST): lambda: print(f'{vehicle_cmd.DETAILS_REQUEST}')
-    }.get(cmd, lambda: (logging.info(f'Invalid received cmd | {cmd}'),
-                        print(f'Invalid received cmd | {cmd}')))()
-
-
 #
 # MQTT - CLASS
+
+
 class prj_foem_mqtt:
     # Class methods
+
     def __init__(self, yaml_mqtt_cfg, yaml_mysql_cfg):
         if yaml_mqtt_cfg != None:
             self.__mqtt_cfg = yaml_mqtt_cfg
@@ -196,6 +181,7 @@ class prj_foem_mqtt:
         #
         self.__mysql_obj = prj_foem_mysql(yaml_sql_cfg=yaml_mysql_cfg)
         self.__tablename = 'website_mqtt'
+        self.__mqtt_unlock_flag = True
 
     def __repr__(self):
         pass
@@ -303,9 +289,15 @@ class prj_foem_mqtt:
                 f"Failed to reconnect | client_id: {self.__clientid} | broker_addr: {self.__brokeraddr}"
             )
         else:
-            logging.critical(
+            logging.info(
                 f"connected to broker_addr: {self.__brokeraddr} with client_id: {self.__clientid} succesfully"
             )
+
+    def __mqtt_pub_lock():
+        self.__mqtt_unlock_flag = False
+
+    def __mqtt_pub_unlock():
+        self.__mqtt_unlock_flag = True
 
     # Public methods
     def loop_start(self):
@@ -352,40 +344,74 @@ class prj_foem_mqtt:
         self.__pmqtt_client.subscribe(topic=self.__subtopic, qos=self.__qos)
         logging.info(f"to subscribing to topic: `{self.__katopic}`")
         self.__pmqtt_client.subscribe(topic=self.__katopic, qos=self.__qos)
+#
+# COMM INTF: START
+# HANDLERS
+#
+# TODO(Wx): Implement the commands handlers
+# MAIN HANDLERS
 
-    def oem_cmd_handle(self):
+    def __vehicle_cmd_switch(self, cmd):
+        return {
+            e_v(vehicle_cmd.UPDATE_REQUEST_ACK): lambda: print(f'{vehicle_cmd.UPDATE_REQUEST_ACK}')
+        }.get(cmd, lambda: (logging.info(f'Invalid received cmd | {cmd}'),
+                            print(f'Invalid received cmd | {cmd}')))()
+
+    def __oem_cmd_handle(self):
         #
         # TODO(Wx): Implement the handler
         if not self.__mqtt_msgsQ.empty():
             vehicle_msg = self.__mqtt_msgsQ.get()
-            vehicle_cmd_switch(vehicle_msg)
-
+            self.__vehicle_cmd_switch(vehicle_msg)
         else:
             pass
-
+#
+# COMM INTF: END
     # Main class sequence runner
+
     def run(self):
         # Fetch my configurations
         self.__get_cfg()
         # Set Paho-MQTT configurations
         self.__set_pmqtt_cfg()
+        last_id = None
+        job_done = False
         # Save first SQL
         # self.__save_sql_cfg()
+        # Get hex file path
+        firmware = []
+        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        firmware_fp = self.__mysql_obj.fetch(
+            'website_fota_firmware', 'firmware_id', 1, 'firmware')
+        firmware_fp = os.path.join(BASE_DIR, firmware_fp)
+        with open(firmware_fp, 'r') as f:
+            firmware = [line.strip() for line in f]
+        #
         try:
             self.connect()
             self.loop_start()
             #
             while True:
-                update_ready = self.__mysql_obj.fetch(
-                    'website_fota_fota', 'fota_id', 1, 'update_ready_flag')
-
-                if update_ready == 1:
-                    self.publish(f'{ e_v(oem_cmd.UPDATE_REQUEST) }')
-                    self.oem_cmd_handle()
+                # Fetch the highest ID in the fota_fota table
+                curr_max_id = self.__mysql_obj.fetch_single_value(
+                    f'SELECT MAX(fota_id) FROM website_fota_fota')
+                #
+                if curr_max_id is not None and curr_max_id != last_id and not job_done:
+                    last_id = curr_max_id
+                    curr_update_ready = self.__mysql_obj.fetch(
+                        'website_fota_fota', 'fota_id', curr_max_id, 'update_ready_flag')
+                    if curr_update_ready == 1:
+                        if self.__mqtt_unlock_flag:
+                            self.publish(f'{ e_v(oem_cmd.UPDATE_REQUEST) }')
+                        self.__oem_cmd_handle()
+                    else:
+                        if self.__mqtt_unlock_flag:
+                            self.publish(f'{ e_v(oem_cmd.DEFAULT) }')
+                        print(f'Nothing new | {e_v(oem_cmd.DEFAULT)}')
                 else:
-                    print(f'Nothing new | {update_ready}')
+                    print(f'There is not new FOTA record. last | @{last_id}')
+                #
                 time.sleep(2)
-            #
         except KeyboardInterrupt:
             self.disconnect()
             self.loop_stop()

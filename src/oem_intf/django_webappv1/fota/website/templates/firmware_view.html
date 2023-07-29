@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+  <div class="d-flex justify-content-center mb-4">
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title text-center">Firmware @version: `{{firmware.version}}`</h5>
+    </div>
+  </div>
+</div>
+    <div class="d-flex justify-content-center mb-4">
+        <div class="card text-white bg-dark" style="width: 80%; max-height: 500px; overflow-y: scroll;">
+            <div class="card-body">
+                <pre id="firmware-content" style="color: #ffffff;">{{ content }}</pre>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <a href="{% url 'firmware_database' firmware.firmware_id %}" class="btn btn-primary">Back</a>
+    </div>
+</div>
+
+<script>
+window.onload = function() {
+  const contentElement = document.getElementById('firmware-content');
+  const colorizedContent = colorizeIntelHex(contentElement.textContent);
+  contentElement.innerHTML = colorizedContent;
+}
+
+function colorizeIntelHex(hexContent) {
+  const regex = /:([0-9A-Fa-f]{2})([0-9A-Fa-f]{4})([0-9A-Fa-f]{2})([0-9A-Fa-f]*)([0-9A-Fa-f]{2})/gm;
+  let m;
+
+  let colorized = '';
+
+  while ((m = regex.exec(hexContent)) !== null) {
+    let coloredLine = ':';
+    coloredLine += `<span class="byte-count">${m[1]}</span>`;
+    coloredLine += `<span class="address">${m[2]}</span>`;
+    coloredLine += `<span class="record-type">${m[3]}</span>`;
+    coloredLine += `<span class="data">${m[4]}</span>`;
+    coloredLine += `<span class="checksum">${m[5]}</span>`;
+    colorized += coloredLine + '<br>';
+  }
+
+  return colorized;
+}
+</script>
+<style>
+.byte-count {
+  color: #ff0000;
+}
+
+.address {
+  color: #00ff00;
+}
+
+.record-type {
+  color: #0000ff;
+}
+
+.data {
+  color: #ffff00;
+}
+
+.checksum {
+  color: #ff00ff;
+}
+</style>
+{% endblock content %}

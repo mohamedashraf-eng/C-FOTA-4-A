@@ -31,7 +31,6 @@ sql_cfg:
   username: 'root'
   password: ''
   database: 'myFOTA'
-
 # CMD cfg
 cmd_cfg:
   getters:

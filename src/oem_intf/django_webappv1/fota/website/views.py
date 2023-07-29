@@ -83,6 +83,13 @@ def firmware_database(request, pk):
         return redirect('home')
 
 
+def firmware_view(request):
+    # This line will get the most recent firmware file
+    firmware = Fota_Firmware.objects.order_by('-release_date').first()
+    content = firmware.firmware.read().decode('utf-8')
+    return render(request, 'firmware_view.html', {'firmware': firmware, 'content': content})
+
+
 def ecu_database(request, pk):
     if request.user.is_authenticated:
         fota_ecu = Fota_Ecu.objects.get(ecu_id=pk)

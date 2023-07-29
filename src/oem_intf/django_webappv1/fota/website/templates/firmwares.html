@@ -22,7 +22,7 @@
           <td class="text-center">{{ firmwares.firmware_id }}</td>
           <td class="text-center">{{ firmwares.version }}</td>
           <td class="text-center">{{ firmwares.release_date }}</td>
-          <td class="text-center">{{ firmwares.firmware }}</td>
+          <td class="text-center"><a href="{% url 'firmware_view'%}">{{ firmwares.firmware }}</h></td>
           <td class="text-center">{{ firmwares.is_active }}</td>
           <td class="text-center">{{ firmwares.firmware_cmac }}</td>
           <td class="text-center">{{ firmwares.firmware_size }}</td>
