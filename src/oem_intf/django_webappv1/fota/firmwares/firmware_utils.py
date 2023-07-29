@@ -68,19 +68,21 @@ class prj_foem_firmware:
             logging.error("Error: The specified hex file was not found.")
 
     def __calculate_sha256(self):
-        sha256_hash = hashlib.sha256(self.__firmware_in_bin).hexdigest()
+        sha256_hash = hashlib.sha256(self.__firmware_in_bin).digest()
         return sha256_hash
 
     def __calculate_cmac(self):
+        sha256_hash = self.__calculate_sha256()
         cmac_key = PBKDF2(self.__cmac_secret_key, self.__cmac_salt, dkLen=16)
         cmac_cipher = CMAC.new(cmac_key, ciphermod=AES)
-        cmac_cipher.update(self.__firmware_in_bin)
+        cmac_cipher.update(sha256_hash)
         cmac_digest = cmac_cipher.hexdigest()
         return cmac_digest
 
     def __calculate_hmac(self):
+        sha256_hash = self.__calculate_sha256()
         hmac_obj = hmac.new(
-            self.__hmac_secret_key, self.__firmware_in_bin, hashlib.sha256
+            self.__hmac_secret_key, sha256_hash, hashlib.sha256
         )
         hmac_digest = hmac_obj.hexdigest()
         return hmac_digest
@@ -103,6 +105,14 @@ class prj_foem_firmware:
             logging.error(f"Error: File '{self.__firmware_fp}' not found.")
             return None
 
+    def __firmware_encrypt_ecc(self):
+        pass
+
+    def __firmware_dsa(self):
+        pass
+    #
+    #
+
     def get_sha256(self):
         return self.__calculate_sha256()
 
@@ -124,7 +134,7 @@ if __name__ == '__main__':
     file_path = args.file_path
 
     myFirmware = prj_foem_firmware(file_path)
+    print(f'HASH: {myFirmware.get_sha256().hex()}')
     print(f'size: {myFirmware.get_size()}')
-    print(f'CMAC: {myFirmware.get_cmac()}')
-    print(f'HMAC: {myFirmware.get_hmac()}')
-    print(f'SHA256: {myFirmware.get_sha256()}')
+    print(f'CMAC OF HASH: {myFirmware.get_cmac()}')
+    print(f'HMAC OF HASH: {myFirmware.get_hmac()}')

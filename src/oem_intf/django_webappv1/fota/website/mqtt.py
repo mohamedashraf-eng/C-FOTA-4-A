@@ -353,7 +353,10 @@ class prj_foem_mqtt:
 
     def __vehicle_cmd_switch(self, cmd):
         return {
+            #
             e_v(vehicle_cmd.UPDATE_REQUEST_ACK): lambda: print(f'{vehicle_cmd.UPDATE_REQUEST_ACK}')
+            e_v(vehicle_cmd.UPDATE_REQUEST_NACK): lambda: print(f'{vehicle_cmd.UPDATE_REQUEST_NACK}')
+            #
         }.get(cmd, lambda: (logging.info(f'Invalid received cmd | {cmd}'),
                             print(f'Invalid received cmd | {cmd}')))()
 
@@ -375,7 +378,9 @@ class prj_foem_mqtt:
         # Set Paho-MQTT configurations
         self.__set_pmqtt_cfg()
         last_id = None
+        last_active_job_id = None
         job_done = False
+        job_delayed = False
         # Save first SQL
         # self.__save_sql_cfg()
         # Get hex file path
@@ -395,23 +400,29 @@ class prj_foem_mqtt:
                 # Fetch the highest ID in the fota_fota table
                 curr_max_id = self.__mysql_obj.fetch_single_value(
                     f'SELECT MAX(fota_id) FROM website_fota_fota')
+                last_active_job_id = curr_max_id
                 #
-                if curr_max_id is not None and curr_max_id != last_id and not job_done:
+                if curr_max_id is not None and curr_max_id != last_id:
                     last_id = curr_max_id
-                    curr_update_ready = self.__mysql_obj.fetch(
-                        'website_fota_fota', 'fota_id', curr_max_id, 'update_ready_flag')
-                    if curr_update_ready == 1:
-                        if self.__mqtt_unlock_flag:
-                            self.publish(f'{ e_v(oem_cmd.UPDATE_REQUEST) }')
-                        self.__oem_cmd_handle()
-                    else:
-                        if self.__mqtt_unlock_flag:
-                            self.publish(f'{ e_v(oem_cmd.DEFAULT) }')
-                        print(f'Nothing new | {e_v(oem_cmd.DEFAULT)}')
+                    while not job_done and not job_delayed:
+                        curr_update_ready = self.__mysql_obj.fetch(
+                            'website_fota_fota', 'fota_id', last_active_job_id, 'update_ready_flag')
+                        if curr_update_ready == 1:
+                            if self.__mqtt_unlock_flag:
+                                self.publish(
+                                    f'{ e_v(oem_cmd.UPDATE_REQUEST) }')
+                            self.__oem_cmd_handle()
+                        else:
+                            if self.__mqtt_unlock_flag:
+                                self.publish(
+                                    f'{ e_v(oem_cmd.DEFAULT) }')
+                            print(f'Nothing new | {e_v(oem_cmd.DEFAULT)}')
+                        last_active_job_id = last_id
+                        time.sleep(2)
                 else:
                     print(f'There is not new FOTA record. last | @{last_id}')
                 #
-                time.sleep(2)
+                time.sleep(5)
         except KeyboardInterrupt:
             self.disconnect()
             self.loop_stop()
