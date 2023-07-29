@@ -2,11 +2,10 @@ import logging
 import yaml
 import json
 import os
+from os import urandom
 import argparse
-import hashlib
-import hmac
 from Crypto.Cipher import AES
-from Crypto.Hash import CMAC
+from Crypto.Hash import CMAC, HMAC, SHA256, SHA512
 from Crypto.Protocol.KDF import PBKDF2
 
 # Configure logging
@@ -28,6 +27,7 @@ class prj_foem_firmware:
         self.__hmac_secret_key = b"drsalma&mohamedashraf&abdolotfy"
         self.__cmac_secret_key = b"drsalma&mohamedashraf&abdolotfy"
         self.__cmac_salt = b"mohamedashraf"
+        self.__ecc_salt = b"mohamedashraf"
 
         self.__firmware_hex_fetch()
         self.__firmware_in_json = json.dumps(self.__firmware_hex)
@@ -68,8 +68,12 @@ class prj_foem_firmware:
             logging.error("Error: The specified hex file was not found.")
 
     def __calculate_sha256(self):
-        sha256_hash = hashlib.sha256(self.__firmware_in_bin).digest()
-        return sha256_hash
+        sha256_obj = SHA256.new()
+        #sha256_hash = hashlib.sha256(self.__firmware_in_bin).digest()
+        for line in self.__firmware_hex:
+            sha256_obj.update(str(line).encode('utf-8'))
+
+        return sha256_obj.digest()
 
     def __calculate_cmac(self):
         sha256_hash = self.__calculate_sha256()
@@ -80,12 +84,10 @@ class prj_foem_firmware:
         return cmac_digest
 
     def __calculate_hmac(self):
-        sha256_hash = self.__calculate_sha256()
-        hmac_obj = hmac.new(
-            self.__hmac_secret_key, sha256_hash, hashlib.sha256
-        )
-        hmac_digest = hmac_obj.hexdigest()
-        return hmac_digest
+        hmac_obj = HMAC.new(str(self.__hmac_secret_key).encode(
+            'utf-8'), digestmod=SHA256)
+        hmac_obj.update(str(self.__calculate_sha256()).encode('utf-8'))
+        return hmac_obj.digest()
 
     def __firmware_calculate_size(self):
         try:
@@ -122,6 +124,9 @@ class prj_foem_firmware:
     def get_hmac(self):
         return self.__calculate_hmac()
 
+    def enc_firmware(self):
+        return self.__firmware_encrypt_ecc()
+
     def get_size(self):
         return self.__firmware_calculate_size()
 
@@ -134,7 +139,7 @@ if __name__ == '__main__':
     file_path = args.file_path
 
     myFirmware = prj_foem_firmware(file_path)
-    print(f'HASH: {myFirmware.get_sha256().hex()}')
     print(f'size: {myFirmware.get_size()}')
-    print(f'CMAC OF HASH: {myFirmware.get_cmac()}')
-    print(f'HMAC OF HASH: {myFirmware.get_hmac()}')
+    print(f'Hash: {myFirmware.get_sha256().hex()}')
+    print(f'CMAC Of Hash: {myFirmware.get_cmac()}')
+    print(f'HMAC Of Hash: {myFirmware.get_hmac().hex()}')

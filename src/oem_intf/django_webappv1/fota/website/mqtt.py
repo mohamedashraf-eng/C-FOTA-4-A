@@ -148,15 +148,34 @@ class prj_foem_mysql:
         self.__cursor.close()
         self.__cnx.close()
 
+#
+#
+#
+#
+
 
 class oem_cmd(Enum):
     DEFAULT = 0xFFFFFFFF
-    UPDATE_REQUEST = 0x00000003
+    UPDATE_REQUEST = 0x00000001
 
 
 class vehicle_cmd(Enum):
+    #
     UPDATE_REQUEST_NACK = 0x00000000
     UPDATE_REQUEST_ACK = 0x00000001
+    #
+    INTEGRITY_ACK = 0x00000002
+    INTEGRITY_NACK = 0x00000003
+    #
+    AUTHNTECITY_ACK = 0x00000004
+    AUTHNTECITY_NACK = 0x00000005
+    #
+    CONFIDENTIALITY_ACK = 0x00000006
+    CONFIDENTIALITY_NACK = 0x00000007
+    #
+    ROOT_OF_TRUST_ACK = 0x00000008
+    ROOT_OF_TRUST_NACK = 0x00000009
+    #
 
 
 def e_v(enum_):
@@ -417,8 +436,8 @@ class prj_foem_mqtt:
                                 self.publish(
                                     f'{ e_v(oem_cmd.DEFAULT) }')
                             print(f'Nothing new | {e_v(oem_cmd.DEFAULT)}')
-                        last_active_job_id = last_id
                         time.sleep(2)
+                    last_active_job_id = last_id
                 else:
                     print(f'There is not new FOTA record. last | @{last_id}')
                 #
