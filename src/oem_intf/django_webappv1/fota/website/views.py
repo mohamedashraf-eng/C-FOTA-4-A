@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.http import JsonResponse
+from django.core import serializers
 #
 #
 from .models import Fota_Firmware, Fota_Ecu, Fota_Vehicle, Fota_Fota, mqtt
@@ -112,8 +114,22 @@ def vehicle_database(request, pk):
 
 def comm_intf(request):
     if request.user.is_authenticated:
-        mymqtt = mqtt.objects.all()
-        return render(request, 'comm_intf.html', {'mqtt': mymqtt})
+        mymqtt = mqtt.objects.all()  # Assuming mqtt is your model name
+
+        # If this is an AJAX request
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            last_mqtt = mymqtt.last()
+            mqtt_list = serializers.serialize('json', mymqtt)
+            return JsonResponse({
+                'in_msg': last_mqtt.in_msg,
+                'out_msg': last_mqtt.out_msg,
+                'mqtt': mqtt_list,
+            })
+
+        # If this is a regular request
+        else:
+            return render(request, 'comm_intf.html', {'mqtt': mymqtt})
+
     else:
         messages.success(
             request, "You must be logged in to view the communications")

@@ -373,7 +373,7 @@ class prj_foem_mqtt:
     def __vehicle_cmd_switch(self, cmd):
         return {
             #
-            e_v(vehicle_cmd.UPDATE_REQUEST_ACK): lambda: print(f'{vehicle_cmd.UPDATE_REQUEST_ACK}')
+            e_v(vehicle_cmd.UPDATE_REQUEST_ACK): lambda: print(f'{vehicle_cmd.UPDATE_REQUEST_ACK}'),
             e_v(vehicle_cmd.UPDATE_REQUEST_NACK): lambda: print(f'{vehicle_cmd.UPDATE_REQUEST_NACK}')
             #
         }.get(cmd, lambda: (logging.info(f'Invalid received cmd | {cmd}'),
