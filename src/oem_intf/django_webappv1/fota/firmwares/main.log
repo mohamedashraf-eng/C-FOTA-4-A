@@ -78,3 +78,10 @@
 2023-07-30 23:45:57,019 - INFO - Conversion successful. Binary file created:test.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
 2023-10-10 11:04:45,501 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:41 - __firmware_hex_fetch
 2023-10-10 11:04:45,517 - INFO - Conversion successful. Binary file created:.\test.bin - .\firmware_utils.py:64 - __firmware_cvt2bin
+2023-10-10 12:12:04,758 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
+2023-10-10 12:12:04,762 - INFO - Conversion successful. Binary file created:.\test.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
+2023-10-10 12:23:56,174 - ERROR - Error: File '.\test.hex' not found. - .\firmware_utils.py:42 - __firmware_hex_fetch
+2023-10-10 12:23:56,174 - ERROR - Error: The specified hex file was not found. - .\firmware_utils.py:68 - __firmware_cvt2bin
+2023-10-10 12:23:56,174 - ERROR - Error: File '.\test.hex' not found. - .\firmware_utils.py:107 - __firmware_calculate_size
+2023-10-10 12:24:03,101 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
+2023-10-10 12:24:03,105 - INFO - Conversion successful. Binary file created:.\firmwareToUpload.bin - .\firmware_utils.py:63 - __firmware_cvt2bin

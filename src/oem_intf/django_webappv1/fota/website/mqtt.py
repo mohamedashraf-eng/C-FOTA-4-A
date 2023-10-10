@@ -28,6 +28,8 @@ logging.basicConfig(filename=log_filename,
                     level=logging.INFO, format=log_format)
 
 
+PASSIVE_RECONNECT_HANDLER = True
+
 class prj_foem_yaml:
     # Class methods
     def __init__(self, filepath):
@@ -140,12 +142,24 @@ class prj_foem_mysql:
         self.close()
 
     def fetch(self, table_name, id_col, id, col):
-        self.connect()
-        fetch_query = f'SELECT {col} FROM {table_name} WHERE {id} = %s'
-        self.__cursor.execute(fetch_query, (id,))
-        data = self.__cursor.fetchone()
-        self.close()
-        return data[0]
+        try:
+            self.connect()
+            fetch_query = f'SELECT {col} FROM {table_name} WHERE {id_col} = %s'
+            self.__cursor.execute(fetch_query, (id,))
+            data = self.__cursor.fetchone()
+
+            if data is not None:
+                return data[0]
+            else:
+                # Handle the case where no matching row was found
+                return None
+        except Exception as e:
+            # Handle exceptions related to database connectivity or query execution
+            print(f"Error fetching data: {str(e)}")
+            return None
+        finally:
+            self.close()
+
 
     def fetch_single_value(self, query):
         self.connect()
@@ -163,12 +177,10 @@ class prj_foem_mysql:
 #
 #
 
-
 class oem_cmd(Enum):
     DEFAULT = 0xFFFFFFFF
     UPDATE_REQUEST = 0x00000001
-
-
+    
 class vehicle_cmd(Enum):
     #
     UPDATE_REQUEST_NACK = '0' # 0x00000000
@@ -374,17 +386,54 @@ class prj_foem_mqtt:
 
     def am_i_connected(self):
         return self.__pmqtt_client.is_connected()
+    
+    def __is_update_ready(self, last_active_job_id):
+        return self.__mysql_obj.fetch(
+                            'website_fota_fota', 'fota_id', last_active_job_id, 'availability_flag')
 #
 # COMM INTF: START
 # HANDLERS
-#
+    def __loadFirmwareToUpdate(self, fota_record_id):
+        try:
+            firmware_id = self.__mysql_obj.fetch('website_fota_fota', 'fota_id', fota_record_id, 'firmware_id')
+            firmware = []
+            BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            firmware_fp = self.__mysql_obj.fetch(
+                'website_fota_firmware', 'firmware_id', firmware_id, 'firmware')
+            firmware_fp = os.path.join(BASE_DIR, firmware_fp)
+            with open(firmware_fp, 'r') as f:
+                firmware = [line.strip() for line in f]
+                
+                return firmware
+        except:
+            raise Exception('Invalid firmware ID')
+        
+    def __onVehicleCmd_UpdateRequestAck(self):
+        print(f'{vehicle_cmd.UPDATE_REQUEST_ACK}')
+        print(self.__firmwareToUpload)
+
+    def __onVehicleCmd_UpdateRequestNack(self):
+        print(f'{vehicle_cmd.UPDATE_REQUEST_NACK}')
+
+    def __onVehicleCmd_IntegrityAck(self):
+        pass
+    
+    def __onVehicleCmd_IntegrityNack(self):
+        pass
+    
+    def __onVehicleCmd_AuthAck(self):
+        pass
+    
+    def __onVehicleCmd_AuthNack(self):
+        pass
+    
 # TODO(Wx): Implement the commands handlers
 # MAIN HANDLERS
     def __vehicle_cmd_switch(self, cmd):
         return {
             #
-            e_v(vehicle_cmd.UPDATE_REQUEST_ACK): lambda: print(f'{vehicle_cmd.UPDATE_REQUEST_ACK}'),
-            e_v(vehicle_cmd.UPDATE_REQUEST_NACK): lambda: print(f'{vehicle_cmd.UPDATE_REQUEST_NACK}')
+            e_v(vehicle_cmd.UPDATE_REQUEST_ACK): lambda: self.__onVehicleCmd_UpdateRequestAck(),
+            e_v(vehicle_cmd.UPDATE_REQUEST_NACK): lambda: self.__onVehicleCmd_UpdateRequestNack()
             #
         }.get(cmd, lambda: (logging.info(f'Invalid received cmd | {cmd}'),
                             print(f'Invalid received cmd | {cmd}')))()
@@ -412,13 +461,7 @@ class prj_foem_mqtt:
         # Save first SQL
         # self.__save_sql_cfg()
         # Get hex file path
-        firmware = []
-        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        firmware_fp = self.__mysql_obj.fetch(
-            'website_fota_firmware', 'firmware_id', 1, 'firmware')
-        firmware_fp = os.path.join(BASE_DIR, firmware_fp)
-        with open(firmware_fp, 'r') as f:
-            firmware = [line.strip() for line in f]
+
         # MAIN
         try:
             self.connect()
@@ -433,19 +476,24 @@ class prj_foem_mqtt:
                 if curr_max_id is not None and curr_max_id != last_id:
                     last_id = curr_max_id
                     while not job_done and not job_delayed:
-                        curr_update_ready = self.__mysql_obj.fetch(
-                            'website_fota_fota', 'fota_id', last_active_job_id, 'update_ready_flag')
+                        curr_update_ready = self.__is_update_ready(last_active_job_id)
+                        #
                         if curr_update_ready == 1:
+                            self.__firmwareToUpload = self.__loadFirmwareToUpdate(last_active_job_id)
                             if self.__mqtt_unlock_flag:
                                 self.publish(
                                     f'{ e_v(oem_cmd.UPDATE_REQUEST) }')
+                            # Start handle the incoming vehicle cmd
                             self.__oem_cmd_handle()
                         else:
                             if self.__mqtt_unlock_flag:
                                 self.publish(
                                     f'{ e_v(oem_cmd.DEFAULT) }')
-                            print(f'Nothing new | {e_v(oem_cmd.DEFAULT)}')
+                            # print(f'Nothing new | {e_v(oem_cmd.DEFAULT)}')
+                            # Base listner 
+                            self.__oem_cmd_handle()
                         time.sleep(2)
+                    #
                     last_active_job_id = last_id
                 else:
                     print(f'There is no new FOTA record. last@{last_id}')
@@ -465,5 +513,16 @@ if __name__ == '__main__':
 
     mymqtt.run()
     # TODO(Wx): Make a recovery handle
-    if not mymqtt.am_i_connected():
-        mymqtt.run()
+
+    try:
+        if PASSIVE_RECONNECT_HANDLER:
+            # Passive handle in (testing)
+            if not mymqtt.am_i_connected():
+                mymqtt.run()
+        else:
+            # Offenseve handle in (production)
+            while not mymqtt.am_i_connected():
+                mymqtt.run()
+    except Exception as e:
+        # TODO(Wx): Critical Exception procedure
+        raise Exception("Unkown exception error due to undefined behaviour. [CRITICAL ! ! ]")

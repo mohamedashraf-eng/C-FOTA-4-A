@@ -12,7 +12,7 @@
           <th class="text-center" scope="col">Ecu ID</th>
           <th class="text-center" scope="col">Vehicle ID</th>
           <th class="text-center" scope="col">Availability Flag</th>
-          <th class="text-center" scope="col">Update Ready Flag</th>
+          {% comment %} <th class="text-center" scope="col">Update Ready Flag</th> {% endcomment %}
           <th class="text-center" scope="col">Status</th>
           <th class="text-center" scope="col">Started at</th>
           <th class="text-center" scope="col">Completed at</th>
@@ -26,7 +26,7 @@
           <td class="text-center"><a href="{% url 'ecu_database' fota.ecu.ecu_id %}">{{ fota.ecu.ecu_id }}</a> </td>
           <td class="text-center"><a href="{% url 'vehicle_database' fota.vehicle.vehicle_id %}">{{ fota.vehicle.vehicle_id }}</a> </td>
           <td class="text-center">{{ fota.availability_flag }}</td>
-          <td class="text-center">{{ fota.update_ready_flag }}</td>
+          {% comment %} <td class="text-center">{{ fota.update_ready_flag }}</td> {% endcomment %}
           <td class="text-center">{{ fota.status }}</td>
           <td class="text-center">{{ fota.started_at }}</td>
           <td class="text-center">{{ fota.completed_at }}</td>

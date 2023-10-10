@@ -12,7 +12,7 @@
           <th class="text-center" scope="col">Ecu ID</th>
           <th class="text-center" scope="col">Vehicle ID</th>
           <th class="text-center" scope="col">Availability Flag</th>
-          <th class="text-center" scope="col">Update Ready Flag</th>
+          {% comment %} <th class="text-center" scope="col">Update Ready Flag</th> {% endcomment %}
           <th class="text-center" scope="col">Status</th>
           <th class="text-center" scope="col">Started at</th>
           <th class="text-center" scope="col">Completed at</th>
@@ -26,7 +26,7 @@
           <td class="text-center"><a href="{% url 'ecu_database' fotas.ecu.ecu_id %}">{{ fotas.ecu.ecu_id }}</a> </td>
           <td class="text-center"><a href="{% url 'vehicle_database' fotas.vehicle.vehicle_id %}">{{ fotas.vehicle.vehicle_id }}</a> </td>
           <td class="text-center">{{ fotas.availability_flag }}</td>
-          <td class="text-center">{{ fotas.update_ready_flag }}</td>
+          {% comment %} <td class="text-center">{{ fotas.update_ready_flag }}</td> {% endcomment %}
           <td class="text-center">{{ fotas.status }}</td>
           <td class="text-center">{{ fotas.started_at }}</td>
           <td class="text-center">{{ fotas.completed_at }}</td>
@@ -36,14 +36,14 @@
     </table>
     <br/>
   <div class="row">
-    <div class="col text-center">
+    {% comment %} <div class="col text-center">
       <form action="" method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Deleting</button>
-      </form>
-    </div>
+      </form> 
+    </div> {% endcomment %}
     <div class="col text-center">
-      <a href="{% url 'update_fota_record' 1%}" class="btn btn-primary">Modifying</a>
+      <a href="{% url 'update_fota_record' 1%}" class="btn btn-primary">Modify</a>
     </div>
   </div>
 {% endif %}

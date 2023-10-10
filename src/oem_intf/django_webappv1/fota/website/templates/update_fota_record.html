@@ -27,10 +27,10 @@
                 <input type="checkbox" class="form-check-input" id="{{ form.availability_flag.id_for_label }}" name="{{ form.availability_flag.html_name }}" {% if form.availability_flag.value %}checked{% endif %}>
                 <label class="form-check-label" for="{{ form.availability_flag.id_for_label }}">Availability Flag</label>
               </div>
-              <div class="form-check">
+              {% comment %} <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="{{ form.update_ready_flag.id_for_label }}" name="{{ form.update_ready_flag.html_name }}" {% if form.update_ready_flag.value %}checked{% endif %}>
                 <label class="form-check-label" for="{{ form.update_ready_flag.id_for_label }}">Update Ready Flag</label>
-              </div>
+              </div> {% endcomment %}
               <div class="mb-3">
                 <label for="{{ form.status.id_for_label }}" class="form-label">Status:</label>
                 {{ form.status }}

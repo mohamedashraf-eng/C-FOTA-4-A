@@ -17,7 +17,6 @@ log_format = (
 logging.basicConfig(filename=log_filename,
                     level=logging.INFO, format=log_format)
 
-
 class prj_foem_firmware:
     def __init__(self, firmware_fp):
         self.__firmware_fp = firmware_fp
@@ -140,6 +139,6 @@ if __name__ == '__main__':
 
     myFirmware = prj_foem_firmware(file_path)
     print(f'size: {myFirmware.get_size()}')
-    print(f'Hash: {myFirmware.get_sha256().hex()}')
+    print(f'SHA256-Hash: {myFirmware.get_sha256().hex()}')
     print(f'CMAC Of Hash: {myFirmware.get_cmac()}')
     print(f'HMAC Of Hash: {myFirmware.get_hmac().hex()}')
