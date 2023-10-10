@@ -1,3 +1,13 @@
+'''
+    @author Mohamed Ashraf Wx
+    @date 2023 / 13 / 3
+    @brief
+    @copyright Copyright (c) Mohamed Ashraf, 2023 FOTA
+    
+    @attention
+
+'''
+
 import yaml
 import json
 import logging
@@ -161,29 +171,27 @@ class oem_cmd(Enum):
 
 class vehicle_cmd(Enum):
     #
-    UPDATE_REQUEST_NACK = 0x00000000
-    UPDATE_REQUEST_ACK = 0x00000001
+    UPDATE_REQUEST_NACK = '0' # 0x00000000
+    UPDATE_REQUEST_ACK = '1' # 0x00000001
     #
-    INTEGRITY_ACK = 0x00000002
-    INTEGRITY_NACK = 0x00000003
+    INTEGRITY_ACK = '2' # 0x00000002
+    INTEGRITY_NACK = '3' # 0x00000003
     #
-    AUTHNTECITY_ACK = 0x00000004
-    AUTHNTECITY_NACK = 0x00000005
+    AUTHNTECITY_ACK = '4' # 0x00000004
+    AUTHNTECITY_NACK = '5' # 0x00000005
     #
-    CONFIDENTIALITY_ACK = 0x00000006
-    CONFIDENTIALITY_NACK = 0x00000007
+    CONFIDENTIALITY_ACK = '6' # 0x00000006
+    CONFIDENTIALITY_NACK = '7' # 0x00000007
     #
-    ROOT_OF_TRUST_ACK = 0x00000008
-    ROOT_OF_TRUST_NACK = 0x00000009
+    ROOT_OF_TRUST_ACK = '9' # 0x00000009
+    ROOT_OF_TRUST_NACK = '10' # 0x0000000A
     #
-
 
 def e_v(enum_):
     return enum_.value
 
 #
 # MQTT - CLASS
-
 
 class prj_foem_mqtt:
     # Class methods
@@ -312,10 +320,10 @@ class prj_foem_mqtt:
                 f"connected to broker_addr: {self.__brokeraddr} with client_id: {self.__clientid} succesfully"
             )
 
-    def __mqtt_pub_lock():
+    def __mqtt_pub_lock(self):
         self.__mqtt_unlock_flag = False
 
-    def __mqtt_pub_unlock():
+    def __mqtt_pub_unlock(self):
         self.__mqtt_unlock_flag = True
 
     # Public methods
@@ -363,13 +371,15 @@ class prj_foem_mqtt:
         self.__pmqtt_client.subscribe(topic=self.__subtopic, qos=self.__qos)
         logging.info(f"to subscribing to topic: `{self.__katopic}`")
         self.__pmqtt_client.subscribe(topic=self.__katopic, qos=self.__qos)
+
+    def am_i_connected(self):
+        return self.__pmqtt_client.is_connected()
 #
 # COMM INTF: START
 # HANDLERS
 #
 # TODO(Wx): Implement the commands handlers
 # MAIN HANDLERS
-
     def __vehicle_cmd_switch(self, cmd):
         return {
             #
@@ -390,7 +400,6 @@ class prj_foem_mqtt:
 #
 # COMM INTF: END
     # Main class sequence runner
-
     def run(self):
         # Fetch my configurations
         self.__get_cfg()
@@ -410,7 +419,7 @@ class prj_foem_mqtt:
         firmware_fp = os.path.join(BASE_DIR, firmware_fp)
         with open(firmware_fp, 'r') as f:
             firmware = [line.strip() for line in f]
-        #
+        # MAIN
         try:
             self.connect()
             self.loop_start()
@@ -439,14 +448,13 @@ class prj_foem_mqtt:
                         time.sleep(2)
                     last_active_job_id = last_id
                 else:
-                    print(f'There is not new FOTA record. last | @{last_id}')
+                    print(f'There is no new FOTA record. last@{last_id}')
                 #
-                time.sleep(5)
+                time.sleep(5) # Comm Speed delay
         except KeyboardInterrupt:
             self.disconnect()
             self.loop_stop()
             self.__mysql_obj.close()
-
 
 if __name__ == '__main__':
     myyaml = prj_foem_yaml('main.yaml')
@@ -454,4 +462,8 @@ if __name__ == '__main__':
 
     mymqtt = prj_foem_mqtt(yaml_mqtt_cfg=myyaml.get_mqttcfg,
                            yaml_mysql_cfg=myyaml.get_sqlcfg)
+
     mymqtt.run()
+    # TODO(Wx): Make a recovery handle
+    if not mymqtt.am_i_connected():
+        mymqtt.run()

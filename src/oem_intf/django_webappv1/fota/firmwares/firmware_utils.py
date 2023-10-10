@@ -4,6 +4,7 @@ import json
 import os
 from os import urandom
 import argparse
+#
 from Crypto.Cipher import AES
 from Crypto.Hash import CMAC, HMAC, SHA256, SHA512
 from Crypto.Protocol.KDF import PBKDF2
@@ -24,8 +25,8 @@ class prj_foem_firmware:
         self.__firmware_in_json = None
         self.__firmware_in_bin = None
         self.__firmware_size = None
-        self.__hmac_secret_key = b"drsalma&mohamedashraf&abdolotfy"
-        self.__cmac_secret_key = b"drsalma&mohamedashraf&abdolotfy"
+        self.__hmac_secret_key = b"mohamedAshraf"
+        self.__cmac_secret_key = b"mohamedAshraf"
         self.__cmac_salt = b"mohamedashraf"
         self.__ecc_salt = b"mohamedashraf"
 
@@ -129,7 +130,6 @@ class prj_foem_firmware:
 
     def get_size(self):
         return self.__firmware_calculate_size()
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

@@ -50,25 +50,35 @@
   }
 
   $(document).ready(function(){
+    // Define the smart list dictionary
+    const out_msg_list = {
+      '4294967295': 'oem_cmd.DEFAULT',
+    };
+    const in_msg_list = {
+      'KEEP_ALIVE': 'vehicle_cmd.KA',
+    };
+    //
     function fetchData(){
       $.ajax({
         url: "/communications/",
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
         success: function(data) {
           if (data.out_msg) {
+            const out_msg_toShow = out_msg_list[data.out_msg] || data.out_msg;
             $("#message-box").append(`
               <div class="d-flex justify-content-start">
                 <div class="card in_msg mb-2 text-right" style="max-width: 100%; width: 150px;">
-                  <p>${data.out_msg}</p>
+                <small class="small-font"><p> ${out_msg_toShow} </p></small>
                 </div>
               </div>
             `);
           }
           if (data.in_msg) {
+            const in_msg_toShow = in_msg_list[data.in_msg] || data.in_msg;
             $("#message-box").append(`
               <div class="d-flex justify-content-end">
                 <div class="card in_msg mb-2 text-left" style="max-width: 100%; width: 150px;">
-                  <p>${data.in_msg}</p>
+                  <small class="small-font"><p> ${in_msg_toShow} </p></small>
                 </div>
               </div>
             `);
@@ -92,3 +102,9 @@
 
   {% endblock extra_js %}
 {% endblock content %}
+
+<style>
+  .small-font {
+    font-size: 9px;
+  }
+</style>
