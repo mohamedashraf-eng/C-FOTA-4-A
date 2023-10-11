@@ -208,23 +208,29 @@ __LOCAL_INLINE __NORETURN __vSetIsAppToBlFlag(flag_t volatile Arg_tValue) {
 	}
 }
 
-__STATIC __NORETURN __vPipeEcho(uint8* pArg_u8TxBuffer, uint8 Arg_u8Length) {
+__STATIC __NORETURN __vPipeEcho(const uint8* pArg_u8TxBuffer, uint8 Arg_u8Length) {
 	if( ((NULL == pArg_u8TxBuffer) || (Arg_u8Length <= 0u)) ) {
 		/* INVALID */
 		BL_DBG_SEND("INVALID Argument Values");
 	} else {
-		PIPE_ECHO(pArg_u8TxBuffer, Arg_u8Length);
+		if( (HAL_OK != PIPE_ECHO((uint8*)&pArg_u8TxBuffer[0], Arg_u8Length)) ) {
+			BL_DBG_SEND("pipe echo is not ok.");
+		} else {
+			BL_DBG_SEND("pipe echo succeeded.");
+		}
 	}
 }
 
-__STATIC __NORETURN __vSendAck(void) {
-	uint8 local_u8AckValue = BL_CMD_RESPONSE_ACK;
-	__vPipeEcho(&local_u8AckValue, 1u);
+__STATIC __NORETURN __vSendAck(uint8 Arg_u8DatatoHostLength) {
+	uint8 local_u8AckValue[2u] = {BL_CMD_RESPONSE_ACK, Arg_u8DatatoHostLength};
+	__vPipeEcho(&local_u8AckValue, 2u);
+	BL_DBG_SEND("Sent Ack successfully");
 }
 
 __STATIC __NORETURN __vSendNack(void) {
 	uint8 local_u8NackValue = BL_CMD_RESPONSE_NACK;
 	__vPipeEcho(&local_u8NackValue, 1u);
+	BL_DBG_SEND("Sent Nack successfully");
 }
 
 __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) {
@@ -270,6 +276,8 @@ __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) 
 			break;
 		default: BL_DBG_SEND("Unkown received command"); break;
 	}
+	/** @todo Make logic for return */
+	local_enThisFuncErrStatus = local_enCmdHandlerErrStatus;
 	return local_enThisFuncErrStatus;
 }
 
@@ -339,12 +347,14 @@ __en_blErrStatus_t __enPipeListen(void) {
 	memset(local_u8PipeListenrBuffer, 0, PIPE_BUFFER_MAX_SIZE);
 	
 	/* Start listening for the packet */
+	BL_DBG_SEND("Waiting for the packet length.");
 	if( (HAL_OK != PIPE_LISTEN((uint8*)&local_u8PipeListenrBuffer[0], 1u)) ) {
 		BL_DBG_SEND("The pipe listner is not ok.");
 		local_enThisFuncErrStatus = BL_E_NOK;
 	} else {
 		/* Receive the data */
 		local_tPacketSeralized.PacketLength = local_u8PipeListenrBuffer[0];
+		BL_DBG_SEND("Waiting for the packet.");
 		if( (HAL_OK != PIPE_LISTEN((uint8*)&local_u8PipeListenrBuffer[1], local_tPacketSeralized.PacketLength)) ) {
 			BL_DBG_SEND("The pipe listner is not ok.");
 			local_enThisFuncErrStatus = BL_E_NOK;
@@ -365,12 +375,12 @@ __en_blErrStatus_t __enPipeListen(void) {
 				local_enThisFuncErrStatus = BL_E_NOK;
 				BL_DBG_SEND("Command execution error");
 			} else {
-				__vSendAck();
+				__vSendAck(0u);
 				local_enThisFuncErrStatus = BL_E_OK;
+				BL_DBG_SEND("Command execution done");
 			}
 		}
 	}
-	BL_DBG_SEND("End of pipe listen test");
 	return local_enThisFuncErrStatus;
 }
 
@@ -379,9 +389,18 @@ __en_blErrStatus_t __enPipeListen(void) {
  * 
  */
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_VER_CMD(void) {
-	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_OK;
 	
+	__STATIC uint8 local_u8BootloaderVersion[3u] = {
+		BOOTLOADER_SW_MAJOR_VERSION,
+		BOOTLOADER_SW_MINOR_VERSION,
+		BOOTLOADER_SW_PATCH_VERSION
+	};
+	
+	__vSendAck(sizeof(local_u8BootloaderVersion));
+	__vPipeEcho(local_u8BootloaderVersion, sizeof(local_u8BootloaderVersion));
 
+	BL_DBG_SEND("Sent the bootloader version successfully.");
 	return local_enThisFuncErrStatus; 
 }
 

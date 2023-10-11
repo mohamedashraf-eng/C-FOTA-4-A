@@ -188,9 +188,9 @@ __LOCAL_INLINE __NORETURN __vSetIsValidHashFlag(flag_t volatile Arg_tValue);
 __LOCAL_INLINE __NORETURN __vSetIsAppToBlFlag(flag_t volatile Arg_tValue);
 
 __STATIC __en_blErrStatus_t __enPipeListen(void);
-__STATIC __NORETURN __vPipeEcho(uint8* pArg_u8TxBuffer, uint8 Arg_u8Length);
+__STATIC __NORETURN __vPipeEcho(const uint8* pArg_u8TxBuffer, uint8 Arg_u8Length);
 
-__STATIC __NORETURN __vSendAck(void);
+__STATIC __NORETURN __vSendAck(uint8 Arg_u8DatatoHostLength);
 __STATIC __NORETURN __vSendNack(void);
 
 __STATIC hash_t __tCalculateSHA256HashForApplication(void);
