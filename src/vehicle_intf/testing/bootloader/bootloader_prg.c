@@ -54,18 +54,20 @@
 #	if(BL_COMM_PIPE == BL_COMM_OVER_UART)
 __BTL_COMM_ST_UART_HANDLE_DEF();
 #		if(BL_COMM_TYPE == BL_COMM_SYNC)
-#			define PIPE_LISTEN(__BUFFER) HAL_UART_Receive(&__BTL_COMM_ST_UART_HANDLE, (uint8*)(&__BUFFER[0]), PIPE_BUFFER_MAX_SIZE, HAL_MAX_DELAY)
-#			define PIPE_ECHO(__BUFFER) HAL_UART_Transmit(&__BTL_COMM_ST_UART_HANDLE, (uint8*)(&__BUFFER), sizeof(__BUFFER), HAL_MAX_DELAY)
+#			define PIPE_LISTEN(__BUFFER, __LEN) HAL_UART_Receive(&__BTL_COMM_ST_UART_HANDLE, (__BUFFER), (uint16)(__LEN), HAL_MAX_DELAY)
+#			define PIPE_ECHO(__BUFFER, __LEN) HAL_UART_Transmit(&__BTL_COMM_ST_UART_HANDLE, (__BUFFER), (uint16)(__LEN), HAL_MAX_DELAY)
 #    else
-#			define PIPE_LISTEN(__BUFFER) HAL_UART_Receive_IT(&__BTL_COMM_ST_UART_HANDLE, (uint8*)(&__BUFFER[0]), PIPE_BUFFER_MAX_SIZE)
-#			define PIPE_ECHO(__BUFER) HAL_UART_Transmit_IT(&__BTL_COMM_ST_UART_HANDLE, (uint8*)(&__BUFFER), sizeof(__BUFFER))
+#			define PIPE_LISTEN(__BUFFER, __LEN) HAL_UART_Receive_IT(&__BTL_COMM_ST_UART_HANDLE, (__BUFFER), (uint16)(__LEN))
+#			define PIPE_ECHO(__BUFER, __LEN) HAL_UART_Transmit_IT(&__BTL_COMM_ST_UART_HANDLE, (__BUFFER), (uint16)(__LEN))
 #    endif /* (BL_COMM_TYPE == BL_COMM_SYNC) */
 #	elif(BL_COMM_PIPE == BL_COMM_OVER_CAN)
 __BTL_COMM_ST_CAN_HANDLE_DEF();
 #		if(BL_COMM_TYPE == BL_COMM_SYNC)
 #			define PIPE_LISTEN(__BUFFER)
+#			define PIPE_ECHO(__BUFER, __LEN) 
 #    else
 #			define PIPE_LISTEN(__BUFFER)
+#			define PIPE_ECHO(__BUFER, __LEN) 
 #    endif /* (BL_COMM_TYPE == BL_COMM_SYNC) */
 #	else
 #	error (" No communication pipe interface defined !")
@@ -73,18 +75,17 @@ __BTL_COMM_ST_CAN_HANDLE_DEF();
 #endif /* (BL_COMM_PIPE >= 0x00) */
 
 #if (BL_DBG_PORT >= 0x00)
-# define BL_DBG_SEND(DBG_MSG, ...)	__bl_vDbgWrt("\r\nVENDOR_ID: %d, MODULE_ID: %d 	    \
-														  <FILE: %s - FUNC: %s - LINE: %s>| DBG_MSG:> "DBG_MSG,     \
-												__FILE__,														    												\
-												__LINE__,														    												\
-												__FUNCTION__,													  												\
+# define BL_DBG_SEND(DBG_MSG, ...)	__bl_vDbgWrt("\r\nVENDOR_ID: %d, MODULE_ID: %d <FILE: %s - FUNC: %s - LINE: %d> \nDBG_MSG:> "DBG_MSG,   \
 												BOOTLOADER_VENDOR_ID,											    									\
 												BOOTLOADER_MODULE_ID,										 	    									\
+												__FILE__,														    												\
+												__FUNCTION__,														    										\
+												__LINE__,													  														\
 												##__VA_ARGS__)													    										\
-												
+
 #	if (BL_DBG_PORT == DBG_PORT_UART)
 __BTL_DBG_ST_UART_HANDLE_DEF();
-#			define __DBG_SEND_OVER_X(__BUFFER) HAL_UART_Transmit(&__BTL_DBG_ST_UART_HANDLE, (uint8*)(&__BUFFER)[0], sizeof(__BUFFER), HAL_MAX_DELAY)
+#			define __DBG_SEND_OVER_X(__BUFFER, __LEN) HAL_UART_Transmit(&__BTL_DBG_ST_UART_HANDLE, (uint8*)(&__BUFFER[0]), (uint16)(__LEN), HAL_MAX_DELAY)
 #	elif(BL_DBG_PORT == DBG_PORT_CAN)
 __BTL_DBG_ST_CAN_HANDLE_DEF();
 #		define __DBG_SEND_OVER_X 
@@ -123,13 +124,18 @@ __STATIC sha256_t volatile global_tApplicationHash;
 */
 
 #if (BL_DBG_PORT >= 0x00)
-__STATIC __NORETURN __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...) {
+__STATIC void __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...) {
+	uint8 local_u8DbgBuffer[DBG_BUFFER_MAX_SIZE] = {0};
+	/* Create variadic argument */
 	va_list args;
+	/* Enable access to the variadic argument */
 	va_start(args, pArg_u8StrFormat);
-	uint8 local_u8DbgBuffer[256u];
-	vsnprintf(local_u8DbgBuffer, sizeof(local_u8DbgBuffer), pArg_u8StrFormat, args);
+	/* Write formatted data from variable argument list to string */
+	vsprintf((char *)local_u8DbgBuffer, pArg_u8StrFormat, args);
+	/* Print the message via the channel speicfied */
+	__DBG_SEND_OVER_X(local_u8DbgBuffer, strlen((const char *)local_u8DbgBuffer));
+	/* Clean up the instant */
 	va_end(args);
-	__DBG_SEND_OVER_X(local_u8DbgBuffer);
 }
 #endif
 
@@ -202,61 +208,68 @@ __LOCAL_INLINE __NORETURN __vSetIsAppToBlFlag(flag_t volatile Arg_tValue) {
 	}
 }
 
-__STATIC __NORETURN __vPipeEcho(uint8* pArg_u8TxBuffer, uint16 Arg_u16BufferSize) {
-	if( ((NULL == pArg_u8TxBuffer) || (Arg_u16BufferSize <= 0)) ) {
+__STATIC __NORETURN __vPipeEcho(uint8* pArg_u8TxBuffer, uint8 Arg_u8Length) {
+	if( ((NULL == pArg_u8TxBuffer) || (Arg_u8Length <= 0u)) ) {
 		/* INVALID */
 		BL_DBG_SEND("INVALID Argument Values");
 	} else {
-		PIPE_ECHO(pArg_u8TxBuffer);
+		PIPE_ECHO(pArg_u8TxBuffer, Arg_u8Length);
 	}
 }
 
 __STATIC __NORETURN __vSendAck(void) {
 	uint8 local_u8AckValue = BL_CMD_RESPONSE_ACK;
-	__vPipeEcho(&local_u8AckValue, sizeof(local_u8AckValue));
+	__vPipeEcho(&local_u8AckValue, 1u);
 }
 
 __STATIC __NORETURN __vSendNack(void) {
 	uint8 local_u8NackValue = BL_CMD_RESPONSE_NACK;
-	__vPipeEcho(&local_u8NackValue, sizeof(local_u8NackValue));
+	__vPipeEcho(&local_u8NackValue, 1u);
 }
 
-__STATIC __en_blErrStatus_t __bl_enExecuteCommand(const cmd_t* pArg_tCommand) {
+__STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	__en_blErrStatus_t local_enCmdHandlerErrStatus = BL_E_NONE;
 
-	uint8 local_u8CommandToExecute = 0;
-	
-	switch(local_u8CommandToExecute) {
+	switch(pArg_tPacket->Command) {
 		case CBL_GET_VER_CMD					:	BL_DBG_SEND("Executing Command: CBL_GET_VER_CMD");
 			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_GET_VER_CMD();
 			break;
 		case CBL_GET_HELP_CMD					: BL_DBG_SEND("Executing Command: CBL_GET_HELP_CMD");
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_GET_HELP_CMD();
 			break;
 		case CBL_GET_CID_CMD					:	BL_DBG_SEND("Executing Command: CBL_GET_CID_CMD");	
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_GET_CID_CMD();
 			break;
 		case CBL_GET_RDP_STATUS_CMD		:	BL_DBG_SEND("Executing Command: CBL_GET_RDP_STATUS_CMD");	
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_GET_RDP_STATUS_CMD();
 			break;
 		case CBL_GO_TO_ADDR_CMD				:	BL_DBG_SEND("Executing Command: CBL_GO_TO_ADDR_CMD");	
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_GO_TO_ADDR_CMD();
 			break;
 		case CBL_FLASH_ERASE_CMD			:	BL_DBG_SEND("Executing Command: CBL_FLASH_ERASE_CMD");	
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_CBL_FLASH_ERASE_CMD();
 			break;
 		case CBL_MEM_WRITE_CMD				:	BL_DBG_SEND("Executing Command: CBL_MEM_WRITE_CMD");	
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_MEM_WRITE_CMD();
 			break;
 		case CBL_EN_R_W_PROTECT_CMD		:	BL_DBG_SEND("Executing Command: CBL_EN_R_W_PROTECT_CMD");	
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_EN_R_W_PROTECT_CMD();
 			break;
 		case CBL_MEM_READ_CMD					:	BL_DBG_SEND("Executing Command: CBL_GET_CBL_MEM_READ_CMDVER_CMD");	
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_MEM_READ_CMD();
 			break;
 		case CBL_OTP_READ_CMD					:	BL_DBG_SEND("Executing Command: CBL_OTP_READ_CMD");	
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_OTP_READ_CMD();
 			break;
 		case CBL_DIS_R_W_PROTECT_CMD	:	BL_DBG_SEND("Executing Command: CBL_DIS_R_W_PROTECT_CMD");	
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_DIS_R_W_PROTECT_CMD();
 			break;
 		case CBL_READ_SECTOR_STATUS 	:	BL_DBG_SEND("Executing Command: CBL_READ_SECTOR_STATUS");	
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_READ_SECTOR_STATUS();
 			break;
-
 		default: BL_DBG_SEND("Unkown received command"); break;
 	}
-
 	return local_enThisFuncErrStatus;
 }
 
@@ -294,6 +307,153 @@ __STATIC __NORETURN __vJumpToApplication(void) {
 	}
 }
 
+__STATIC __NORETURN __vSeralizeReceivedBuffer(packet_t* pArg_tPacket, uint8* pArg_tReceivedBuffer) {
+	if( (NULL == pArg_tPacket) || (NULL == pArg_tReceivedBuffer) ) {
+		BL_DBG_SEND("Invalid arguments");
+	} else {
+		pArg_tPacket->PacketType = *((uint8*)&pArg_tReceivedBuffer[0]);
+		pArg_tPacket->Command = *((uint8*)&pArg_tReceivedBuffer[1]);
+		pArg_tPacket->Data = *((uint32*)&pArg_tReceivedBuffer[2]);
+		pArg_tPacket->DataCRC = *((uint32*)&pArg_tReceivedBuffer[3]);
+		pArg_tPacket->PacketCRC = *((uint32*)&pArg_tReceivedBuffer[4]);
+	}
+	return;
+}
+
+/**
+ * @details
+ * 	Packet structure format:
+ * 					[Packet length] | [Packet Type] | [Command] | [Data]		[Data CRC] | [Packet CRC]
+ * 					[1 Byte]				| [1 Byte] 			| [1 Byte]  | [4 Byte]	[4 Byte] 	 | [4 Byte]
+ * 
+ * Max Packet length (Excluding Length): x Bytes
+ * Min Packet length (Excluding Length): y Bytes
+ * 
+ */
+__en_blErrStatus_t __enPipeListen(void) {
+	BL_DBG_SEND("Command Listening Start pipe: %d | type: %d\n", BL_COMM_PIPE, BL_COMM_TYPE);
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	packet_t local_tPacketSeralized = {0};
+	
+	uint8 local_u8PipeListenrBuffer[PIPE_BUFFER_MAX_SIZE];
+	memset(local_u8PipeListenrBuffer, 0, PIPE_BUFFER_MAX_SIZE);
+	
+	/* Start listening for the packet */
+	if( (HAL_OK != PIPE_LISTEN((uint8*)&local_u8PipeListenrBuffer[0], 1u)) ) {
+		BL_DBG_SEND("The pipe listner is not ok.");
+		local_enThisFuncErrStatus = BL_E_NOK;
+	} else {
+		/* Receive the data */
+		local_tPacketSeralized.PacketLength = local_u8PipeListenrBuffer[0];
+		if( (HAL_OK != PIPE_LISTEN((uint8*)&local_u8PipeListenrBuffer[1], local_tPacketSeralized.PacketLength)) ) {
+			BL_DBG_SEND("The pipe listner is not ok.");
+			local_enThisFuncErrStatus = BL_E_NOK;
+		} else {
+			BL_DBG_SEND("The pipe listner received a packet successfully.");
+			/* Seralize the received packet */
+			__vSeralizeReceivedBuffer(&local_tPacketSeralized, (uint8*)&local_u8PipeListenrBuffer[1]);
+
+			/* Validate CRC */
+
+			/* Validate the type */
+			
+			/* Validate the command */
+
+			/* Execute the command */
+			if( (BL_E_OK != __bl_enExecuteCommand(&local_tPacketSeralized)) ) {
+				__vSendNack();
+				local_enThisFuncErrStatus = BL_E_NOK;
+				BL_DBG_SEND("Command execution error");
+			} else {
+				__vSendAck();
+				local_enThisFuncErrStatus = BL_E_OK;
+			}
+		}
+	}
+	BL_DBG_SEND("End of pipe listen test");
+	return local_enThisFuncErrStatus;
+}
+
+/**
+ * @defgroup Command handlers implementation 
+ * 
+ */
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_VER_CMD(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+
+	return local_enThisFuncErrStatus; 
+}
+
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_HELP_CMD(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+
+	return local_enThisFuncErrStatus; 
+}
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_CID_CMD(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+
+	return local_enThisFuncErrStatus; 
+}
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_RDP_STATUS_CMD(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+
+	return local_enThisFuncErrStatus; 
+}
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GO_TO_ADDR_CMD(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+
+	return local_enThisFuncErrStatus; 
+}
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_CBL_FLASH_ERASE_CMD(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+
+	return local_enThisFuncErrStatus; 
+}
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_WRITE_CMD(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+
+	return local_enThisFuncErrStatus; 
+}
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_EN_R_W_PROTECT_CMD(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+
+	return local_enThisFuncErrStatus; 
+}
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_READ_SECTOR_STATUS(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+
+	return local_enThisFuncErrStatus; 
+}
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_READ_CMD(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+
+	return local_enThisFuncErrStatus; 
+}
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_OTP_READ_CMD(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+
+	return local_enThisFuncErrStatus; 
+}
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_DIS_R_W_PROTECT_CMD(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+
+	return local_enThisFuncErrStatus; 
+}
+/**
+  * @}
+  */
 /**
 * ===============================================================================================
 *   > Public Functions Implementation
@@ -313,16 +473,19 @@ __STATIC __NORETURN __vJumpToApplication(void) {
  * 
  */
 __NORETURN BL_enBootManager(void) {
-	BL_DBG_SEND("Started the boot manager.");
-	if( (BL_FRESH == __enGetIsAppToBlFlag()) || (BL_APP_VALID != __enGetIsValidAppFlag()) ) {
-		/* Start listner */
+	BL_DBG_SEND("Started the boot manager");
+	if( (BL_FRESH == __enGetIsAppToBlFlag()) || (BL_APP_VALID != __enGetIsValidAppFlag()) ||
+			(BL_APP_TO_BL == __enGetIsAppToBlFlag())) {
 		BL_DBG_SEND("Invalid application, waiting for a valid application");
+		/* Start listner */
 		__enPipeListen();
 	} else {
+		BL_DBG_SEND("Validating the existant application");
 		/* Process */
 		if( (BL_APP_VALID == __enGetIsValidAppFlag()) ) {
+			BL_DBG_SEND("Calculating application hash.");
 			__STATIC sha256_t local_tApplicationHash;  
-			strncpy((uint8*)local_tApplicationHash, (uint8*)__tCalculateSHA256HashForApplication(), sizeof(local_tApplicationHash) - 1);
+			strncpy((uint8*)local_tApplicationHash, "X", sizeof(local_tApplicationHash) - 1);
 			local_tApplicationHash[sizeof(local_tApplicationHash) - 1] = '\0';
 			if ( (0 == strcmp(local_tApplicationHash, global_tApplicationHash)) ) {
 				__vSetIsValidHashFlag(TRUE);
@@ -340,34 +503,7 @@ __NORETURN BL_enBootManager(void) {
 			;
 		}
 	}
-}
-
-__en_blErrStatus_t __enPipeListen(void) {
-	BL_DBG_SEND("Command Listening Start pipe: %d | type: %d", BL_COMM_PIPE, BL_COMM_TYPE);
-	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
-	
-	uint8 local_u8PipeListenrBuffer[PIPE_BUFFER_MAX_SIZE];
-	memset(local_u8PipeListenrBuffer, 0, PIPE_BUFFER_MAX_SIZE);
-	
-	if( (HAL_OK != PIPE_LISTEN(local_u8PipeListenrBuffer)) ) {
-		BL_DBG_SEND("The pipe listner is not ok.");
-		local_enThisFuncErrStatus = BL_E_NOK;
-	} else {
-		/* Process the buffer */
-		cmd_t local_tCommandSeralized;
-		
-		/* */
-		
-		if( (BL_E_OK != __bl_enExecuteCommand(&local_tCommandSeralized)) ) {
-			__vSendNack();
-			local_enThisFuncErrStatus = BL_E_NOK;
-			BL_DBG_SEND("Command execution error");
-		} else {
-			__vSendAck();
-			local_enThisFuncErrStatus = BL_E_OK;
-		}
-	}
-	return local_enThisFuncErrStatus;
+	BL_DBG_SEND("End of the boot manager");
 }
 
 __st_blVersion_t BL_stGetSwVersion(void) {

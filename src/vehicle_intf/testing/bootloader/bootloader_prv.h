@@ -60,12 +60,12 @@
 #define __BTL_DBG_ST_CAN_HANDLE    hcan
 
 #define __BTL_COMM_ST_UART_HANDLE_DEF()	 extern UART_HandleTypeDef __BTL_COMM_ST_UART_HANDLE
-#define __BTL_COMM_ST_CAN_HANDLE_DEF()  extern CAN_HandleTypeDef __BTL_COMM_ST_CAN_HANDLE
+#define __BTL_COMM_ST_CAN_HANDLE_DEF()   extern CAN_HandleTypeDef __BTL_COMM_ST_CAN_HANDLE
 #define __BTL_DBG_ST_UART_HANDLE_DEF()	 extern UART_HandleTypeDef __BTL_DBG_ST_UART_HANDLE
-#define __BTL_DBG_ST_CAN_HANDLE_DEF()   extern CAN_HandleTypeDef __BTL_DBG_ST_CAN_HANDLE
+#define __BTL_DBG_ST_CAN_HANDLE_DEF()    extern CAN_HandleTypeDef __BTL_DBG_ST_CAN_HANDLE
 
 #define PIPE_BUFFER_MAX_SIZE ( (uint8) (255U) )
-
+#define DBG_BUFFER_MAX_SIZE  ( (uint8) (255U) )
 /** @defgroup debugging configurations */
 #define DBG_PORT_UART  ( (0x00U) )
 #define DBG_PORT_CAN   ( (0x01U) )
@@ -101,7 +101,7 @@
 #define BTL_FLASH_MAX_PAGE_NUM 				(STM32F103C8Tx_FLASH_PAGE_NUM)
 #define BTL_FLASH_MASS_ERASE 					(BTL_FLASH_MAX_PAGE_NUM + 1u)
 
-/** @defgroup UDS - Commands */
+/** @defgroup Commands */
 #define NUM_OF_CMD 										( (uint8) (12u) )
 #define	CBL_GET_VER_CMD								( (uint8) (0) )
 #define	CBL_GET_HELP_CMD							( (uint8) (1) )
@@ -116,6 +116,11 @@
 #define	CBL_DIS_R_W_PROTECT_CMD				( (uint8) (10) )
 #define CBL_READ_SECTOR_STATUS 				( (uint8) (11) )
 
+/** @defgroup Packet Type */
+#define PACKET_TYPE_REQUEST_DATA				( (uint8) (0) )
+#define PACKET_TYPE_DATA_FOR_FLASH			( (uint8) (1) )
+#define PACKET_TYPE_CMD									( (uint8) (2) )
+
 /**
 * ===============================================================================================
 *   > Private Datatypes
@@ -123,7 +128,7 @@
 */
 
 /** @defgroup Bootloader defined types */
-typedef struct __packetSerialization cmd_t;
+typedef struct __packetSerialization packet_t;
 typedef boolean flag_t;
 
 typedef uint8* hash_t;
@@ -146,9 +151,13 @@ struct __bootloaderVersion {
 
 /** @brief Struct for packet serialization */
 struct __packetSerialization {
-	
+	uint8 PacketLength;
+	uint8 PacketType;
+	uint8 Command;
+	uint32 Data;
+	uint32 DataCRC;
+	uint32 PacketCRC;
 };
-
 
 /**
 * ===============================================================================================
@@ -165,9 +174,11 @@ struct __packetSerialization {
 extern "c" {
 #endif /* __cplusplus */
 
-__STATIC __NORETURN __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...);
+#if (BL_DBG_PORT >= 0x00)
+__STATIC void __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...);
+#endif
 
-__STATIC __en_blErrStatus_t __bl_enExecuteCommand(const cmd_t* pArg_tCommand);
+__STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket);
 
 __LOCAL_INLINE __en_blStatus_t __enGetIsValidAppFlag(void);
 __LOCAL_INLINE __en_blStatus_t __enGetIsValidHashFlag(void);
@@ -176,24 +187,36 @@ __LOCAL_INLINE __NORETURN __vSetIsValidAppFlag(flag_t volatile Arg_tValue);
 __LOCAL_INLINE __NORETURN __vSetIsValidHashFlag(flag_t volatile Arg_tValue);
 __LOCAL_INLINE __NORETURN __vSetIsAppToBlFlag(flag_t volatile Arg_tValue);
 
-__en_blErrStatus_t __enPipeListen(void);
-__STATIC __NORETURN __vPipeEcho(uint8* pArg_u8TxBuffer, uint16 Arg_u16BufferSize);
+__STATIC __en_blErrStatus_t __enPipeListen(void);
+__STATIC __NORETURN __vPipeEcho(uint8* pArg_u8TxBuffer, uint8 Arg_u8Length);
 
 __STATIC __NORETURN __vSendAck(void);
 __STATIC __NORETURN __vSendNack(void);
 
 __STATIC hash_t __tCalculateSHA256HashForApplication(void);
 
-__STATIC __NORETURN __vJumpToApplication(void);
+__STATIC __FORCE_NORETURN __vJumpToApplication(void);
 __STATIC __en_blErrStatus_t __enVerifyAddress(uint32 Arg_McuAddressValue);
 
+__STATIC __NORETURN __vSeralizeReceivedBuffer(packet_t* pArg_tPacket, uint8* pArg_tReceivedBuffer);
 
 /** 
  * @defgroup commands handlers 
  **/ 
 
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_VER_CMD(void);
-
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_HELP_CMD(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_CID_CMD(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_RDP_STATUS_CMD(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GO_TO_ADDR_CMD(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_CBL_FLASH_ERASE_CMD(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_WRITE_CMD(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_EN_R_W_PROTECT_CMD(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_READ_SECTOR_STATUS(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_READ_CMD(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_OTP_READ_CMD(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_DIS_R_W_PROTECT_CMD(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_READ_SECTOR_STATUS(void);
 
 /**
   * @}
