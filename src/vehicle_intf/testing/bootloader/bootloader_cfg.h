@@ -50,16 +50,18 @@
 * ===============================================================================================
 */
 
-/** @brief Communication pipe for the bootloader
-	* @arguments
-		@arg BL_COMM_OVER_CAN
-		@arg BL_COMM_OVER_UART
+/** 
+ * @brief Communication pipe for the bootloader
+ * @arguments
+ *	@arg BL_COMM_OVER_CAN
+ *	@arg BL_COMM_OVER_UART
 */
 #define BL_COMM_PIPE	BL_COMM_OVER_UART
-/** @brief Communication type for the bootloader
-	* @arguments
-		@arg BL_COMM_SYNC
-		@arg BL_COMM_ASYNC
+/** 
+ * @brief Communication type for the bootloader
+ * @arguments
+ *	@arg BL_COMM_SYNC
+ *	@arg BL_COMM_ASYNC
 */
 #define BL_COMM_TYPE	BL_COMM_SYNC
 
@@ -69,16 +71,20 @@
 * ===============================================================================================
 */
 
-/** @brief MCU application start address
+/** 
+ * @brief MCU application start address
+ * @attention DON'T CHANGE THIS LINE !!!!!
+ * 
 */
-#define APP_START_ADDR	( (uint32) (0x00) )
+#define APP_START_ADDR	( (uint32) (0x8004F00) )
 
 /**
 * ===============================================================================================
 *   > Bootloader Debugging CFG
 * ===============================================================================================
 */
-/** @brief ECU application start address
+/** 
+ * @brief ECU application start address
  *  @arguments
  *  	@arg DBG_PORT_UART
  *  	@arg DBG_PORT_CAN
