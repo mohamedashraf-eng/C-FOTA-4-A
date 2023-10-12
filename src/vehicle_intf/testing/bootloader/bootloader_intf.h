@@ -62,40 +62,12 @@
 * ===============================================================================================
 */
 
-/** @brief Enum for bootloader status */
-enum __bootloaderErrorStatus {
-	BL_E_NONE = -1,
-	BL_E_OK 	= 0,
-	BL_E_NOK,
-	BL_E_INVALID_LENGTH,
-	BL_E_INVALID_CMD,
-	BL_E_INVALID_CRC,
-	BL_E_TIMEOUT,
-	BL_E_INVALID_ADDR
-};
-
-enum __bootloaderStatus {
-	BL_NONE = -1,
-	BL_APP_VALID = 0,
-	BL_APP_NOT_VALID,
-	BL_HASH_VALID,
-	BL_HASH_NOT_VALID,
-	BL_APP_TO_BL,
-	BL_FRESH,
-	BL_NO_APP
-};
-
 /**
 * ===============================================================================================
 *   > Public Datatypes
 * ===============================================================================================
 */
 
-/** @brief Struct container for the bootloader sw version */
-typedef struct __bootloaderVersion __st_blVersion_t;
-/** @brief Enum for bootloader status */
-typedef enum __bootloaderErrorStatus __en_blErrStatus_t;
-typedef enum __bootloaderStatus __en_blStatus_t;
 
 /**
 * ===============================================================================================

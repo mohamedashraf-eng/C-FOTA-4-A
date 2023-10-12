@@ -49,6 +49,25 @@
 * ===============================================================================================
 */
 
+// #define DATACONVERSION
+#define BIG2LITTLE
+
+#ifdef DATACONVERSION
+#	ifdef BIG2LITTLE
+#		define B2LENDIAN32(x) ((uint32)( 	 \
+				(((x) & 0x000000FF) << 24) | 		\
+				(((x) & 0x0000FF00) << 8)  |		\
+				(((x) & 0x00FF0000) >> 8)  | 		\
+				(((x) & 0xFF000000) >> 24) 			\
+			))
+#		define APPLYDATACONVERSION(x) B2LENDIAN32(x)
+#	elif  LITTLE2BIG
+#		define APPLYDATACONVERSION(x) 
+# endif /* BIG2LITTLE*/
+#else
+#define APPLYDATACONVERSION(x) x
+#endif /* DATACONVERSION */
+
 #define NOTIMPLEMENTED ({ do 		\
 									\
 				while(1) })			\
@@ -98,6 +117,7 @@
 #define STM32F103C8Tx_FLASH_PAGE_SIZE (1024u)
 #define STM32F103C8Tx_FLASH_SIZE 			(STM32F103C8Tx_FLASH_PAGE_SIZE * STM32F103C8Tx_FLASH_PAGE_NUM)
 #define STM32F103C8Tx_FLASH_END 			(FLASH_BASE + STM32F103C8Tx_FLASH_SIZE)
+
 #define BTL_FLASH_MAX_PAGE_NUM 				(STM32F103C8Tx_FLASH_PAGE_NUM)
 #define BTL_FLASH_MASS_ERASE 					(BTL_FLASH_MAX_PAGE_NUM + 1u)
 
@@ -116,6 +136,8 @@
 #define	CBL_DIS_R_W_PROTECT_CMD				( (uint8) (10) )
 #define CBL_READ_SECTOR_STATUS 				( (uint8) (11) )
 
+#define	CBL_GET_INFO_CMD							( (uint8) (13) )
+
 /** @defgroup Packet Type */
 #define PACKET_TYPE_REQUEST_DATA				( (uint8) (0) )
 #define PACKET_TYPE_DATA_FOR_FLASH			( (uint8) (1) )
@@ -133,6 +155,12 @@ typedef boolean flag_t;
 
 typedef uint8* hash_t;
 typedef uint8 sha256_t[256u];
+
+/** @brief Struct container for the bootloader sw version */
+typedef struct __bootloaderVersion __st_blVersion_t;
+/** @brief Enum for bootloader status */
+typedef enum __bootloaderErrorStatus __en_blErrStatus_t;
+typedef enum __bootloaderStatus __en_blStatus_t;
 
 /**
 * ===============================================================================================
@@ -154,9 +182,10 @@ struct __packetSerialization {
 	uint8 PacketLength;
 	uint8 PacketType;
 	uint8 Command;
-	uint32 Data;
-	uint32 DataCRC;
-	uint32 PacketCRC;
+	uint8 DataLength;
+	uint8 Data[8u]; /* CAN STD COMPATIBLE */
+	uint32 DataCRC32;
+	uint32 PacketCRC32;
 };
 
 /**
@@ -164,6 +193,30 @@ struct __packetSerialization {
 *   > Private Enums
 * ===============================================================================================
 */
+
+enum __bootloaderStatus {
+	BL_NONE = -1,
+	BL_APP_VALID = 0,
+	BL_APP_NOT_VALID,
+	BL_HASH_VALID,
+	BL_HASH_NOT_VALID,
+	BL_APP_TO_BL,
+	BL_FRESH,
+	BL_NO_APP
+};
+
+/** @brief Enum for bootloader status */
+enum __bootloaderErrorStatus {
+	BL_E_NONE = -1,
+	BL_E_OK 	= 0,
+	BL_E_NOK,
+	BL_E_INVALID_LENGTH,
+	BL_E_INVALID_CMD,
+	BL_E_INVALID_CRC,
+	BL_E_TIMEOUT,
+	BL_E_INVALID_ADDR
+};
+
 
 /**
 * ===============================================================================================
@@ -195,25 +248,38 @@ __STATIC __NORETURN __vSendNack(void);
 
 __STATIC hash_t __tCalculateSHA256HashForApplication(void);
 
+__STATIC __en_blErrStatus_t __enVerifyAddress(uint32 Arg_u32McuAddressValue);
 __STATIC __FORCE_NORETURN __vJumpToApplication(void);
-__STATIC __en_blErrStatus_t __enVerifyAddress(uint32 Arg_McuAddressValue);
 
 __STATIC __NORETURN __vSeralizeReceivedBuffer(packet_t* pArg_tPacket, uint8* pArg_tReceivedBuffer);
+
+__LOCAL_INLINE __en_blErrStatus_t __enVerifyPacketCRC32(const uint32 Arg_u32ReceivedCrc32, const uint8* pArg_u8ReceivedBuffer, const uint8 Arg_u8ReceivedBufferSize);
+__LOCAL_INLINE __en_blErrStatus_t __enVerifyPacketDataCRC32(const packet_t* pArg_tReceivedPacket);
+
+
+__LOCAL_INLINE __en_blErrStatus_t __enGetMcuRdpLevel(uint8* pArg_u8RdpLevel);
+__STATIC __en_blErrStatus_t __enEraseFlashPages(const uint8 Arg_u8PageIdx, const uint8 Arg_u8NumOfPages);
+__LOCAL_INLINE __en_blErrStatus_t __enJumpToAddress(uint32 Arg_u32Address);
+
+__FORCE_INLINE
+__LOCAL_INLINE uint32 __vPageIdx2PhysicalAddress(uint8 Arg_u8PageIdx);
+
+__LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, const uint32 Arg_u8BaseAddr, uint16 Arg_u16Length);
 
 /** 
  * @defgroup commands handlers 
  **/ 
-
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_INFO_CMD(void);
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_VER_CMD(void);
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_HELP_CMD(void);
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_CID_CMD(void);
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_RDP_STATUS_CMD(void);
-__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GO_TO_ADDR_CMD(void);
-__STATIC __en_blErrStatus_t __enCmdHandler_CBL_CBL_FLASH_ERASE_CMD(void);
-__STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_WRITE_CMD(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GO_TO_ADDR_CMD(const uint8* pArg_u8Data);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_CBL_FLASH_ERASE_CMD(const uint8* pArg_u8Data);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_WRITE_CMD(const uint8* pArg_u8Data);
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_EN_R_W_PROTECT_CMD(void);
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_READ_SECTOR_STATUS(void);
-__STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_READ_CMD(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_READ_CMD(const uint8* pArg_u8Data);
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_OTP_READ_CMD(void);
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_DIS_R_W_PROTECT_CMD(void);
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_READ_SECTOR_STATUS(void);

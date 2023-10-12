@@ -238,6 +238,9 @@ __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) 
 	__en_blErrStatus_t local_enCmdHandlerErrStatus = BL_E_NONE;
 
 	switch(pArg_tPacket->Command) {
+		case CBL_GET_INFO_CMD			  : BL_DBG_SEND("Executing Command: CBLP_GET_INFO_CMD");
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_GET_INFO_CMD();
+			break;
 		case CBL_GET_VER_CMD					:	BL_DBG_SEND("Executing Command: CBL_GET_VER_CMD");
 			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_GET_VER_CMD();
 			break;
@@ -251,19 +254,19 @@ __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) 
 			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_GET_RDP_STATUS_CMD();
 			break;
 		case CBL_GO_TO_ADDR_CMD				:	BL_DBG_SEND("Executing Command: CBL_GO_TO_ADDR_CMD");	
-			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_GO_TO_ADDR_CMD();
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_GO_TO_ADDR_CMD(pArg_tPacket->Data);
 			break;
 		case CBL_FLASH_ERASE_CMD			:	BL_DBG_SEND("Executing Command: CBL_FLASH_ERASE_CMD");	
-			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_CBL_FLASH_ERASE_CMD();
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_CBL_FLASH_ERASE_CMD(pArg_tPacket->Data);
 			break;
 		case CBL_MEM_WRITE_CMD				:	BL_DBG_SEND("Executing Command: CBL_MEM_WRITE_CMD");	
-			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_MEM_WRITE_CMD();
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_MEM_WRITE_CMD(pArg_tPacket->Data);
 			break;
 		case CBL_EN_R_W_PROTECT_CMD		:	BL_DBG_SEND("Executing Command: CBL_EN_R_W_PROTECT_CMD");	
 			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_EN_R_W_PROTECT_CMD();
 			break;
 		case CBL_MEM_READ_CMD					:	BL_DBG_SEND("Executing Command: CBL_GET_CBL_MEM_READ_CMDVER_CMD");	
-			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_MEM_READ_CMD();
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_MEM_READ_CMD(pArg_tPacket->Data);
 			break;
 		case CBL_OTP_READ_CMD					:	BL_DBG_SEND("Executing Command: CBL_OTP_READ_CMD");	
 			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_OTP_READ_CMD();
@@ -281,11 +284,11 @@ __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) 
 	return local_enThisFuncErrStatus;
 }
 
-__STATIC __en_blErrStatus_t __enVerifyAddress(uint32 Arg_McuAddressValue) {
+__STATIC __en_blErrStatus_t __enVerifyAddress(uint32 Arg_u32McuAddressValue) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	/* FLASH validity ** SRAM1 Validity */
-	if( ((Arg_McuAddressValue >= FLASH_BASE) && (Arg_McuAddressValue <= STM32F103C8Tx_FLASH_END)) ||
-			((Arg_McuAddressValue >= SRAM_BASE) && (Arg_McuAddressValue <= STM32F103C8Tx_SRAM1_END))) {
+	if( ((Arg_u32McuAddressValue >= FLASH_BASE) && (Arg_u32McuAddressValue <= STM32F103C8Tx_FLASH_END)) ||
+			((Arg_u32McuAddressValue >= SRAM_BASE) && (Arg_u32McuAddressValue <= STM32F103C8Tx_SRAM1_END))) {
 		local_enThisFuncErrStatus = BL_E_OK;
 	} else {
 		local_enThisFuncErrStatus = BL_E_INVALID_ADDR;
@@ -319,11 +322,25 @@ __STATIC __NORETURN __vSeralizeReceivedBuffer(packet_t* pArg_tPacket, uint8* pAr
 	if( (NULL == pArg_tPacket) || (NULL == pArg_tReceivedBuffer) ) {
 		BL_DBG_SEND("Invalid arguments");
 	} else {
-		pArg_tPacket->PacketType = *((uint8*)&pArg_tReceivedBuffer[0]);
-		pArg_tPacket->Command = *((uint8*)&pArg_tReceivedBuffer[1]);
-		pArg_tPacket->Data = *((uint32*)&pArg_tReceivedBuffer[2]);
-		pArg_tPacket->DataCRC = *((uint32*)&pArg_tReceivedBuffer[3]);
-		pArg_tPacket->PacketCRC = *((uint32*)&pArg_tReceivedBuffer[4]);
+		pArg_tPacket->PacketType = pArg_tReceivedBuffer[0];
+		BL_DBG_SEND("pArg_tPacket->PacketType: %X", pArg_tPacket->PacketType);
+
+		pArg_tPacket->Command = pArg_tReceivedBuffer[1];
+		BL_DBG_SEND("pArg_tPacket->Command: %X", pArg_tPacket->Command);
+
+		pArg_tPacket->DataLength = pArg_tReceivedBuffer[2];
+		BL_DBG_SEND("pArg_tPacket->DataLength: %X", pArg_tPacket->DataLength);
+
+		memcpy((uint8*)pArg_tPacket->Data, (uint8*)&pArg_tReceivedBuffer[3], pArg_tPacket->DataLength);
+		BL_DBG_SEND("pArg_tPacket->Data: %X", pArg_tPacket->Data[0]); /* Print the first byte as indication */
+
+		memcpy(&pArg_tPacket->DataCRC32, &pArg_tReceivedBuffer[(pArg_tPacket->DataLength + 3u)], sizeof(uint32));
+		pArg_tPacket->DataCRC32 = APPLYDATACONVERSION(pArg_tPacket->DataCRC32);
+		BL_DBG_SEND("pArg_tPacket->DataCRC32: %X", pArg_tPacket->DataCRC32);
+
+		memcpy(&pArg_tPacket->PacketCRC32, &pArg_tReceivedBuffer[(pArg_tPacket->DataLength + 7u)], sizeof(uint32));
+		pArg_tPacket->PacketCRC32 = APPLYDATACONVERSION(pArg_tPacket->PacketCRC32);
+		BL_DBG_SEND("pArg_tPacket->PacketCRC32: %X", pArg_tPacket->PacketCRC32);
 	}
 	return;
 }
@@ -331,8 +348,8 @@ __STATIC __NORETURN __vSeralizeReceivedBuffer(packet_t* pArg_tPacket, uint8* pAr
 /**
  * @details
  * 	Packet structure format:
- * 					[Packet length] | [Packet Type] | [Command] | [Data]		[Data CRC] | [Packet CRC]
- * 					[1 Byte]				| [1 Byte] 			| [1 Byte]  | [4 Byte]	[4 Byte] 	 | [4 Byte]
+ * 					[Packet length] | [Packet Type] | [Command] | [Data Length] | [Data]		[Data CRC] | [Packet CRC]
+ * 					[1 Byte]				| [1 Byte] 			| [1 Byte]  | [1 Byte] 			| [n Byte]	[4 Byte] 	 | [4 Byte]
  * 
  * Max Packet length (Excluding Length): x Bytes
  * Min Packet length (Excluding Length): y Bytes
@@ -354,7 +371,7 @@ __en_blErrStatus_t __enPipeListen(void) {
 	} else {
 		/* Receive the data */
 		local_tPacketSeralized.PacketLength = local_u8PipeListenrBuffer[0];
-		BL_DBG_SEND("Waiting for the packet.");
+		BL_DBG_SEND("Waiting for the packet with length (%d).", local_tPacketSeralized.PacketLength);
 		if( (HAL_OK != PIPE_LISTEN((uint8*)&local_u8PipeListenrBuffer[1], local_tPacketSeralized.PacketLength)) ) {
 			BL_DBG_SEND("The pipe listner is not ok.");
 			local_enThisFuncErrStatus = BL_E_NOK;
@@ -362,25 +379,88 @@ __en_blErrStatus_t __enPipeListen(void) {
 			BL_DBG_SEND("The pipe listner received a packet successfully.");
 			/* Seralize the received packet */
 			__vSeralizeReceivedBuffer(&local_tPacketSeralized, (uint8*)&local_u8PipeListenrBuffer[1]);
-
-			/* Validate CRC */
-
-			/* Validate the type */
-			
-			/* Validate the command */
-
-			/* Execute the command */
-			if( (BL_E_OK != __bl_enExecuteCommand(&local_tPacketSeralized)) ) {
-				__vSendNack();
-				local_enThisFuncErrStatus = BL_E_NOK;
-				BL_DBG_SEND("Command execution error");
+			/* Validate CRC32 for packet */
+			/** @note Calculating CRC32 for packet excluding the packet length and packetCRC32 */
+			if( (BL_E_INVALID_CRC != __enVerifyPacketCRC32(local_tPacketSeralized.PacketCRC32, (uint8*)&local_u8PipeListenrBuffer[1], (local_tPacketSeralized.PacketLength - 4u))) ) {
+				/* Validate CRC32 for data */
+				if( (BL_E_INVALID_CRC != __enVerifyPacketDataCRC32(&local_tPacketSeralized)) ) {
+					/** 
+					 * @todo Add more verifications
+					 * /
+					/* Execute the command */
+					if( (BL_E_OK != __bl_enExecuteCommand(&local_tPacketSeralized)) ) {
+						__vSendNack();
+						local_enThisFuncErrStatus = BL_E_NOK;
+						BL_DBG_SEND("Command execution error");
+					} else {
+						__vSendAck(0u);
+						local_enThisFuncErrStatus = BL_E_OK;
+						BL_DBG_SEND("Command execution done");
+					}
+				} else {
+					local_enThisFuncErrStatus = BL_E_INVALID_CRC;
+					BL_DBG_SEND("Packet error, Invalid packet data CRC32");
+				}
 			} else {
-				__vSendAck(0u);
-				local_enThisFuncErrStatus = BL_E_OK;
-				BL_DBG_SEND("Command execution done");
+				local_enThisFuncErrStatus = BL_E_INVALID_CRC;
+				BL_DBG_SEND("Packet error, Invalid packet CRC32");
 			}
 		}
 	}
+	return local_enThisFuncErrStatus;
+}
+
+__LOCAL_INLINE __en_blErrStatus_t __enVerifyPacketDataCRC32(const packet_t* pArg_tReceivedPacket) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_INVALID_CRC;
+	uint32 local_u32CalculatedCrc32 = 0xFFFFFFFFU;
+	BL_DBG_SEND("Calculating CRC32 for data");
+	
+	/* CRC32 using standard poly: 0x04C11DB7 */
+	uint8 local_u8Counter = 0;
+	for(local_u8Counter = 0; (local_u8Counter < pArg_tReceivedPacket->DataLength); ++local_u8Counter) {
+		uint32 temp = (uint32)pArg_tReceivedPacket->Data[local_u8Counter];
+		local_u32CalculatedCrc32 = 
+			HAL_CRC_Accumulate(&hcrc, &temp, 1u);
+	}
+  __HAL_CRC_DR_RESET(&hcrc);
+	
+	BL_DBG_SEND("Calculated CRC32 for data: %X", local_u32CalculatedCrc32);
+	if( (local_u32CalculatedCrc32 == pArg_tReceivedPacket->DataCRC32 ) ) {
+		local_enThisFuncErrStatus = BL_E_OK;
+		BL_DBG_SEND("Valid CRC32 for packet data");
+	} else {
+		BL_DBG_SEND("Invalid CRC32 for packet data");
+	}
+
+	return local_enThisFuncErrStatus;
+}
+
+__LOCAL_INLINE __en_blErrStatus_t __enVerifyPacketCRC32(const uint32 Arg_u32ReceivedCrc32, const uint8* pArg_u8ReceivedBuffer, const uint8 Arg_u8ReceivedBufferSize) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_INVALID_CRC;
+	uint32 local_u32CalculatedCrc32 = 0;
+	BL_DBG_SEND("Calculating CRC32 for packet");
+	
+	/* CRC32 using standard poly: 0x04C11DB7 */
+
+  // local_u32CalculatedCrc32 = 
+	// 	HAL_CRC_Calculate(&hcrc, (uint8*)(pArg_tReceivedPacket), (pArg_tReceivedPacket->PacketLength - 3u));
+
+	uint8 local_u8Counter = 0;
+	for(local_u8Counter = 0; (local_u8Counter < Arg_u8ReceivedBufferSize); ++local_u8Counter) {
+		uint32 temp = (uint32)pArg_u8ReceivedBuffer[local_u8Counter];
+		local_u32CalculatedCrc32 = 
+			HAL_CRC_Accumulate(&hcrc, &temp, 1u);
+	}
+ 	__HAL_CRC_DR_RESET(&hcrc);
+	
+	BL_DBG_SEND("Calculated CRC32 for packet: %X", local_u32CalculatedCrc32);
+	if( (Arg_u32ReceivedCrc32 == local_u32CalculatedCrc32) ) {
+		local_enThisFuncErrStatus = BL_E_OK;
+		BL_DBG_SEND("Valid CRC32 for packet");
+	} else {
+		BL_DBG_SEND("Invalid CRC32 for packet");
+	}
+
 	return local_enThisFuncErrStatus;
 }
 
@@ -388,6 +468,17 @@ __en_blErrStatus_t __enPipeListen(void) {
  * @defgroup Command handlers implementation 
  * 
  */
+
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_INFO_CMD(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_OK;
+	uint8 local_u8Info[] = "This bootloader is made by Mohamed Ashraf Wx Copyright (C) Wx Inc, 2023";
+
+	__vSendAck(sizeof(local_u8Info));
+	__vPipeEcho(local_u8Info, sizeof(local_u8Info));
+
+	return local_enThisFuncErrStatus;
+}
+
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_VER_CMD(void) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_OK;
 	
@@ -399,14 +490,32 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_VER_CMD(void) {
 	
 	__vSendAck(sizeof(local_u8BootloaderVersion));
 	__vPipeEcho(local_u8BootloaderVersion, sizeof(local_u8BootloaderVersion));
-
+	
 	BL_DBG_SEND("Sent the bootloader version successfully.");
 	return local_enThisFuncErrStatus; 
 }
-
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_HELP_CMD(void) {
-	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_OK;
 	
+	__STATIC uint8 local_u8Commands[NUM_OF_CMD] = {
+		[0] = CBL_GET_VER_CMD,
+		[1] =	CBL_GET_HELP_CMD,			
+		[2] =	CBL_GET_CID_CMD,				
+		[3] =	CBL_GET_RDP_STATUS_CMD,
+		[4] =	CBL_GO_TO_ADDR_CMD,		
+		[5] =	CBL_FLASH_ERASE_CMD,		
+		[6] =	CBL_MEM_WRITE_CMD,			
+		[7] =	CBL_EN_R_W_PROTECT_CMD,
+		[8] =	CBL_MEM_READ_CMD,			
+		[9] =	CBL_OTP_READ_CMD,			
+		[10] =	CBL_DIS_R_W_PROTECT_CMD,
+		[11] =	CBL_READ_SECTOR_STATUS 
+	};
+	
+	__vSendAck(sizeof(local_u8Commands));
+	__vPipeEcho(local_u8Commands, sizeof(local_u8Commands));
+	
+	BL_DBG_SEND("Sent the bootloader commands helper successfully.");
 
 	return local_enThisFuncErrStatus; 
 }
@@ -419,24 +528,61 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_CID_CMD(void) {
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_RDP_STATUS_CMD(void) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	
+	uint8 local_u8RdpLevel;
+	if( (BL_E_OK == __enGetMcuRdpLevel(&local_u8RdpLevel)) ) {
+		__vSendAck(1u);
+		__vPipeEcho(&local_u8RdpLevel, 1u);
+		local_enThisFuncErrStatus = BL_E_OK;
+	} else {
+		/* Error Handle */
+		local_enThisFuncErrStatus = BL_E_NOK;
+	}
+	return local_enThisFuncErrStatus; 
+}
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GO_TO_ADDR_CMD(const uint8* pArg_u8Data) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+	uint32 local_u32AddressToJump = (uint32)(*(uint32*) pArg_u8Data);
+	if( (BL_E_OK != __enJumpToAddress(local_u32AddressToJump)) ) {
+		local_enThisFuncErrStatus = BL_E_NOK;
+		BL_DBG_SEND("Jumping to address error");
+	} else {
+		local_enThisFuncErrStatus = BL_E_OK;
+		BL_DBG_SEND("Jumped to address successfully");
+	}
+	return local_enThisFuncErrStatus; 
+}
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_CBL_FLASH_ERASE_CMD(const uint8* pArg_u8Data) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	
+	uint8 local_u8PageIdx = pArg_u8Data[0];
+	uint8 local_u8NumOfPages = pArg_u8Data[1];
+	
+	if( (BL_E_OK != __enEraseFlashPages(local_u8PageIdx, local_u8NumOfPages)) ) {
+		local_enThisFuncErrStatus = BL_E_NOK;
+		BL_DBG_SEND("Flash erasing error");
+	} else {
+		local_enThisFuncErrStatus = BL_E_OK;
+		BL_DBG_SEND("Flash erasing succeeded");
+	}
 
 	return local_enThisFuncErrStatus; 
 }
-__STATIC __en_blErrStatus_t __enCmdHandler_CBL_GO_TO_ADDR_CMD(void) {
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_WRITE_CMD(const uint8* pArg_u8Data) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	
+	uint32 local_u32BaseAdrress = *((uint32*)&pArg_u8Data[0]);
+	uint8 local_u8DataLength = *((uint8*)&pArg_u8Data[4]);
+	uint8 local_u8Data[256] = {0};
 
-	return local_enThisFuncErrStatus; 
-}
-__STATIC __en_blErrStatus_t __enCmdHandler_CBL_CBL_FLASH_ERASE_CMD(void) {
-	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
-	
+	memcpy((uint8*)&local_u8Data[0], (uint8*)&pArg_u8Data[5], local_u8DataLength);
 
-	return local_enThisFuncErrStatus; 
-}
-__STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_WRITE_CMD(void) {
-	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
-	
+	if( (BL_E_OK != __enWriteToAddr(local_u8Data, local_u32BaseAdrress, local_u8DataLength)) ) {
+		local_enThisFuncErrStatus = BL_E_NOK;
+		BL_DBG_SEND("Writing to memory error");
+	} else {
+		local_enThisFuncErrStatus = BL_E_OK;
+	}
 
 	return local_enThisFuncErrStatus; 
 }
@@ -452,7 +598,7 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_READ_SECTOR_STATUS(void) {
 
 	return local_enThisFuncErrStatus; 
 }
-__STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_READ_CMD(void) {
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_READ_CMD(const uint8* pArg_u8Data) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	
 
@@ -470,9 +616,155 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_DIS_R_W_PROTECT_CMD(void) {
 
 	return local_enThisFuncErrStatus; 
 }
+
 /**
   * @}
   */
+
+/**
+ * @defgroup Command handlers helpers 
+ * 
+ */
+
+__LOCAL_INLINE uint32 __vPageIdx2PhysicalAddress(uint8 Arg_u8PageIdx) {
+	uint32 local_u32PageAddress = (FLASH_BASE) | (Arg_u8PageIdx * STM32F103C8Tx_FLASH_PAGE_SIZE);
+	if( (local_u32PageAddress < FLASH_BASE) || (local_u32PageAddress > STM32F103C8Tx_FLASH_END) ) {
+		BL_DBG_SEND("Page indexig went to fatal error. SYNC STUCK");
+		while(1) {
+			;
+		}
+	} else {
+		;
+	}
+	return local_u32PageAddress;
+}
+
+__LOCAL_INLINE __en_blErrStatus_t __enGetMcuRdpLevel(uint8* pArg_u8RdpLevel) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+
+	FLASH_OBProgramInitTypeDef L_StMyFlashRDPSett;
+
+	/* Get the RDP level */
+	HAL_FLASHEx_OBGetConfig(&L_StMyFlashRDPSett);
+
+	if( (L_StMyFlashRDPSett.RDPLevel < 0) ) {
+		BL_DBG_SEND("Invalid RDP level read");
+		local_enThisFuncErrStatus = BL_E_NOK;
+	} else {
+		*pArg_u8RdpLevel = (uint8)L_StMyFlashRDPSett.RDPLevel;
+
+		local_enThisFuncErrStatus = BL_E_OK;
+	}
+	
+	return local_enThisFuncErrStatus;
+}
+__STATIC __en_blErrStatus_t __enEraseFlashPages(const uint8 Arg_u8PageIdx, uint8 Arg_u8NumOfPages) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+
+	if( (Arg_u8NumOfPages > BTL_FLASH_MAX_PAGE_NUM) ||
+			(Arg_u8PageIdx > BTL_FLASH_MASS_ERASE) ) {
+		local_enThisFuncErrStatus = BL_E_NOK;
+		BL_DBG_SEND("Invalid flash erase operation");
+	} else {
+		/* Init the Flash HAL Driver */
+		FLASH_EraseInitTypeDef local_stMyErasingConfig;
+
+		if( (BTL_FLASH_MASS_ERASE == Arg_u8PageIdx) ) {
+			local_stMyErasingConfig.TypeErase = FLASH_TYPEERASE_MASSERASE;
+		} else {
+			/* Limit the page size*/
+			uint8_t local_u8RemainingPages = BTL_FLASH_MAX_PAGE_NUM - Arg_u8PageIdx;
+			if( (Arg_u8NumOfPages > local_u8RemainingPages) ) {
+				Arg_u8NumOfPages = local_u8RemainingPages;
+			} else {
+				;
+			}
+			local_stMyErasingConfig.TypeErase = FLASH_TYPEERASE_PAGES;
+			local_stMyErasingConfig.PageAddress = __vPageIdx2PhysicalAddress(Arg_u8PageIdx);
+			local_stMyErasingConfig.NbPages = Arg_u8NumOfPages;
+		}
+		local_stMyErasingConfig.Banks = FLASH_BANK_1;
+		uint8 local_u32PageEraseErr = 0;
+
+		BL_DBG_SEND("Flash erasing started");
+
+		if( (HAL_OK == HAL_FLASH_Unlock()) ) {
+			HAL_FLASHEx_Erase(&local_stMyErasingConfig, &local_u32PageEraseErr);
+			if( (0xFFFFFFFFU == local_u32PageEraseErr) ) {
+				local_enThisFuncErrStatus = BL_E_OK;
+				BL_DBG_SEND("Done flash erasing");
+			} else {
+				local_enThisFuncErrStatus = BL_E_NOK;
+				BL_DBG_SEND("Flash erasing failed");
+			}
+			if( (HAL_OK == HAL_FLASH_Lock()) ) {
+				;
+			} else {
+				BL_DBG_SEND("Error with flash locing");
+			}
+		} else {
+			BL_DBG_SEND("Error with flash unlocking");
+		}
+	}
+	return local_enThisFuncErrStatus;
+}
+
+__LOCAL_INLINE __en_blErrStatus_t __enJumpToAddress(uint32 Arg_u32Address) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	if( (BL_E_OK != __enVerifyAddress(Arg_u32Address)) ) {
+		local_enThisFuncErrStatus = BL_E_INVALID_ADDR;	
+	} else {
+		local_enThisFuncErrStatus = BL_E_OK;
+		/* L_u32HostJmpAddr + 1 : For ARM-Thumb ISA indication */
+		void (*localFuncPtr_vAddrToJmp)(void) = (void *) (Arg_u32Address + 1U);
+		/* Jump to the specified address */
+		BL_DBG_SEND("Jumping to address: %p", Arg_u32Address);
+		localFuncPtr_vAddrToJmp();
+	}
+	return local_enThisFuncErrStatus;
+}
+
+__LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, const uint32 Arg_u8BaseAddr, uint16 Arg_u16Length) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
+	if( (BL_E_OK == __enVerifyAddress(Arg_u8BaseAddr)) ) {
+		if( ( HAL_OK == HAL_FLASH_Unlock()) ) {
+			uint16 local_u16DataCounter = 0;
+			uint16 local_u16HwordData = 0;
+			
+			for(local_u16DataCounter = 0; (local_u16DataCounter < (Arg_u16Length-1u)); local_u16DataCounter += 2u) {
+				local_u16HwordData = /* COMBINE FOR HWORD PROGRAMMING */
+					(pArg_u8Data[local_u16DataCounter] | (pArg_u8Data[local_u16DataCounter] << 8u));
+				if( (HAL_OK != HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (Arg_u8BaseAddr + local_u16DataCounter), local_u16HwordData)) ) {
+					local_enThisFuncErrStatus = BL_E_OK;
+					BL_DBG_SEND("Programmed flash successfully");
+				} else {
+					/* HWORD TYPE RESOLUTION PROGRAM */
+					local_enThisFuncErrStatus = BL_E_NOK;
+					BL_DBG_SEND("Error writing to flash");
+					break; 
+				}
+			}
+
+			if( (HAL_OK == HAL_FLASH_Lock()) ) {
+				local_enThisFuncErrStatus = BL_E_OK;
+			} else {
+				local_enThisFuncErrStatus = BL_E_NOK;
+				BL_DBG_SEND("Error with flash locking");
+			}
+		} else {
+			local_enThisFuncErrStatus = BL_E_NOK;
+			BL_DBG_SEND("Error with flash unlocking");
+		}
+	} else {
+		local_enThisFuncErrStatus = BL_E_INVALID_ADDR;
+	}
+	return local_enThisFuncErrStatus;
+}
+
+/**
+  * @}
+  */
+
 /**
 * ===============================================================================================
 *   > Public Functions Implementation
@@ -504,8 +796,7 @@ __NORETURN BL_enBootManager(void) {
 		if( (BL_APP_VALID == __enGetIsValidAppFlag()) ) {
 			BL_DBG_SEND("Calculating application hash.");
 			__STATIC sha256_t local_tApplicationHash;  
-			strncpy((uint8*)local_tApplicationHash, "X", sizeof(local_tApplicationHash) - 1);
-			local_tApplicationHash[sizeof(local_tApplicationHash) - 1] = '\0';
+			/* Calculate hash */
 			if ( (0 == strcmp(local_tApplicationHash, global_tApplicationHash)) ) {
 				__vSetIsValidHashFlag(TRUE);
 				__vSetIsValidAppFlag(TRUE);
@@ -516,13 +807,13 @@ __NORETURN BL_enBootManager(void) {
 				__vSetIsValidHashFlag(FALSE);
 				__vSetIsValidAppFlag(FALSE);
 				BL_DBG_SEND("Invalid hash");
+				/* Start listner */
 				__enPipeListen();
 			}
 		} else {
 			;
 		}
 	}
-	BL_DBG_SEND("End of the boot manager");
 }
 
 __st_blVersion_t BL_stGetSwVersion(void) {

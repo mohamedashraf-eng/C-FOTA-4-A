@@ -78,6 +78,14 @@
 */
 #define APP_START_ADDR	( (uint32) (0x8004F00) )
 
+/** 
+ * @brief Communication type for the bootloader
+ * @arguments
+ *	@arg BL_SECURE_BOOT_ON
+ *	@arg BL_SECURE_BOOT_OFF
+*/
+#define BL_SECURE_BOOT  BL_SECURE_BOOT_OFF
+
 /**
 * ===============================================================================================
 *   > Bootloader Debugging CFG
