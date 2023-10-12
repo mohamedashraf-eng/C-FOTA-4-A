@@ -227,9 +227,9 @@ __STATIC __NORETURN __vSendAck(uint8 Arg_u8DatatoHostLength) {
 	BL_DBG_SEND("Sent Ack successfully");
 }
 
-__STATIC __NORETURN __vSendNack(void) {
-	uint8 local_u8NackValue = BL_CMD_RESPONSE_NACK;
-	__vPipeEcho(&local_u8NackValue, 1u);
+__STATIC __NORETURN __vSendNack(uint8 Arg_u8ErrorCode) {
+	uint8 local_u8NackValue[2u] = {BL_CMD_RESPONSE_NACK, Arg_u8ErrorCode};
+	__vPipeEcho((uint8*)&local_u8NackValue[0], 2u);
 	BL_DBG_SEND("Sent Nack successfully");
 }
 
@@ -389,7 +389,7 @@ __en_blErrStatus_t __enPipeListen(void) {
 					 * /
 					/* Execute the command */
 					if( (BL_E_OK != __bl_enExecuteCommand(&local_tPacketSeralized)) ) {
-						__vSendNack();
+						__vSendNack(BL_E_NOK);
 						local_enThisFuncErrStatus = BL_E_NOK;
 						BL_DBG_SEND("Command execution error");
 					} else {
@@ -478,7 +478,6 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_INFO_CMD(void) {
 
 	return local_enThisFuncErrStatus;
 }
-
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_VER_CMD(void) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_OK;
 	
@@ -522,6 +521,9 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_HELP_CMD(void) {
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_CID_CMD(void) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	
+	uint32 local_u32CID = HAL_GetUIDw0();
+	__vSendAck(4u);
+	__vPipeEcho((uint8*)&local_u32CID, 4u);
 
 	return local_enThisFuncErrStatus; 
 }
@@ -542,7 +544,7 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_RDP_STATUS_CMD(void) {
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GO_TO_ADDR_CMD(const uint8* pArg_u8Data) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	
-	uint32 local_u32AddressToJump = (uint32)(*(uint32*) pArg_u8Data);
+	uint32 local_u32AddressToJump = (uint32)(*((uint32*)pArg_u8Data));
 	if( (BL_E_OK != __enJumpToAddress(local_u32AddressToJump)) ) {
 		local_enThisFuncErrStatus = BL_E_NOK;
 		BL_DBG_SEND("Jumping to address error");
@@ -557,7 +559,7 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_CBL_FLASH_ERASE_CMD(const uint8* 
 	
 	uint8 local_u8PageIdx = pArg_u8Data[0];
 	uint8 local_u8NumOfPages = pArg_u8Data[1];
-	
+
 	if( (BL_E_OK != __enEraseFlashPages(local_u8PageIdx, local_u8NumOfPages)) ) {
 		local_enThisFuncErrStatus = BL_E_NOK;
 		BL_DBG_SEND("Flash erasing error");
@@ -658,54 +660,68 @@ __LOCAL_INLINE __en_blErrStatus_t __enGetMcuRdpLevel(uint8* pArg_u8RdpLevel) {
 	
 	return local_enThisFuncErrStatus;
 }
+
 __STATIC __en_blErrStatus_t __enEraseFlashPages(const uint8 Arg_u8PageIdx, uint8 Arg_u8NumOfPages) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 
-	if( (Arg_u8NumOfPages > BTL_FLASH_MAX_PAGE_NUM) ||
-			(Arg_u8PageIdx > BTL_FLASH_MASS_ERASE) ) {
+	if (Arg_u8PageIdx > BTL_FLASH_MASS_ERASE) {
 		local_enThisFuncErrStatus = BL_E_NOK;
 		BL_DBG_SEND("Invalid flash erase operation");
 	} else {
 		/* Init the Flash HAL Driver */
 		FLASH_EraseInitTypeDef local_stMyErasingConfig;
 
-		if( (BTL_FLASH_MASS_ERASE == Arg_u8PageIdx) ) {
+		if (BTL_FLASH_MASS_ERASE == Arg_u8PageIdx) {
+			BL_DBG_SEND("Selected mass erase");
 			local_stMyErasingConfig.TypeErase = FLASH_TYPEERASE_MASSERASE;
 		} else {
-			/* Limit the page size*/
+			/* Limit the page size */
 			uint8_t local_u8RemainingPages = BTL_FLASH_MAX_PAGE_NUM - Arg_u8PageIdx;
-			if( (Arg_u8NumOfPages > local_u8RemainingPages) ) {
+			if (Arg_u8NumOfPages > local_u8RemainingPages) {
 				Arg_u8NumOfPages = local_u8RemainingPages;
 			} else {
 				;
 			}
-			local_stMyErasingConfig.TypeErase = FLASH_TYPEERASE_PAGES;
-			local_stMyErasingConfig.PageAddress = __vPageIdx2PhysicalAddress(Arg_u8PageIdx);
-			local_stMyErasingConfig.NbPages = Arg_u8NumOfPages;
-		}
-		local_stMyErasingConfig.Banks = FLASH_BANK_1;
-		uint8 local_u32PageEraseErr = 0;
-
-		BL_DBG_SEND("Flash erasing started");
-
-		if( (HAL_OK == HAL_FLASH_Unlock()) ) {
-			HAL_FLASHEx_Erase(&local_stMyErasingConfig, &local_u32PageEraseErr);
-			if( (0xFFFFFFFFU == local_u32PageEraseErr) ) {
-				local_enThisFuncErrStatus = BL_E_OK;
-				BL_DBG_SEND("Done flash erasing");
-			} else {
-				local_enThisFuncErrStatus = BL_E_NOK;
-				BL_DBG_SEND("Flash erasing failed");
+				BL_DBG_SEND("Selected page erase (page: %d, nop: %d)", Arg_u8PageIdx, Arg_u8NumOfPages);
+				local_stMyErasingConfig.TypeErase = FLASH_TYPEERASE_PAGES;
+				local_stMyErasingConfig.NbPages = Arg_u8NumOfPages;
+				local_stMyErasingConfig.PageAddress = __vPageIdx2PhysicalAddress(Arg_u8PageIdx);
+				if( (local_stMyErasingConfig.PageAddress >= BTL_FIRMWARE_START_ADDRESS) ||
+						(local_stMyErasingConfig.PageAddress >= BTL_FIRMWARE_LAST_ADDR) ) {
+							BL_DBG_SEND("CANOT SELF TERMINATE THE BOOTLOADER FIRMWARE!");
+							goto BTL_SELF_TERMINATE_GUARD;
+				} else {
+					;
+				}
 			}
-			if( (HAL_OK == HAL_FLASH_Lock()) ) {
-				;
-			} else {
-				BL_DBG_SEND("Error with flash locing");
-			}
+			local_stMyErasingConfig.Banks = FLASH_BANK_1;
+			uint32_t local_u32PageEraseErr = 0;  // Change the data type
+			
+			BL_DBG_SEND("Flash erasing started");
+			if (HAL_OK == HAL_FLASH_Unlock()) {
+				if(HAL_OK == HAL_FLASHEx_Erase(&local_stMyErasingConfig, &local_u32PageEraseErr)) {
+						/* 0xFFFFFFFFU == ERASE_OK */
+						if (0xFFFFFFFFU == local_u32PageEraseErr) { 
+							local_enThisFuncErrStatus = BL_E_OK;
+							BL_DBG_SEND("Done flash erasing");
+						} else {
+							local_enThisFuncErrStatus = BL_E_NOK;
+							BL_DBG_SEND("Flash erasing failed on page addr: %p", local_u32PageEraseErr);
+						}
+						if (HAL_OK == HAL_FLASH_Lock()) {
+							;
+						} else {
+							BL_DBG_SEND("Error with flash locking");
+						}
+				} else {
+					BL_DBG_SEND("Error with flash erasing");
+				}
 		} else {
 			BL_DBG_SEND("Error with flash unlocking");
 		}
 	}
+
+	BTL_SELF_TERMINATE_GUARD:
 	return local_enThisFuncErrStatus;
 }
 
@@ -713,6 +729,7 @@ __LOCAL_INLINE __en_blErrStatus_t __enJumpToAddress(uint32 Arg_u32Address) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	if( (BL_E_OK != __enVerifyAddress(Arg_u32Address)) ) {
 		local_enThisFuncErrStatus = BL_E_INVALID_ADDR;	
+		BL_DBG_SEND("Invalid jumping address: %p", Arg_u32Address);
 	} else {
 		local_enThisFuncErrStatus = BL_E_OK;
 		/* L_u32HostJmpAddr + 1 : For ARM-Thumb ISA indication */

@@ -121,8 +121,13 @@
 #define BTL_FLASH_MAX_PAGE_NUM 				(STM32F103C8Tx_FLASH_PAGE_NUM)
 #define BTL_FLASH_MASS_ERASE 					(BTL_FLASH_MAX_PAGE_NUM + 1u)
 
+/* DON'T CHANGE THIS LINE */
+#define BTL_FIRMWARE_SIZE							(6000u)
+#define BTL_FIRMWARE_START_ADDRESS		(FLASH_BASE)
+#define BTL_FIRMWARE_LAST_ADDR				(FLASH_BASE | BTL_FIRMWARE_SIZE)
+
 /** @defgroup Commands */
-#define NUM_OF_CMD 										( (uint8) (12u) )
+#define NUM_OF_CMD 										( (uint8) (13u) )
 #define	CBL_GET_VER_CMD								( (uint8) (0) )
 #define	CBL_GET_HELP_CMD							( (uint8) (1) )
 #define	CBL_GET_CID_CMD								( (uint8) (2) )
@@ -244,7 +249,7 @@ __STATIC __en_blErrStatus_t __enPipeListen(void);
 __STATIC __NORETURN __vPipeEcho(const uint8* pArg_u8TxBuffer, uint8 Arg_u8Length);
 
 __STATIC __NORETURN __vSendAck(uint8 Arg_u8DatatoHostLength);
-__STATIC __NORETURN __vSendNack(void);
+__STATIC __NORETURN __vSendNack(uint8 Arg_u8ErrorCode);
 
 __STATIC hash_t __tCalculateSHA256HashForApplication(void);
 
