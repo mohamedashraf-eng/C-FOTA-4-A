@@ -1,0 +1,223 @@
+/**
+******************************************************************************
+* @file           : bootloader_prg.c
+* @brief          : Bootloader implementation file
+******************************************************************************
+* @attention
+*
+* All rights reserved.
+* CF4A
+* Copyright (c) 2023 Neoprimalists
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+******************************************************************************
+*/
+/*
+* =============================================================================
+* Project              : CF4A
+* Platform             : ARM
+* Peripheral           : STM32F103
+* SW Version           : 1.0.0
+* =============================================================================
+*/
+#include "bootloader_intf.h"
+#include "bootloader_prv.h"
+#include "bootloader_cfg.h"
+#include <stdarg.h>
+
+/**
+* ===============================================================================================
+*   > Private Macros
+* ===============================================================================================
+*/
+
+#if (BL_COMM_PIPE >= 0x00)
+#	if   (BL_COMM_PIPE == BL_COMM_OVER_CAN)
+		__BTL_COMM_ST_CAN_HANDLE();
+#		if 	  (BL_COMM_TYPE == BL_COMM_SYNC)
+#			define __bl_receivePacket
+#			define __bl_sendPacket
+#		elif  (BL_COMM_TYPE == BL_COMM_ASYNC)
+#			define __bl_receivePacket
+#			define __bl_sendPacket
+#		endif /* (BL_COMM_TYPE == BL_COMM_SYNC) */
+#	elif (BL_COMM_PIPE == BL_COMM_OVER_UART)
+		__BTL_COMM_ST_UART_HANDLE();
+#		if 	  (BL_COMM_TYPE == BL_COMM_SYNC)
+#			define __bl_receivePacket
+#			define __bl_sendPacket
+#		elif  (BL_COMM_TYPE == BL_COMM_ASYNC)
+#			define __bl_receivePacket
+#			define __bl_sendPacket
+#		endif /* (BL_COMM_TYPE == BL_COMM_SYNC) */
+#	endif /* (BL_COMM_PIPE == BL_COMM_OVER_CAN) */
+#else
+#	error (" No communication pipe interface defined !")
+#endif /* (BL_COMM_PIPE >= 0x00) */
+
+#if (BL_DBG_PORT >= 0x00)
+		__BTL_DBG_ST_UART_HANDLE();
+#define BL_DBG_SEND(DBG_MSG, ...) \
+    __bl_dbg_wrt("VENDOR_ID: %d, MODULE_ID: %d <FILE: %s - FUNC: %s - LINE: %d>| DBG_MSG: " DBG_MSG, \
+                BOOTLOADER_VENDOR_ID, \
+                BOOTLOADER_MODULE_ID, \
+                __FILE__, \
+                __FUNCTION__, \
+                __LINE__, \
+                ##__VA_ARGS__)
+#	if 	(BL_DBG_PORT == DBG_PORT_UART)
+#		define __DBG_SEND_OVER_X
+#	elif 	(BL_DBG_PORT == DBG_PORT_CAN)
+#		define __DBG_SEND_OVER_X
+#	else
+#		error (" No dbg port interface defined !")
+#	endif /* (BL_DBG_PORT == DBG_PORT_UART) */
+#else
+#		define BL_DBG_SEND(DBG_MSG, ...) ()
+#endif /* (BL_DBG_PORT > 0x00) */
+
+/**
+* ===============================================================================================
+*   > Global Private Types
+* ===============================================================================================
+*/
+
+/** @brief Struct container for the bootloader sw version */
+__STATIC const __st_blVersion_t global_stMyBootLoaderVersion = {
+	.vendorID	=	BOOTLOADER_VENDOR_ID,
+	.moduleID = BOOTLOADER_MODULE_ID,
+	.sw_major_version = BOOTLOADER_SW_MAJOR_VERSION,
+	.sw_minor_version = BOOTLOADER_SW_MINOR_VERSION,
+	.sw_mpatch_version = BOOTLOADER_SW_PATCH_VERSION
+};
+
+__STATIC flag_t volatile global_tIsValidApp    = FALSE;
+__STATIC flag_t volatile global_tIsValidHash   = FALSE;
+__STATIC flag_t volatile global_tIsFromAppToBl = FALSE;
+
+/**
+* ===============================================================================================
+*   > Private Functions Implementation
+* ===============================================================================================
+*/
+
+#if (BL_DBG_PORT >= 0x00)
+__STATIC __NORETURN __bl_dbg_wrt(const uint8 * pArg_u8StrFormat, ...) {
+    va_list args;
+    va_start(args, pArg_u8StrFormat);
+    uint8 local_u8DbgBuffer[256];
+    vsnprintf(local_u8DbgBuffer, sizeof(local_u8DbgBuffer), pArg_u8StrFormat, args);
+    va_end(args);
+    __DBG_SEND_OVER_X(local_u8DbgBuffer);
+}
+#endif
+
+__LOCAL_INLINE __en_blStatus_t __getIsValidAppFlag(void) {
+	__en_blStatus_t local_enThisFuncStatus = BL_NONE;
+
+	if( (FALSE == global_tIsValidApp) ) {
+		local_enThisFuncStatus = BL_APP_NOT_VALID;
+	} else if( (TRUE == global_tIsValidApp) ) {
+		local_enThisFuncStatus = BL_APP_VALID;
+	} else {
+		/* UNDEFINED */
+	}
+
+	return local_enThisFuncStatus;
+}
+
+__LOCAL_INLINE __en_blStatus_t __getIsValidHashFlag(void) {
+	__en_blStatus_t local_enThisFuncStatus = BL_NONE;
+
+	if( (FALSE == global_tIsValidHash) ) {
+		local_enThisFuncStatus = BL_HASH_NOT_VALID;
+	} else if( (TRUE == global_tIsValidHash) ) {
+		local_enThisFuncStatus = BL_HASH_VALID;
+	} else {
+		/* UNDEFINED */
+	}
+
+	return local_enThisFuncStatus;
+}
+
+__LOCAL_INLINE __en_blStatus_t __getIsAppToBlFlag(void) {
+	__en_blStatus_t local_enThisFuncStatus = BL_NONE;
+
+	if( (FALSE == global_tIsFromAppToBl) ) {
+		local_enThisFuncStatus = BL_APP_TO_BL;
+	} else if( (TRUE == global_tIsFromAppToBl) ) {
+		local_enThisFuncStatus = BL_FRESH;
+	} else {
+		/* UNDEFINED */
+	}
+
+	return local_enThisFuncStatus;
+}
+
+__LOCAL_INLINE __NORETURN __setIsValidAppFlag(flag_t volatile Arg_tValue) {
+	if( (Arg_tValue <= 0 || Arg_tValue >= 1) ) {
+		global_tIsValidApp = Arg_tValue;
+	} else {
+		/* INVALID */
+		BL_DBG_SEND("INVALID Arg_tValue: %d", Arg_tValue);
+	}
+}
+
+__LOCAL_INLINE __NORETURN __setIsValidHashFlag(flag_t volatile Arg_tValue) {
+	if( (Arg_tValue <= 0 || Arg_tValue >= 1) ) {
+		global_tIsValidHash = Arg_tValue;
+	} else {
+		/* INVALID */
+		BL_DBG_SEND("INVALID Arg_tValue: %d", Arg_tValue);
+	}
+}
+
+__LOCAL_INLINE __NORETURN __setIsAppToBlFlag(flag_t volatile Arg_tValue) {
+	if( (Arg_tValue <= 0 || Arg_tValue >= 1) ) {
+		global_tIsFromAppToBl = Arg_tValue;
+	} else {
+		/* INVALID */
+		BL_DBG_SEND("INVALID Arg_tValue: %d", Arg_tValue);
+	}
+}
+
+/**
+* ===============================================================================================
+*   > Public Functions Implementation
+* ===============================================================================================
+*/
+
+__st_blVersion_t BL_GetSwVersion(void) {
+	return global_stMyBootLoaderVersion;
+}
+
+__en_blErrStatus_t BL_PipeListen(void) {
+	BL_DBG_SEND("Command Listening Start pipe: %d | type: %d", BL_COMM_PIPE, BL_COMM_TYPE);
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_NONE;
+
+
+	return local_enThisFuncErrStatus;
+}
+
+
+
+
+
+
+
+
+
+
+
+

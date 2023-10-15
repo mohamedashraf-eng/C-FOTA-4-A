@@ -76,7 +76,7 @@
  * @attention DON'T CHANGE THIS LINE !!!!!
  * 
 */
-#define APP_START_ADDR	( (uint32) (0x8004F00) )
+#define APP_START_ADDR	( (uint32) (0x08008000) )
 
 /** 
  * @brief Communication type for the bootloader
@@ -85,6 +85,12 @@
  *	@arg BL_SECURE_BOOT_OFF
 */
 #define BL_SECURE_BOOT  BL_SECURE_BOOT_OFF
+
+
+/** 
+ * @brief Pipe listner timeout in milliseconds
+*/
+#define PIPE_TIMEOUT_MS       (20u)
 
 /**
 * ===============================================================================================
@@ -97,8 +103,7 @@
  *  	@arg DBG_PORT_UART
  *  	@arg DBG_PORT_CAN
 */
-#define BL_DBG_PORT	 	DBG_PORT_UART
-
+// #define BL_DBG_PORT DBG_PORT_UART
 
 #endif /* __BOOTLOADER_CFG_H__ */
 

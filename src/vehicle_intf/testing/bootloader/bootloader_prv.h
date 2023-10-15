@@ -122,7 +122,7 @@
 #define BTL_FLASH_MASS_ERASE 					(BTL_FLASH_MAX_PAGE_NUM + 1u)
 
 /* DON'T CHANGE THIS LINE */
-#define BTL_FIRMWARE_SIZE							(6000u)
+#define BTL_FIRMWARE_SIZE							(25u * STM32F103C8Tx_FLASH_PAGE_SIZE)
 #define BTL_FIRMWARE_START_ADDRESS		(FLASH_BASE)
 #define BTL_FIRMWARE_LAST_ADDR				(FLASH_BASE | BTL_FIRMWARE_SIZE)
 
@@ -188,7 +188,7 @@ struct __packetSerialization {
 	uint8 PacketType;
 	uint8 Command;
 	uint8 DataLength;
-	uint8 Data[8u]; /* CAN STD COMPATIBLE */
+	uint8 Data[128u]; 
 	uint32 DataCRC32;
 	uint32 PacketCRC32;
 };
@@ -232,7 +232,7 @@ enum __bootloaderErrorStatus {
 extern "c" {
 #endif /* __cplusplus */
 
-#if (BL_DBG_PORT >= 0x00)
+#if defined(BL_DBG_PORT)
 __STATIC void __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...);
 #endif
 
@@ -269,7 +269,7 @@ __LOCAL_INLINE __en_blErrStatus_t __enJumpToAddress(uint32 Arg_u32Address);
 __FORCE_INLINE
 __LOCAL_INLINE uint32 __vPageIdx2PhysicalAddress(uint8 Arg_u8PageIdx);
 
-__LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, const uint32 Arg_u8BaseAddr, uint16 Arg_u16Length);
+__LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, const uint32 Arg_u32BaseAddr, uint16 Arg_u16Length);
 
 /** 
  * @defgroup commands handlers 

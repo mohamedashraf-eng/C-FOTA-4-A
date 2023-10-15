@@ -1,0 +1,277 @@
+20:19:59 **** Build of configuration Debug for project fvi_t2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/bootloader_prg.c" -mcpu=cortex-m3 -std=gnu99 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/assets" -I"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader" -I"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/sim800" -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/bootloader_prg.d" -MT"Core/Src/bootloader_prg.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/bootloader_prg.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu99 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/assets" -I"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader" -I"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/sim800" -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/bootloader_prg.c:34:
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_intf.h:114:12: warning: type defaults to 'int' in declaration of 'BL_enBootManager' [-Wimplicit-int]
+  114 | __NORETURN BL_enBootManager(void);
+      |            ^~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_intf.h:130:18: error: return type is an incomplete type
+  130 | __st_blVersion_t BL_stGetSwVersion(void)
+      |                  ^~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/bootloader_prg.c:35:
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h: In function 'BL_stGetSwVersion':
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:126:15: error: storage class specified for parameter 'cmd_t'
+  126 | typedef uint8 cmd_t;
+      |               ^~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:127:17: error: storage class specified for parameter 'flag_t'
+  127 | typedef boolean flag_t;
+      |                 ^~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:129:16: error: storage class specified for parameter 'hash_t'
+  129 | typedef uint8* hash_t;
+      |                ^~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:130:15: error: storage class specified for parameter 'sha256_t'
+  130 | typedef uint8 sha256_t[256u];
+      |               ^~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:139:1: warning: empty declaration
+  139 | struct __bootloaderVersion {
+      | ^~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:162:21: warning: type defaults to 'int' in declaration of '__bl_vDbgWrt' [-Wimplicit-int]
+  162 | __STATIC __NORETURN __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...);
+      |                     ^~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:162:21: error: storage class specified for parameter '__bl_vDbgWrt'
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:164:57: warning: type defaults to 'int' in declaration of 'cmd_t' [-Wimplicit-int]
+  164 | __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const cmd_t Arg_tCommand);
+      |                                                         ^~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:164:63: error: expected ';', ',' or ')' before 'Arg_tCommand'
+  164 | __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const cmd_t Arg_tCommand);
+      |                                                               ^~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:166:32: error: storage class specified for parameter '__enGetIsValidAppFlag'
+  166 | __LOCAL_INLINE __en_blStatus_t __enGetIsValidAppFlag(void);
+      |                                ^~~~~~~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:166:32: warning: parameter '__enGetIsValidAppFlag' declared 'inline'
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:167:32: error: storage class specified for parameter '__enGetIsValidHashFlag'
+  167 | __LOCAL_INLINE __en_blStatus_t __enGetIsValidHashFlag(void);
+      |                                ^~~~~~~~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:167:32: warning: parameter '__enGetIsValidHashFlag' declared 'inline'
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:168:32: error: storage class specified for parameter '__enGetIsAppToBlFlag'
+  168 | __LOCAL_INLINE __en_blStatus_t __enGetIsAppToBlFlag(void);
+      |                                ^~~~~~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:168:32: warning: parameter '__enGetIsAppToBlFlag' declared 'inline'
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:169:48: error: expected declaration specifiers or '...' before 'flag_t'
+  169 | __LOCAL_INLINE __NORETURN __vSetIsValidAppFlag(flag_t volatile Arg_tValue);
+      |                                                ^~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:170:49: error: expected declaration specifiers or '...' before 'flag_t'
+  170 | __LOCAL_INLINE __NORETURN __vSetIsValidHashFlag(flag_t volatile Arg_tValue);
+      |                                                 ^~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:171:47: error: expected declaration specifiers or '...' before 'flag_t'
+  171 | __LOCAL_INLINE __NORETURN __vSetIsAppToBlFlag(flag_t volatile Arg_tValue);
+      |                                               ^~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:173:21: warning: type defaults to 'int' in declaration of '__vPipeEcho' [-Wimplicit-int]
+  173 | __STATIC __NORETURN __vPipeEcho(uint8* pArg_u8TxBuffer);
+      |                     ^~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:173:21: error: storage class specified for parameter '__vPipeEcho'
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:175:21: warning: type defaults to 'int' in declaration of '__vSendAck' [-Wimplicit-int]
+  175 | __STATIC __NORETURN __vSendAck(void);
+      |                     ^~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:175:21: error: storage class specified for parameter '__vSendAck'
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:176:21: warning: type defaults to 'int' in declaration of '__vSendNack' [-Wimplicit-int]
+  176 | __STATIC __NORETURN __vSendNack(void);
+      |                     ^~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:176:21: error: storage class specified for parameter '__vSendNack'
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:178:17: error: expected '=', ',', ';', 'asm' or '__attribute__' before '__tCalculateSHA256HashForApplication'
+  178 | __STATIC hash_t __tCalculateSHA256HashForApplication(void);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:180:21: warning: type defaults to 'int' in declaration of '__vJumpToApplication' [-Wimplicit-int]
+  180 | __STATIC __NORETURN __vJumpToApplication(void);
+      |                     ^~~~~~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:180:21: error: storage class specified for parameter '__vJumpToApplication'
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:181:29: error: storage class specified for parameter '__enVerifyAddress'
+  181 | __STATIC __en_blErrStatus_t __enVerifyAddress(void);
+      |                             ^~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/bootloader_prg.c:37:
+h:\stmcubeide\stm32cubeide_1.10.1\stm32cubeide\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127\tools\lib\gcc\arm-none-eabi\10.3.1\include\stdarg.h:40:27: error: storage class specified for parameter '__gnuc_va_list'
+   40 | typedef __builtin_va_list __gnuc_va_list;
+      |                           ^~~~~~~~~~~~~~
+In file included from ../Core/Src/bootloader_prg.c:37:
+h:\stmcubeide\stm32cubeide_1.10.1\stm32cubeide\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127\tools\lib\gcc\arm-none-eabi\10.3.1\include\stdarg.h:99:24: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'va_list'
+   99 | typedef __gnuc_va_list va_list;
+      |                        ^~~~~~~
+In file included from ../Core/Src/bootloader_prg.c:35:
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:57:35: error: expected declaration specifiers before 'huart1'
+   57 | #define __BTL_COMM_ST_UART_HANDLE huart1
+      |                                   ^~~~~~
+../Core/Src/bootloader_prg.c:56:3: note: in expansion of macro '__BTL_COMM_ST_UART_HANDLE'
+   56 |   __BTL_COMM_ST_UART_HANDLE();
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_prv.h:59:36: error: expected declaration specifiers before 'huart2'
+   59 | #define __BTL_DBG_ST_UART_HANDLE   huart2
+      |                                    ^~~~~~
+../Core/Src/bootloader_prg.c:70:3: note: in expansion of macro '__BTL_DBG_ST_UART_HANDLE'
+   70 |   __BTL_DBG_ST_UART_HANDLE();
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bootloader_prg.c:97:33: error: storage class specified for parameter 'global_stMyBootLoaderVersion'
+   97 | __STATIC const __st_blVersion_t global_stMyBootLoaderVersion = {
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bootloader_prg.c:97:1: error: parameter 'global_stMyBootLoaderVersion' is initialized
+   97 | __STATIC const __st_blVersion_t global_stMyBootLoaderVersion = {
+      | ^~~~~~~~
+../Core/Src/bootloader_prg.c:98:3: error: '__st_blVersion_t' {aka 'const struct __bootloaderVersion'} has no member named 'vendorID'
+   98 |  .vendorID = BOOTLOADER_VENDOR_ID,
+      |   ^~~~~~~~
+In file included from ../Core/Src/bootloader_prg.c:36:
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_cfg.h:40:52: warning: excess elements in struct initializer
+   40 | #define BOOTLOADER_VENDOR_ID                       (1332)
+      |                                                    ^
+../Core/Src/bootloader_prg.c:98:14: note: in expansion of macro 'BOOTLOADER_VENDOR_ID'
+   98 |  .vendorID = BOOTLOADER_VENDOR_ID,
+      |              ^~~~~~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_cfg.h:40:52: note: (near initialization for 'global_stMyBootLoaderVersion')
+   40 | #define BOOTLOADER_VENDOR_ID                       (1332)
+      |                                                    ^
+../Core/Src/bootloader_prg.c:98:14: note: in expansion of macro 'BOOTLOADER_VENDOR_ID'
+   98 |  .vendorID = BOOTLOADER_VENDOR_ID,
+      |              ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/bootloader_prg.c:99:3: error: '__st_blVersion_t' {aka 'const struct __bootloaderVersion'} has no member named 'moduleID'
+   99 |  .moduleID = BOOTLOADER_MODULE_ID,
+      |   ^~~~~~~~
+In file included from ../Core/Src/bootloader_prg.c:36:
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_cfg.h:41:52: warning: excess elements in struct initializer
+   41 | #define BOOTLOADER_MODULE_ID                       (120)
+      |                                                    ^
+../Core/Src/bootloader_prg.c:99:14: note: in expansion of macro 'BOOTLOADER_MODULE_ID'
+   99 |  .moduleID = BOOTLOADER_MODULE_ID,
+      |              ^~~~~~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_cfg.h:41:52: note: (near initialization for 'global_stMyBootLoaderVersion')
+   41 | #define BOOTLOADER_MODULE_ID                       (120)
+      |                                                    ^
+../Core/Src/bootloader_prg.c:99:14: note: in expansion of macro 'BOOTLOADER_MODULE_ID'
+   99 |  .moduleID = BOOTLOADER_MODULE_ID,
+      |              ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/bootloader_prg.c:100:3: error: '__st_blVersion_t' {aka 'const struct __bootloaderVersion'} has no member named 'sw_major_version'
+  100 |  .sw_major_version = BOOTLOADER_SW_MAJOR_VERSION,
+      |   ^~~~~~~~~~~~~~~~
+In file included from ../Core/Src/bootloader_prg.c:36:
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_cfg.h:43:52: warning: excess elements in struct initializer
+   43 | #define BOOTLOADER_SW_MAJOR_VERSION                (1)
+      |                                                    ^
+../Core/Src/bootloader_prg.c:100:22: note: in expansion of macro 'BOOTLOADER_SW_MAJOR_VERSION'
+  100 |  .sw_major_version = BOOTLOADER_SW_MAJOR_VERSION,
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_cfg.h:43:52: note: (near initialization for 'global_stMyBootLoaderVersion')
+   43 | #define BOOTLOADER_SW_MAJOR_VERSION                (1)
+      |                                                    ^
+../Core/Src/bootloader_prg.c:100:22: note: in expansion of macro 'BOOTLOADER_SW_MAJOR_VERSION'
+  100 |  .sw_major_version = BOOTLOADER_SW_MAJOR_VERSION,
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bootloader_prg.c:101:3: error: '__st_blVersion_t' {aka 'const struct __bootloaderVersion'} has no member named 'sw_minor_version'
+  101 |  .sw_minor_version = BOOTLOADER_SW_MINOR_VERSION,
+      |   ^~~~~~~~~~~~~~~~
+In file included from ../Core/Src/bootloader_prg.c:36:
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_cfg.h:44:52: warning: excess elements in struct initializer
+   44 | #define BOOTLOADER_SW_MINOR_VERSION                (0)
+      |                                                    ^
+../Core/Src/bootloader_prg.c:101:22: note: in expansion of macro 'BOOTLOADER_SW_MINOR_VERSION'
+  101 |  .sw_minor_version = BOOTLOADER_SW_MINOR_VERSION,
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_cfg.h:44:52: note: (near initialization for 'global_stMyBootLoaderVersion')
+   44 | #define BOOTLOADER_SW_MINOR_VERSION                (0)
+      |                                                    ^
+../Core/Src/bootloader_prg.c:101:22: note: in expansion of macro 'BOOTLOADER_SW_MINOR_VERSION'
+  101 |  .sw_minor_version = BOOTLOADER_SW_MINOR_VERSION,
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bootloader_prg.c:102:3: error: '__st_blVersion_t' {aka 'const struct __bootloaderVersion'} has no member named 'sw_mpatch_version'
+  102 |  .sw_mpatch_version = BOOTLOADER_SW_PATCH_VERSION
+      |   ^~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/bootloader_prg.c:36:
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_cfg.h:45:52: warning: excess elements in struct initializer
+   45 | #define BOOTLOADER_SW_PATCH_VERSION                (0)
+      |                                                    ^
+../Core/Src/bootloader_prg.c:102:23: note: in expansion of macro 'BOOTLOADER_SW_PATCH_VERSION'
+  102 |  .sw_mpatch_version = BOOTLOADER_SW_PATCH_VERSION
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_cfg.h:45:52: note: (near initialization for 'global_stMyBootLoaderVersion')
+   45 | #define BOOTLOADER_SW_PATCH_VERSION                (0)
+      |                                                    ^
+../Core/Src/bootloader_prg.c:102:23: note: in expansion of macro 'BOOTLOADER_SW_PATCH_VERSION'
+  102 |  .sw_mpatch_version = BOOTLOADER_SW_PATCH_VERSION
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/bootloader_prg.c:105:17: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'volatile'
+  105 | __STATIC flag_t volatile global_tIsValidApp    = FALSE;
+      |                 ^~~~~~~~
+../Core/Src/bootloader_prg.c:106:17: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'volatile'
+  106 | __STATIC flag_t volatile global_tIsValidHash   = FALSE;
+      |                 ^~~~~~~~
+../Core/Src/bootloader_prg.c:107:17: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'volatile'
+  107 | __STATIC flag_t volatile global_tIsFromAppToBl = FALSE;
+      |                 ^~~~~~~~
+../Core/Src/bootloader_prg.c:116:71: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  116 | __STATIC __NORETURN __bl_dbg_wrt(const uint8 * pArg_u8StrFormat, ...) {
+      |                                                                       ^
+../Core/Src/bootloader_prg.c:126:58: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  126 | __LOCAL_INLINE __en_blStatus_t __getIsValidAppFlag(void) {
+      |                                                          ^
+../Core/Src/bootloader_prg.c:140:59: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  140 | __LOCAL_INLINE __en_blStatus_t __getIsValidHashFlag(void) {
+      |                                                           ^
+../Core/Src/bootloader_prg.c:154:57: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  154 | __LOCAL_INLINE __en_blStatus_t __getIsAppToBlFlag(void) {
+      |                                                         ^
+../Core/Src/bootloader_prg.c:168:47: error: expected declaration specifiers or '...' before 'flag_t'
+  168 | __LOCAL_INLINE __NORETURN __setIsValidAppFlag(flag_t volatile Arg_tValue) {
+      |                                               ^~~~~~
+../Core/Src/bootloader_prg.c:177:48: error: expected declaration specifiers or '...' before 'flag_t'
+  177 | __LOCAL_INLINE __NORETURN __setIsValidHashFlag(flag_t volatile Arg_tValue) {
+      |                                                ^~~~~~
+../Core/Src/bootloader_prg.c:186:46: error: expected declaration specifiers or '...' before 'flag_t'
+  186 | __LOCAL_INLINE __NORETURN __setIsAppToBlFlag(flag_t volatile Arg_tValue) {
+      |                                              ^~~~~~
+../Core/Src/bootloader_prg.c:201:40: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  201 | __st_blVersion_t BL_GetSwVersion(void) {
+      |                                        ^
+../Core/Src/bootloader_prg.c:205:40: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  205 | __en_blErrStatus_t BL_PipeListen(void) {
+      |                                        ^
+In file included from ../Core/Src/bootloader_prg.c:34:
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_intf.h:130:18: error: old-style parameter declarations in prototyped function definition
+  130 | __st_blVersion_t BL_stGetSwVersion(void)
+      |                  ^~~~~~~~~~~~~~~~~
+../Core/Src/bootloader_prg.c:224: error: expected '{' at end of input
+make: *** [Core/Src/subdir.mk:52: Core/Src/bootloader_prg.o] Error 1
+make: *** Waiting for unfinished jobs....
+In file included from G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/assets/Std_Types.h:40,
+                 from G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_intf.h:37,
+                 from ../Core/Src/main.c:25:
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/assets/Compiler.h:198: warning: "__PACKED" redefined
+  198 |     #define __PACKED __attribute__((packed))
+      | 
+In file included from ../Drivers/CMSIS/Include/cmsis_compiler.h:48,
+                 from ../Drivers/CMSIS/Include/core_cm3.h:115,
+                 from ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h:131,
+                 from ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h:130,
+                 from ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h:29,
+                 from ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h:27,
+                 from ../Core/Inc/stm32f1xx_hal_conf.h:238,
+                 from ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/CMSIS/Include/cmsis_gcc.h:62: note: this is the location of the previous definition
+   62 |   #define __PACKED                               __attribute__((packed, aligned(1)))
+      | 
+In file included from ../Core/Src/main.c:25:
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_intf.h:114:12: warning: type defaults to 'int' in declaration of 'BL_enBootManager' [-Wimplicit-int]
+  114 | __NORETURN BL_enBootManager(void);
+      |            ^~~~~~~~~~~~~~~~
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_intf.h:130:18: error: return type is an incomplete type
+  130 | __st_blVersion_t BL_stGetSwVersion(void)
+      |                  ^~~~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'BL_stGetSwVersion':
+../Core/Src/main.c:69:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+   69 | {
+      | ^
+../Core/Src/main.c:116:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  116 | {
+      | ^
+../Core/Src/main.c:163:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  163 | {
+      | ^
+In file included from ../Core/Src/main.c:25:
+G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/bootloader/bootloader_intf.h:130:18: error: old-style parameter declarations in prototyped function definition
+  130 | __st_blVersion_t BL_stGetSwVersion(void)
+      |                  ^~~~~~~~~~~~~~~~~
+../Core/Src/main.c:189: error: expected '{' at end of input
+make: *** [Core/Src/subdir.mk:52: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+
+20:20:00 Build Failed. 53 errors, 18 warnings. (took 832ms)
+

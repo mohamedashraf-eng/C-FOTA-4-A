@@ -74,7 +74,7 @@ __BTL_COMM_ST_CAN_HANDLE_DEF();
 #	endif /* (BL_COMM_PIPE == BL_COMM_OVER_UART) */
 #endif /* (BL_COMM_PIPE >= 0x00) */
 
-#if (BL_DBG_PORT >= 0x00)
+#if defined(BL_DBG_PORT)
 # define BL_DBG_SEND(DBG_MSG, ...)	__bl_vDbgWrt("\r\nVENDOR_ID: %d, MODULE_ID: %d <FILE: %s - FUNC: %s - LINE: %d> \nDBG_MSG:> "DBG_MSG,   \
 												BOOTLOADER_VENDOR_ID,											    									\
 												BOOTLOADER_MODULE_ID,										 	    									\
@@ -93,7 +93,7 @@ __BTL_DBG_ST_CAN_HANDLE_DEF();
 #		error (" No dbg port interface defined !")
 #	endif /* (BL_DBG_PORT == DBG_PORT_UART) */
 #else
-#		define BL_DBG_SEND(DBG_MSG, ...) ()
+#		define BL_DBG_SEND(DBG_MSG, ...) (0)
 #endif /* (BL_DBG_PORT > 0x00) */
 
 /**
@@ -123,7 +123,7 @@ __STATIC sha256_t volatile global_tApplicationHash;
 * ===============================================================================================
 */
 
-#if (BL_DBG_PORT >= 0x00)
+#if defined(BL_DBG_PORT)
 __STATIC void __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...) {
 	uint8 local_u8DbgBuffer[DBG_BUFFER_MAX_SIZE] = {0};
 	/* Create variadic argument */
@@ -301,12 +301,12 @@ __STATIC __NORETURN __vJumpToApplication(void) {
 		/* Read the data stored in the first 4 bytes (Main Stack Pointer) */
 		uint32 local_u32MspValue = *((uint32_t volatile *)(APP_START_ADDR));
 		/* Read the next 4 bytes from the base address (Reset Handler Function) */
-		uint32 local_u32ResetHandler = *((uint32_t volatile *) (APP_START_ADDR + 4U));
+		uint32 local_u32ResetHandler = *((uint32_t volatile *) (APP_START_ADDR + 4u));
 		/* Set the reset handler as function */
 		void (*local_vAppResetFunc)(void) = (void*)local_u32ResetHandler;
 		/* Set the MSP for the application */
 		__set_MSP(local_u32MspValue);
-		/* Reset all the modules before start */
+		/* Reset clock before start */
 		HAL_RCC_DeInit();
 		/* Call the reset function to start the application */
 		BL_DBG_SEND("Succesfully jumped to application.");
@@ -332,15 +332,22 @@ __STATIC __NORETURN __vSeralizeReceivedBuffer(packet_t* pArg_tPacket, uint8* pAr
 		BL_DBG_SEND("pArg_tPacket->DataLength: %X", pArg_tPacket->DataLength);
 
 		memcpy((uint8*)pArg_tPacket->Data, (uint8*)&pArg_tReceivedBuffer[3], pArg_tPacket->DataLength);
-		BL_DBG_SEND("pArg_tPacket->Data: %X", pArg_tPacket->Data[0]); /* Print the first byte as indication */
+#if defined(BL_DBG_PORT)
+		BL_DBG_SEND("pArg_tPacket->Data: "); /* Print the first byte as indication */
+		uint8 local_u8TempCounter = 0;
+		for(local_u8TempCounter = 0; (local_u8TempCounter < pArg_tPacket->DataLength); ++local_u8TempCounter) {
+			BL_DBG_SEND("Byte[%d]: %X", local_u8TempCounter, pArg_tPacket->Data[local_u8TempCounter]);
+		}
+#endif
 
-		memcpy(&pArg_tPacket->DataCRC32, &pArg_tReceivedBuffer[(pArg_tPacket->DataLength + 3u)], sizeof(uint32));
+		memcpy(&pArg_tPacket->DataCRC32, (uint8*)&pArg_tReceivedBuffer[3u + pArg_tPacket->DataLength], sizeof(uint32));
 		pArg_tPacket->DataCRC32 = APPLYDATACONVERSION(pArg_tPacket->DataCRC32);
 		BL_DBG_SEND("pArg_tPacket->DataCRC32: %X", pArg_tPacket->DataCRC32);
 
-		memcpy(&pArg_tPacket->PacketCRC32, &pArg_tReceivedBuffer[(pArg_tPacket->DataLength + 7u)], sizeof(uint32));
+		memcpy(&pArg_tPacket->PacketCRC32, (uint8*)&pArg_tReceivedBuffer[7u + pArg_tPacket->DataLength], sizeof(uint32));
 		pArg_tPacket->PacketCRC32 = APPLYDATACONVERSION(pArg_tPacket->PacketCRC32);
 		BL_DBG_SEND("pArg_tPacket->PacketCRC32: %X", pArg_tPacket->PacketCRC32);
+
 	}
 	return;
 }
@@ -351,8 +358,8 @@ __STATIC __NORETURN __vSeralizeReceivedBuffer(packet_t* pArg_tPacket, uint8* pAr
  * 					[Packet length] | [Packet Type] | [Command] | [Data Length] | [Data]		[Data CRC] | [Packet CRC]
  * 					[1 Byte]				| [1 Byte] 			| [1 Byte]  | [1 Byte] 			| [n Byte]	[4 Byte] 	 | [4 Byte]
  * 
- * Max Packet length (Excluding Length): x Bytes
- * Min Packet length (Excluding Length): y Bytes
+ * Max Packet length (Excluding Length): 12 + n Bytes
+ * Min Packet length (Excluding Length): 12 Bytes
  * 
  */
 __en_blErrStatus_t __enPipeListen(void) {
@@ -369,6 +376,9 @@ __en_blErrStatus_t __enPipeListen(void) {
 		BL_DBG_SEND("The pipe listner is not ok.");
 		local_enThisFuncErrStatus = BL_E_NOK;
 	} else {
+		/** @todo Create a session terminator if no data sent after length */
+		/** Watchdog guard */
+		// HAL_IWDG_Refresh(&hiwdg);
 		/* Receive the data */
 		local_tPacketSeralized.PacketLength = local_u8PipeListenrBuffer[0];
 		BL_DBG_SEND("Waiting for the packet with length (%d).", local_tPacketSeralized.PacketLength);
@@ -521,7 +531,7 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_HELP_CMD(void) {
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_CID_CMD(void) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	
-	uint32 local_u32CID = HAL_GetUIDw0();
+	uint32 local_u32CID = HAL_GetDEVID();
 	__vSendAck(4u);
 	__vPipeEcho((uint8*)&local_u32CID, 4u);
 
@@ -583,6 +593,7 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_WRITE_CMD(const uint8* pArg_u
 		local_enThisFuncErrStatus = BL_E_NOK;
 		BL_DBG_SEND("Writing to memory error");
 	} else {
+		BL_DBG_SEND("Written to memory");
 		local_enThisFuncErrStatus = BL_E_OK;
 	}
 
@@ -686,16 +697,17 @@ __STATIC __en_blErrStatus_t __enEraseFlashPages(const uint8 Arg_u8PageIdx, uint8
 				local_stMyErasingConfig.TypeErase = FLASH_TYPEERASE_PAGES;
 				local_stMyErasingConfig.NbPages = Arg_u8NumOfPages;
 				local_stMyErasingConfig.PageAddress = __vPageIdx2PhysicalAddress(Arg_u8PageIdx);
-				if( (local_stMyErasingConfig.PageAddress >= BTL_FIRMWARE_START_ADDRESS) ||
-						(local_stMyErasingConfig.PageAddress >= BTL_FIRMWARE_LAST_ADDR) ) {
-							BL_DBG_SEND("CANOT SELF TERMINATE THE BOOTLOADER FIRMWARE!");
-							goto BTL_SELF_TERMINATE_GUARD;
+				/* Erasing bootloader firmware guard */
+				if( (local_stMyErasingConfig.PageAddress >= BTL_FIRMWARE_START_ADDRESS) &&
+						(local_stMyErasingConfig.PageAddress <= BTL_FIRMWARE_LAST_ADDR) ) {
+					BL_DBG_SEND("CANOT SELF TERMINATE THE BOOTLOADER FIRMWARE!");
+					goto BTL_SELF_TERMINATE_GUARD;
 				} else {
 					;
 				}
 			}
 			local_stMyErasingConfig.Banks = FLASH_BANK_1;
-			uint32_t local_u32PageEraseErr = 0;  // Change the data type
+			uint32 local_u32PageEraseErr = 0;
 			
 			BL_DBG_SEND("Flash erasing started");
 			if (HAL_OK == HAL_FLASH_Unlock()) {
@@ -720,7 +732,6 @@ __STATIC __en_blErrStatus_t __enEraseFlashPages(const uint8 Arg_u8PageIdx, uint8
 			BL_DBG_SEND("Error with flash unlocking");
 		}
 	}
-
 	BTL_SELF_TERMINATE_GUARD:
 	return local_enThisFuncErrStatus;
 }
@@ -733,7 +744,7 @@ __LOCAL_INLINE __en_blErrStatus_t __enJumpToAddress(uint32 Arg_u32Address) {
 	} else {
 		local_enThisFuncErrStatus = BL_E_OK;
 		/* L_u32HostJmpAddr + 1 : For ARM-Thumb ISA indication */
-		void (*localFuncPtr_vAddrToJmp)(void) = (void *) (Arg_u32Address + 1U);
+		void (*localFuncPtr_vAddrToJmp)(void) = (void*)(Arg_u32Address + 1U);
 		/* Jump to the specified address */
 		BL_DBG_SEND("Jumping to address: %p", Arg_u32Address);
 		localFuncPtr_vAddrToJmp();
@@ -741,42 +752,54 @@ __LOCAL_INLINE __en_blErrStatus_t __enJumpToAddress(uint32 Arg_u32Address) {
 	return local_enThisFuncErrStatus;
 }
 
-__LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, const uint32 Arg_u8BaseAddr, uint16 Arg_u16Length) {
-	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
-	if( (BL_E_OK == __enVerifyAddress(Arg_u8BaseAddr)) ) {
-		if( ( HAL_OK == HAL_FLASH_Unlock()) ) {
-			uint16 local_u16DataCounter = 0;
-			uint16 local_u16HwordData = 0;
-			
-			for(local_u16DataCounter = 0; (local_u16DataCounter < (Arg_u16Length-1u)); local_u16DataCounter += 2u) {
-				local_u16HwordData = /* COMBINE FOR HWORD PROGRAMMING */
-					(pArg_u8Data[local_u16DataCounter] | (pArg_u8Data[local_u16DataCounter] << 8u));
-				if( (HAL_OK != HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (Arg_u8BaseAddr + local_u16DataCounter), local_u16HwordData)) ) {
-					local_enThisFuncErrStatus = BL_E_OK;
-					BL_DBG_SEND("Programmed flash successfully");
-				} else {
-					/* HWORD TYPE RESOLUTION PROGRAM */
+/**
+ * @brief Secure program flash memory
+ * 
+ * @note You can't program the same memory address twice,
+ * 			 the memory address should be erased then re programmed.
+ * @param pArg_u8Data 
+ * @param Arg_u32BaseAddr 
+ * @param Arg_u16Length 
+ * @return __en_blErrStatus_t 
+ */
+__LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, const uint32 Arg_u32BaseAddr, uint16 Arg_u16Length) {
+  __en_blErrStatus_t local_enThisFuncErrStatus = BL_E_OK;
+  
+  if (BL_E_OK == __enVerifyAddress(Arg_u32BaseAddr)) {
+    if (HAL_OK == HAL_FLASH_Unlock()) {
+      uint16 local_u16DataCounter = 0;
+      uint16 local_u16HwordData = 0;
+      
+      for (local_u16DataCounter = 0; local_u16DataCounter < (Arg_u16Length-1u); local_u16DataCounter += 2u) {
+        local_u16HwordData = /* Combining two QW as HW for HWORD RES FPEC compatbility */
+					(pArg_u8Data[local_u16DataCounter] | (pArg_u8Data[local_u16DataCounter + 1] << 8u));
+      	BL_DBG_SEND("Writing %X to address %p", local_u16HwordData, (Arg_u32BaseAddr + local_u16DataCounter));
+        if (HAL_OK != HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (Arg_u32BaseAddr + local_u16DataCounter), local_u16HwordData)) {
 					local_enThisFuncErrStatus = BL_E_NOK;
-					BL_DBG_SEND("Error writing to flash");
-					break; 
-				}
-			}
-
-			if( (HAL_OK == HAL_FLASH_Lock()) ) {
-				local_enThisFuncErrStatus = BL_E_OK;
-			} else {
+          BL_DBG_SEND("Error writing 0x%04X to flash address %p", local_u16HwordData, (Arg_u32BaseAddr + local_u16DataCounter));
+          break;
+        } else {
+          BL_DBG_SEND("Written 0x%04X to address %p successfully", local_u16HwordData, (Arg_u32BaseAddr + local_u16DataCounter));
+        }
+      }
+      
+      if (HAL_OK == HAL_FLASH_Lock()) {
+				;
+      } else {
+        BL_DBG_SEND("Error with flash locking");
 				local_enThisFuncErrStatus = BL_E_NOK;
-				BL_DBG_SEND("Error with flash locking");
-			}
-		} else {
-			local_enThisFuncErrStatus = BL_E_NOK;
-			BL_DBG_SEND("Error with flash unlocking");
-		}
-	} else {
-		local_enThisFuncErrStatus = BL_E_INVALID_ADDR;
-	}
-	return local_enThisFuncErrStatus;
+      }
+    } else {
+      BL_DBG_SEND("Error with flash unlocking");
+    }
+  } else {
+    BL_DBG_SEND("Invalid write memory address: %p ", Arg_u32BaseAddr);
+    local_enThisFuncErrStatus = BL_E_INVALID_ADDR;
+  }
+  
+  return local_enThisFuncErrStatus;
 }
+
 
 /**
   * @}
