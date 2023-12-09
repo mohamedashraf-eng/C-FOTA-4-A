@@ -49,6 +49,12 @@
 * ===============================================================================================
 */
 
+#define LOGL_INFO		(0)		
+#define LOGL_WARN		(1)
+#define LOGL_ERR		(2)
+#define LOGL_CRIT		(3)
+#define BL_LOG_BUFFER_SIZE ( (uint8) (255U) )
+
 // #define DATACONVERSION
 #define BIG2LITTLE
 
@@ -76,12 +82,14 @@
 #define __BTL_COMM_ST_UART_HANDLE	huart1
 #define __BTL_COMM_ST_CAN_HANDLE 	hcan
 #define __BTL_DBG_ST_UART_HANDLE   huart2
+#define __BTL_LOG_ST_UART_HANDLE	 huart2
 #define __BTL_DBG_ST_CAN_HANDLE    hcan
 
 #define __BTL_COMM_ST_UART_HANDLE_DEF()	 extern UART_HandleTypeDef __BTL_COMM_ST_UART_HANDLE
 #define __BTL_COMM_ST_CAN_HANDLE_DEF()   extern CAN_HandleTypeDef __BTL_COMM_ST_CAN_HANDLE
 #define __BTL_DBG_ST_UART_HANDLE_DEF()	 extern UART_HandleTypeDef __BTL_DBG_ST_UART_HANDLE
 #define __BTL_DBG_ST_CAN_HANDLE_DEF()    extern CAN_HandleTypeDef __BTL_DBG_ST_CAN_HANDLE
+#define __BTL_LOG_ST_UART_HANDLE_DEF() 	 extern UART_HandleTypeDef __BTL_LOG_ST_UART_HANDLE
 
 #define PIPE_BUFFER_MAX_SIZE ( (uint8) (255U) )
 #define DBG_BUFFER_MAX_SIZE  ( (uint8) (255U) )
@@ -140,8 +148,8 @@
 #define	CBL_OTP_READ_CMD							( (uint8) (9) )
 #define	CBL_DIS_R_W_PROTECT_CMD				( (uint8) (10) )
 #define CBL_READ_SECTOR_STATUS 				( (uint8) (11) )
-
 #define	CBL_GET_INFO_CMD							( (uint8) (13) )
+#define	CBL_FLASH_APP_CMD							( (uint8) (14) )
 
 /** @defgroup Packet Type */
 #define PACKET_TYPE_REQUEST_DATA				( (uint8) (0) )
@@ -234,6 +242,10 @@ extern "c" {
 
 #if defined(BL_DBG_PORT)
 __STATIC void __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...);
+#endif
+
+#if defined(BL_LOG_PORT)
+__STATIC void __bl_vLogWrt(const uint8 Arg_u8LogLevel, const uint8 * pArg_u8LogMsg);
 #endif
 
 __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket);

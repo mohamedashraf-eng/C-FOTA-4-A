@@ -37,13 +37,12 @@
 #include "bootloader_cfg.h"
 /** @defgroup ST libs */
 #include "usart.h"
-#include "can.h"
+//#include "can.h"
 #include "crc.h"
 /** @defgroup STD Libs */
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-
 /**
 * ===============================================================================================
 *   > Private Macros
@@ -58,23 +57,50 @@ __BTL_COMM_ST_UART_HANDLE_DEF();
 #			define PIPE_ECHO(__BUFFER, __LEN) HAL_UART_Transmit(&__BTL_COMM_ST_UART_HANDLE, (__BUFFER), (uint16)(__LEN), HAL_MAX_DELAY)
 #    else
 #			define PIPE_LISTEN(__BUFFER, __LEN) HAL_UART_Receive_IT(&__BTL_COMM_ST_UART_HANDLE, (__BUFFER), (uint16)(__LEN))
-#			define PIPE_ECHO(__BUFER, __LEN) HAL_UART_Transmit_IT(&__BTL_COMM_ST_UART_HANDLE, (__BUFFER), (uint16)(__LEN))
+#			define PIPE_ECHO(__BUFFER, __LEN) HAL_UART_Transmit_IT(&__BTL_COMM_ST_UART_HANDLE, (__BUFFER), (uint16)(__LEN))
 #    endif /* (BL_COMM_TYPE == BL_COMM_SYNC) */
 #	elif(BL_COMM_PIPE == BL_COMM_OVER_CAN)
 __BTL_COMM_ST_CAN_HANDLE_DEF();
 #		if(BL_COMM_TYPE == BL_COMM_SYNC)
 #			define PIPE_LISTEN(__BUFFER)
-#			define PIPE_ECHO(__BUFER, __LEN) 
+#			define PIPE_ECHO(__BUFFER, __LEN) 
 #    else
 #			define PIPE_LISTEN(__BUFFER)
-#			define PIPE_ECHO(__BUFER, __LEN) 
+#			define PIPE_ECHO(__BUFFER, __LEN) 
 #    endif /* (BL_COMM_TYPE == BL_COMM_SYNC) */
 #	else
 #	error (" No communication pipe interface defined !")
 #	endif /* (BL_COMM_PIPE == BL_COMM_OVER_UART) */
 #endif /* (BL_COMM_PIPE >= 0x00) */
 
+#if defined(BL_LOG_PORT)
+#		if defined(BL_DBG_PORT)
+#			undef (DBG_PORT_UART)
+#		endif /* DBG_PORT_UART */
+__BTL_LOG_ST_UART_HANDLE_DEF();
+__STATIC uint8 global_bl_log_buffer[BL_LOG_BUFFER_SIZE];
+
+#		define BL_LOG_SEND(LOG_LEVEL, LOG_MSG) __bl_vLogWrt(LOG_LEVEL, LOG_MSG)
+#		define __LOG_SEND_OVER_X(__BUFFER, __LEN) HAL_UART_Transmit_DMA(&__BTL_LOG_ST_UART_HANDLE, (__BUFFER), (uint16)(__LEN))
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
+	if( (huart->Instance == __BTL_LOG_ST_UART_HANDLE.Instance) ) {
+		;
+	} else return;
+}
+
+#else
+#		define BL_LOG_SEND(LOG_LEVEL, LOG_MSG) (0)
+#endif /* BL_LOG_PORT*/
+
 #if defined(BL_DBG_PORT)
+#		if defined(LWD)
+# define BL_DBG_SEND(DBG_MSG, ...)	__bl_vDbgWrt("\r\nVENDOR_ID: %d, MODULE_ID: %d - DBG_MSG:> "DBG_MSG,   \
+												BOOTLOADER_VENDOR_ID,											    									\
+												BOOTLOADER_MODULE_ID,										 	    									\
+												##__VA_ARGS__)													    										\
+
+#		else
 # define BL_DBG_SEND(DBG_MSG, ...)	__bl_vDbgWrt("\r\nVENDOR_ID: %d, MODULE_ID: %d <FILE: %s - FUNC: %s - LINE: %d> \nDBG_MSG:> "DBG_MSG,   \
 												BOOTLOADER_VENDOR_ID,											    									\
 												BOOTLOADER_MODULE_ID,										 	    									\
@@ -82,6 +108,8 @@ __BTL_COMM_ST_CAN_HANDLE_DEF();
 												__FUNCTION__,														    										\
 												__LINE__,													  														\
 												##__VA_ARGS__)													    										\
+
+#		endif /* LWD */
 
 #	if (BL_DBG_PORT == DBG_PORT_UART)
 __BTL_DBG_ST_UART_HANDLE_DEF();
@@ -125,18 +153,44 @@ __STATIC sha256_t volatile global_tApplicationHash;
 
 #if defined(BL_DBG_PORT)
 __STATIC void __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...) {
-	uint8 local_u8DbgBuffer[DBG_BUFFER_MAX_SIZE] = {0};
-	/* Create variadic argument */
+	__STATIC uint8 local_u8DbgBuffer[DBG_BUFFER_MAX_SIZE] = {0};
+
+	// Check if the buffer is large enough before proceeding
+	if (strlen((const char *)pArg_u8StrFormat) >= DBG_BUFFER_MAX_SIZE) {
+		// Handle error or truncate the string as needed
+		return;
+	}
+
 	va_list args;
-	/* Enable access to the variadic argument */
 	va_start(args, pArg_u8StrFormat);
-	/* Write formatted data from variable argument list to string */
-	vsprintf((char *)local_u8DbgBuffer, pArg_u8StrFormat, args);
-	/* Print the message via the channel speicfied */
-	__DBG_SEND_OVER_X(local_u8DbgBuffer, strlen((const char *)local_u8DbgBuffer));
-	/* Clean up the instant */
+	
+	// Use vsnprintf to limit the buffer size and prevent buffer overflow
+	vsnprintf((char *)local_u8DbgBuffer, DBG_BUFFER_MAX_SIZE, (char *)pArg_u8StrFormat, args);
+	
 	va_end(args);
+
+	// Print the message via the channel specified
+	__DBG_SEND_OVER_X(local_u8DbgBuffer, strlen((const char *)local_u8DbgBuffer));
 }
+#endif
+
+#if defined(BL_LOG_PORT)
+__STATIC void __bl_vLogWrt(const uint8 Arg_u8LogLevel, const uint8 * pArg_u8LogMsg) {
+	switch(Arg_u8LogLevel) {
+		case LOGL_INFO:
+		case LOGL_WARN:
+		case LOGL_ERR:
+		case LOGL_CRIT:
+			sprintf(global_bl_log_buffer, "[TimeStamp] [LogLevel] - %s\r\n", pArg_u8LogMsg);
+			
+			uint16_t global_bl_log_buffer_len = strlen(global_bl_log_buffer);
+			__LOG_SEND_OVER_X(global_bl_log_buffer, global_bl_log_buffer_len);
+
+			break;
+		default: break;
+	}
+}
+
 #endif
 
 __LOCAL_INLINE __en_blStatus_t __enGetIsValidAppFlag(void) {
@@ -209,11 +263,13 @@ __LOCAL_INLINE __NORETURN __vSetIsAppToBlFlag(flag_t volatile Arg_tValue) {
 }
 
 __STATIC __NORETURN __vPipeEcho(const uint8* pArg_u8TxBuffer, uint8 Arg_u8Length) {
+	__STATIC uint8 volatile local_u8TxBuffer[255u] = {0};
 	if( ((NULL == pArg_u8TxBuffer) || (Arg_u8Length <= 0u)) ) {
 		/* INVALID */
 		BL_DBG_SEND("INVALID Argument Values");
 	} else {
-		if( (HAL_OK != PIPE_ECHO((uint8*)&pArg_u8TxBuffer[0], Arg_u8Length)) ) {
+		memcpy(local_u8TxBuffer, pArg_u8TxBuffer, Arg_u8Length);
+		if( (HAL_OK != PIPE_ECHO((uint8*)&local_u8TxBuffer[0], Arg_u8Length)) ) {
 			BL_DBG_SEND("pipe echo is not ok.");
 		} else {
 			BL_DBG_SEND("pipe echo succeeded.");
@@ -363,19 +419,21 @@ __STATIC __NORETURN __vSeralizeReceivedBuffer(packet_t* pArg_tPacket, uint8* pAr
  * 
  */
 __en_blErrStatus_t __enPipeListen(void) {
+	BL_LOG_SEND(LOGL_INFO, "Bootloader is listening");
 	BL_DBG_SEND("Command Listening Start pipe: %d | type: %d\n", BL_COMM_PIPE, BL_COMM_TYPE);
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	packet_t local_tPacketSeralized = {0};
 	
-	uint8 local_u8PipeListenrBuffer[PIPE_BUFFER_MAX_SIZE];
+	__STATIC uint8 volatile local_u8PipeListenrBuffer[PIPE_BUFFER_MAX_SIZE];
 	memset(local_u8PipeListenrBuffer, 0, PIPE_BUFFER_MAX_SIZE);
 	
 	/* Start listening for the packet */
 	BL_DBG_SEND("Waiting for the packet length.");
 	if( (HAL_OK != PIPE_LISTEN((uint8*)&local_u8PipeListenrBuffer[0], 1u)) ) {
+		BL_LOG_SEND(LOGL_INFO, "Bad message");
 		BL_DBG_SEND("The pipe listner is not ok.");
 		local_enThisFuncErrStatus = BL_E_NOK;
-	} else {
+	} else {	
 		/** @todo Create a session terminator if no data sent after length */
 		/** Watchdog guard */
 		// HAL_IWDG_Refresh(&hiwdg);
@@ -386,6 +444,7 @@ __en_blErrStatus_t __enPipeListen(void) {
 			BL_DBG_SEND("The pipe listner is not ok.");
 			local_enThisFuncErrStatus = BL_E_NOK;
 		} else {
+			BL_LOG_SEND(LOGL_INFO, "Got the packet");
 			BL_DBG_SEND("The pipe listner received a packet successfully.");
 			/* Seralize the received packet */
 			__vSeralizeReceivedBuffer(&local_tPacketSeralized, (uint8*)&local_u8PipeListenrBuffer[1]);
@@ -401,18 +460,22 @@ __en_blErrStatus_t __enPipeListen(void) {
 					if( (BL_E_OK != __bl_enExecuteCommand(&local_tPacketSeralized)) ) {
 						__vSendNack(BL_E_NOK);
 						local_enThisFuncErrStatus = BL_E_NOK;
+						BL_LOG_SEND(LOGL_INFO, "Executing the command");
 						BL_DBG_SEND("Command execution error");
 					} else {
 						__vSendAck(0u);
 						local_enThisFuncErrStatus = BL_E_OK;
+						BL_LOG_SEND(LOGL_INFO, "Done");
 						BL_DBG_SEND("Command execution done");
 					}
 				} else {
 					local_enThisFuncErrStatus = BL_E_INVALID_CRC;
+					BL_LOG_SEND(LOGL_INFO, "Probably a corrupted data");
 					BL_DBG_SEND("Packet error, Invalid packet data CRC32");
 				}
 			} else {
 				local_enThisFuncErrStatus = BL_E_INVALID_CRC;
+				BL_LOG_SEND(LOGL_INFO, "Probably a corrupted packet");
 				BL_DBG_SEND("Packet error, Invalid packet CRC32");
 			}
 		}
@@ -824,28 +887,34 @@ __LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, cons
  * 
  */
 __NORETURN BL_enBootManager(void) {
+	BL_LOG_SEND(LOGL_INFO, "Bootloader manager started, looking for a valid application");
 	BL_DBG_SEND("Started the boot manager");
 	if( (BL_FRESH == __enGetIsAppToBlFlag()) || (BL_APP_VALID != __enGetIsValidAppFlag()) ||
 			(BL_APP_TO_BL == __enGetIsAppToBlFlag())) {
 		BL_DBG_SEND("Invalid application, waiting for a valid application");
+		BL_LOG_SEND(LOGL_INFO, "No valid application found");
 		/* Start listner */
 		__enPipeListen();
 	} else {
+		BL_LOG_SEND(LOGL_INFO, "Found appllication, started to validate");
 		BL_DBG_SEND("Validating the existant application");
 		/* Process */
 		if( (BL_APP_VALID == __enGetIsValidAppFlag()) ) {
+			BL_LOG_SEND(LOGL_INFO, "Calculating hash digest");
 			BL_DBG_SEND("Calculating application hash.");
 			__STATIC sha256_t local_tApplicationHash;  
 			/* Calculate hash */
 			if ( (0 == strcmp(local_tApplicationHash, global_tApplicationHash)) ) {
 				__vSetIsValidHashFlag(TRUE);
 				__vSetIsValidAppFlag(TRUE);
+				BL_LOG_SEND(LOGL_INFO, "Applicaton is valid");
 				BL_DBG_SEND("Valid hash");
 				/* Jump to the application */
 				__vJumpToApplication();
 			} else {
 				__vSetIsValidHashFlag(FALSE);
 				__vSetIsValidAppFlag(FALSE);
+				BL_LOG_SEND(LOGL_INFO, "Application not valid, waiting for a valid application");
 				BL_DBG_SEND("Invalid hash");
 				/* Start listner */
 				__enPipeListen();

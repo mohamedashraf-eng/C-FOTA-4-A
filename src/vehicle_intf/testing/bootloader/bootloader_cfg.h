@@ -94,16 +94,24 @@
 
 /**
 * ===============================================================================================
-*   > Bootloader Debugging CFG
+*   > Bootloader Debugging & Logging CFG
 * ===============================================================================================
 */
+
 /** 
  * @brief ECU application start address
  *  @arguments
  *  	@arg DBG_PORT_UART
  *  	@arg DBG_PORT_CAN
 */
-// #define BL_DBG_PORT DBG_PORT_UART
+#define BL_DBG_PORT DBG_PORT_UART
+/** 
+ * @brief Light Weight Debugging 
+ * @note defining the LWD enables the functionality automatically
+*/
+#define LWD
+
+// #define BL_LOG_PORT DBG_PORT_UART
 
 #endif /* __BOOTLOADER_CFG_H__ */
 
