@@ -150,11 +150,16 @@
 #define CBL_READ_SECTOR_STATUS 				( (uint8) (11) )
 #define	CBL_GET_INFO_CMD							( (uint8) (13) )
 #define	CBL_FLASH_APP_CMD							( (uint8) (14) )
+#define	CBL_SW_RESET									( (uint8) (15) )
 
 /** @defgroup Packet Type */
 #define PACKET_TYPE_REQUEST_DATA				( (uint8) (0) )
 #define PACKET_TYPE_DATA_FOR_FLASH			( (uint8) (1) )
 #define PACKET_TYPE_CMD									( (uint8) (2) )
+
+#define __STM32F103C8T6_SW_RESET_EXCECPTION() NVIC_SystemReset() 
+
+#define __sw_reset_signal() __STM32F103C8T6_SW_RESET_EXCECPTION()
 
 /**
 * ===============================================================================================
@@ -300,6 +305,7 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_MEM_READ_CMD(const uint8* pArg_u8
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_OTP_READ_CMD(void);
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_DIS_R_W_PROTECT_CMD(void);
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_READ_SECTOR_STATUS(void);
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_SW_RESET(void);
 
 /**
   * @}

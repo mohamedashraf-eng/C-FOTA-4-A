@@ -32,6 +32,7 @@ class btl_ttl_intf(object):
         CBL_READ_SECTOR_STATUS = 11
         CBL_GET_INFO_CMD = 13
         CBL_FLASH_APP_CMD = 14
+        CBL_SW_RESET = 15
         
     std_baudrates = [9600, 19200, 38400, 57600, 115200, 1500000]
 
@@ -54,7 +55,8 @@ class btl_ttl_intf(object):
             "CBL_DIS_R_W_PROTECT_CMD": "Disable Read/Write Protection",
             "CBL_READ_SECTOR_STATUS": "Read Sector Status",
             "CBL_GET_INFO_CMD": "Get Bootloader Information",
-            "CBL_FLASH_APP_CMD": "Flashing the application binary"
+            "CBL_FLASH_APP_CMD": "Flashing the application binary",
+            "CBL_SW_RESET": "Seneding a reset signal to the bootloader"
         }
         self.__btl_commands = {
             # btl_ttl_intf.BtlCommands.CBL_GET_VER_CMD:,
@@ -71,6 +73,7 @@ class btl_ttl_intf(object):
             # btl_ttl_intf.BtlCommands.CBL_DIS_R_W_PROTECT_CMD:,
             # btl_ttl_intf.BtlCommands.CBL_READ_SECTOR_STATUS:,
             # btl_ttl_intf.BtlCommands.CBL_GET_INFO_CMD:,
+            btl_ttl_intf.BtlCommands.CBL_GET_INFO_CMD: self.btl_cmd_intf_Reboot,
             # ... add other commands here
         }
         
@@ -377,11 +380,12 @@ class btl_ttl_intf(object):
             
     def run(self):
         # Get the user input
-        # self.set_serial_port(input("Enter the serial port to connect to: "))
-        # self.set_baudrate(input("Enter the baudrate: "))
+        self.set_serial_port(input("Enter the serial port to connect to: "))
+        self.set_baudrate(input("Enter the baudrate: "))
         # self.set_timeout(input("Enter the timeout: "))
-        self.set_serial_port('COM3')
-        self.set_baudrate(115200)
+        # self.set_serial_port('COM3')
+        # self.set_baudrate(115200)
+        
         if self.__connect_to_port(self.__serial_port, self.__baudrate, self.__timeout):
             self.BTL_CLI()
 
@@ -428,7 +432,10 @@ class btl_ttl_intf(object):
         
     def btl_cmd_intf_FlashApp(self):
         self.__btl_cmd_flashApp()
-        
+    
+    def btl_cmd_intf_Reboot(self):
+        pass
+    
     def btl_command_exec(self, command):
         default_command = lambda: print("Invalid command")
         command_method = self.__btl_commands.get(command, default_command)

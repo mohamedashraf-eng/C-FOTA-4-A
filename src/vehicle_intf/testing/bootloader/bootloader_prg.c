@@ -333,6 +333,8 @@ __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) 
 		case CBL_READ_SECTOR_STATUS 	:	BL_DBG_SEND("Executing Command: CBL_READ_SECTOR_STATUS");	
 			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_READ_SECTOR_STATUS();
 			break;
+		case CBL_SW_RESET: BL_DBG_SEND("Executing Command: CBL_SW_RESET");	
+			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_SW_RESET();
 		default: BL_DBG_SEND("Unkown received command"); break;
 	}
 	/** @todo Make logic for return */
@@ -689,6 +691,15 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_OTP_READ_CMD(void) {
 __STATIC __en_blErrStatus_t __enCmdHandler_CBL_DIS_R_W_PROTECT_CMD(void) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	
+
+	return local_enThisFuncErrStatus; 
+}
+
+__STATIC __en_blErrStatus_t __enCmdHandler_CBL_SW_RESET(void) {
+	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_OK;
+	
+	BL_DBG_SEND("Performing SW reset. -- No Return");
+	__sw_reset_signal();
 
 	return local_enThisFuncErrStatus; 
 }
