@@ -148,9 +148,9 @@
 #define	CBL_OTP_READ_CMD							( (uint8) (9) )
 #define	CBL_DIS_R_W_PROTECT_CMD				( (uint8) (10) )
 #define CBL_READ_SECTOR_STATUS 				( (uint8) (11) )
-#define	CBL_GET_INFO_CMD							( (uint8) (13) )
-#define	CBL_FLASH_APP_CMD							( (uint8) (14) )
-#define	CBL_SW_RESET									( (uint8) (15) )
+#define	CBL_GET_INFO_CMD							( (uint8) (12) )
+#define	CBL_FLASH_APP_CMD							( (uint8) (13) )
+#define	CBL_SW_RESET									( (uint8) (14) )
 
 /** @defgroup Packet Type */
 #define PACKET_TYPE_REQUEST_DATA				( (uint8) (0) )
@@ -201,7 +201,8 @@ struct __packetSerialization {
 	uint8 PacketType;
 	uint8 Command;
 	uint8 DataLength;
-	uint8 Data[128u]; 
+	/* MTU */
+	uint8 Data[128u];  
 	uint32 DataCRC32;
 	uint32 PacketCRC32;
 };
@@ -287,6 +288,13 @@ __FORCE_INLINE
 __LOCAL_INLINE uint32 __vPageIdx2PhysicalAddress(uint8 Arg_u8PageIdx);
 
 __LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, const uint32 Arg_u32BaseAddr, uint16 Arg_u16Length);
+
+
+__LOCAL_INLINE uint32 __u32GetTickCount(void);
+__LOCAL_INLINE __NORETURN __vStartSessiontimeOutCount(void);
+__LOCAL_INLINE uint8 __u8IsSessionTimeOut(uint32 Arg_u32LastPacketTime);
+__LOCAL_INLINE __NORETURN __vResetSessionTimeOutCounter(uint32* pArg_u32LastPacketTime);
+__LOCAL_INLINE __NORETURN __vUpdateLastPacketTime(uint32* pArg_u32LastPacketTime);
 
 /** 
  * @defgroup commands handlers 

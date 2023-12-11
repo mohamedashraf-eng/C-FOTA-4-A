@@ -90,7 +90,7 @@
 /** 
  * @brief Pipe listner timeout in milliseconds
 */
-#define PIPE_TIMEOUT_MS       (20u)
+#define PIPE_TIMEOUT_MS       (20000u)
 
 /**
 * ===============================================================================================

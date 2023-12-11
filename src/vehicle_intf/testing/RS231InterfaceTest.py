@@ -26,10 +26,10 @@ def Check_Serial_Ports():
 
     return Serial_Ports
 
-def Serial_Port_Configuration(Port_Number):
+def Serial_Port_Configuration(Port_Number, br):
     global Serial_Port_Obj
     try:
-        Serial_Port_Obj = serial.Serial(Port_Number, 115200, timeout=2)
+        Serial_Port_Obj = serial.Serial(Port_Number, br, timeout=1)
     except:
         print("\nError !! That was not a valid port")
 
@@ -137,9 +137,8 @@ def readIncomingMessageFromBl():
             print("\nNothing to wait from bootloader")
             return 2
     else:
-        print("\nReceived Nack from bootloader")
         hex_values = [format(byte, '02X') for byte in reply]
-        print(f"Recieved error code: {hex_values[1]}")
+        print(f"\nReceived Nack from bootloader err_code@{hex_values[1]}")
         return 0
 
 
@@ -218,11 +217,11 @@ def FlashApplication(application_fp):
         print(f"Packet sent ({packet[0]}): ")
         Write_Data_To_Serial_Port(packet[0], 1)
 
-        sleep(0.0001)
+        sleep(1)
         for Data in packet[1:]:
             Write_Data_To_Serial_Port(Data, len(packet) - 1)
 
-        sleep(0.0001)  # wait for writing
+        # sleep(2)  # wait for writing
         if 0 == readIncomingMessageFromBl():
             print("Failed to program bootloader")
             sys.exit(1)
@@ -233,64 +232,32 @@ def FlashApplication(application_fp):
         print("\n   Bytes sent to the bootloader :{0}".format(
             BinFileSentBytes))
         
-
-def compare_binary_files(bin1_fp, bin2_fp):
-    import difflib
-    with open(bin1_fp, 'rb') as bf1:
-        binaries1 = bf1.readlines()
-
-    with open(bin2_fp, 'rb') as bf2:
-        binaries2 = bf2.readlines()
-
-    # Compare the two binary files
-    d = difflib.Differ()
-    diff = list(d.compare(binaries1, binaries2))
-
-    # Extract changes
-    added = [line for line in diff if line.startswith('+ ')]
-    removed = [line for line in diff if line.startswith('- ')]
-    modified = [line[2:] for line in diff if line.startswith('? ')]
-
-    return added, removed, modified
-
-# # Example usage
-# bin1_file = r"G:\WX_CAREER\Grad Project\src\oem_intf\django_webappv1\fota\firmwares\Buned.bin"
-# bin2_file = r"G:\WX_CAREER\Grad Project\src\oem_intf\django_webappv1\fota\firmwares\App.bin"
-# added, removed, modified = compare_binary_files(bin1_file, bin2_file)
-
-# print("Added lines:")
-# for line in added:
-#     print(line)
-
-# print("\nRemoved lines:")
-# for line in removed:
-#     print(line)
-
-# print("\nModified lines:")
-# for line in modified:
-#     print(line)
-    
-# while True: pass
-
 if __name__ == "__main__":
-    serial_port = Serial_Port_Configuration('COM6')
-
-    FlashApplication(r"G:\WX_CAREER\Grad Project\src\oem_intf\django_webappv1\fota\firmwares\ApplicationTest.bin")
+    serial_port = Serial_Port_Configuration('COM3', 115200)
+    
+    import time
+    start_time = time.monotonic()
+    FlashApplication(r"G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\TestAppLedOn\MDK-ARM\TestAppLedOn\TestAppLedOn.bin")
+    end_time = time.monotonic()
+    elapsed_time = end_time - start_time
+    print(f"Firmware flashing time: {elapsed_time:.3f}s")
+    
     # while True: pass
-    # Jumping to the flashed application [TEST]
-    # 0x08008235 ??
-    data = [0x00, 0x80, 0x00, 0x08]
-    packet_info = {
-        "PacketType": 1,
-        "Command": 4,
-        "Data": data,
-    }
-    packet = formatPacket(packet_info)
+    
+    # # Jumping to the flashed application [TEST]
+    # # 0x08008235 ??
+    # data = [0x00, 0x80, 0x00, 0x08]
+    # packet_info = {
+    #     "PacketType": 1,
+    #     "Command": 4,
+    #     "Data": data,
+    # }
+    # packet = formatPacket(packet_info)
 
-    sleep(2)
-    print("Packet sent:")
-    Write_Data_To_Serial_Port(packet[0], 1)
-    sleep(0.5)
-    for Data in packet[1:]:
-        Write_Data_To_Serial_Port(Data, len(packet) - 1)
-    readIncomingMessageFromBl()
+    # sleep(2)
+    # print("Packet sent:")
+    # Write_Data_To_Serial_Port(packet[0], 1)
+    # sleep(0.5)
+    # for Data in packet[1:]:
+    #     Write_Data_To_Serial_Port(Data, len(packet) - 1)
+    # readIncomingMessageFromBl()

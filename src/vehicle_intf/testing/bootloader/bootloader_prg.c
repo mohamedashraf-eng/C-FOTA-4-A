@@ -145,6 +145,9 @@ __STATIC flag_t volatile global_tIsFromAppToBl = FALSE;
 
 __STATIC sha256_t volatile global_tApplicationHash;
 
+__STATIC uint32 global_u32LastPacketTime = 0;
+__STATIC volatile uint8 global_u8StartCountingFlag = FALSE;
+
 /**
 * ===============================================================================================
 *   > Private Functions Implementation
@@ -289,6 +292,42 @@ __STATIC __NORETURN __vSendNack(uint8 Arg_u8ErrorCode) {
 	BL_DBG_SEND("Sent Nack successfully");
 }
 
+#include "stm32f1xx_hal.h"
+
+__LOCAL_INLINE uint32 __u32GetTickCount(void) {
+	return HAL_GetTick();
+}
+
+__LOCAL_INLINE uint8 __u8IsSessionTimeOut(uint32 Arg_u32LastPacketTime) {
+	return (Arg_u32LastPacketTime > PIPE_TIMEOUT_MS) ? TRUE: FALSE;
+}
+
+__LOCAL_INLINE __NORETURN __vResetSessionTimeOutCounter(uint32* pArg_u32LastPacketTime) {
+	(*pArg_u32LastPacketTime) = 0;
+	global_u8StartCountingFlag = FALSE;
+}
+
+__LOCAL_INLINE __NORETURN __vStartSessiontimeOutCount(void) {
+	global_u8StartCountingFlag = TRUE;
+}
+
+void SysTick_Init(void) {
+	HAL_SYSTICK_Config(SystemCoreClock / 1000);  // Generate SysTick interrupt every 1 ms
+	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+}
+
+// Function to handle SysTick interrupt
+void SysTick_Handler(void) {
+	if(TRUE == global_u8StartCountingFlag) {
+		global_u32LastPacketTime++;
+		if( (TRUE == __u8IsSessionTimeOut(global_u32LastPacketTime)) ) {
+			/* Reset connection */
+			__sw_reset_signal();
+		} else;
+	} else;
+	HAL_IncTick();
+}
+
 __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	__en_blErrStatus_t local_enCmdHandlerErrStatus = BL_E_NONE;
@@ -335,6 +374,7 @@ __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) 
 			break;
 		case CBL_SW_RESET: BL_DBG_SEND("Executing Command: CBL_SW_RESET");	
 			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_SW_RESET();
+			break;
 		default: BL_DBG_SEND("Unkown received command"); break;
 	}
 	/** @todo Make logic for return */
@@ -436,16 +476,18 @@ __en_blErrStatus_t __enPipeListen(void) {
 		BL_DBG_SEND("The pipe listner is not ok.");
 		local_enThisFuncErrStatus = BL_E_NOK;
 	} else {	
-		/** @todo Create a session terminator if no data sent after length */
-		/** Watchdog guard */
-		// HAL_IWDG_Refresh(&hiwdg);
 		/* Receive the data */
 		local_tPacketSeralized.PacketLength = local_u8PipeListenrBuffer[0];
 		BL_DBG_SEND("Waiting for the packet with length (%d).", local_tPacketSeralized.PacketLength);
+		
+		__vStartSessiontimeOutCount();
+
 		if( (HAL_OK != PIPE_LISTEN((uint8*)&local_u8PipeListenrBuffer[1], local_tPacketSeralized.PacketLength)) ) {
 			BL_DBG_SEND("The pipe listner is not ok.");
 			local_enThisFuncErrStatus = BL_E_NOK;
 		} else {
+			__vResetSessionTimeOutCounter(&global_u32LastPacketTime);
+
 			BL_LOG_SEND(LOGL_INFO, "Got the packet");
 			BL_DBG_SEND("The pipe listner received a packet successfully.");
 			/* Seralize the received packet */
@@ -900,6 +942,7 @@ __LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, cons
 __NORETURN BL_enBootManager(void) {
 	BL_LOG_SEND(LOGL_INFO, "Bootloader manager started, looking for a valid application");
 	BL_DBG_SEND("Started the boot manager");
+	SysTick_Init();
 	if( (BL_FRESH == __enGetIsAppToBlFlag()) || (BL_APP_VALID != __enGetIsValidAppFlag()) ||
 			(BL_APP_TO_BL == __enGetIsAppToBlFlag())) {
 		BL_DBG_SEND("Invalid application, waiting for a valid application");
