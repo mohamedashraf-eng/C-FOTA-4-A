@@ -80,7 +80,7 @@ class btl_ttl_intf(object):
         self.__baudrate = 0
         self.__timeout = 0
 
-        self.__application_bin_fp = DUMMY_APP_BIN_FP
+        self.__application_bin_fp = ""
 
     def __available_ports(self):
         ports = serial.tools.list_ports.comports()
@@ -337,6 +337,15 @@ class btl_ttl_intf(object):
         Byte_Value = WordValue >> (8 * (ByteIdx - 1)) & 0x000000FF
         return Byte_Value
 
+    def __cvtHex2Bin(self, hex_fp):
+        # output = os.path.splitext(os.path.basename(hex_fp))[0]
+        
+        # Load the Intel HEX file
+        ih = IntelHex(hex_fp)
+
+        # Convert to binary and save
+        ih.tobinfile("UpdatedFirmware.bin")
+    
     def __print_commands_as_table(self):
         print(
             "+-------+---------------------------+----------------------------------------------------+"
@@ -385,16 +394,16 @@ class btl_ttl_intf(object):
         print(
             "+----------------------------------------------------------------------------------------+"
         )
-
+    
     def check_input(self, input_str):
         try:
             # Check if input is empty or contains only whitespaces
             if not input_str or input_str.isspace():
                 pass
-
+            
             # Remove leading and trailing whitespaces
             input_str = input_str.strip()
-
+            
             # Convert input to integer
             input_value = int(input_str)
 
@@ -403,21 +412,13 @@ class btl_ttl_intf(object):
         except ValueError as e:
             print(e)
             return None
-
+    
     def __interactive_btl_intf(self):
         print("Select a command")
         selected_command = input("[BTL]> ")
         selected_command = self.check_input(selected_command)
         self.btl_command_exec(selected_command - 1)
 
-    def __cvt_hex2bin(self, hex_fp):
-        file_name = os.path.splitext(os.path.basename(hex_fp))[0]
-        # Load the Intel HEX file
-        ih = IntelHex(hex_fp)
-
-        # Convert to binary and save
-        ih.tobinfile(file_name, '.bin')
-        
     def BTL_CLI(self):
         try:
             while True:
@@ -432,13 +433,23 @@ class btl_ttl_intf(object):
         # self.set_serial_port(input("Enter the serial port to connect to: "))
         # self.set_baudrate(input("Enter the baudrate: "))
         # self.set_timeout(input("Enter the timeout: "))
-        self.set_serial_port("/dev/ttyUSB0")
-        self.set_baudrate(115200)
 
         if self.__connect_to_port(self.__serial_port, self.__baudrate, self.__timeout):
             self.BTL_CLI()
-
+    
     # APIs
+    def update_firmware(self):
+        # Dummy procedure [TODO(Wx): Fix & Optimize]
+        if self.__connect_to_port(self.__serial_port, self.__baudrate, self.__timeout):
+            self.__cvtHex2Bin('./UpdatedFirmware.hex')
+            self.set_appBinFp('./UpdatedFirmware.bin')
+            #
+            self.btl_cmd_intf_FlashApp()
+            #
+            self.btl_cmd_intf_JumpToAddr(0x08008000)
+            
+            return True
+        
     def get_serial_port(self):
         return self.__serial_port
 
@@ -469,23 +480,24 @@ class btl_ttl_intf(object):
         else:
             logging.error("Invalid application binary path")
 
+    def cvtHex2Bin(self, hexfp):
+        if os.path.exists(hexfp):
+            self.__cvtHex2Bin(hexfp)
+        else:
+            print(f"Invalid file path @{hexfp}")
+    
     def btl_cmd_intf_JumpToAddr(self, jumpAddr=None):
         if jumpAddr is None:
             jumpAddr = int(
-                input("Input flashing address in hex format (e.x 0x08008000): "),
-                base=16,
+                input("Input flashing address in hex format (e.x 0x08008000): "), base=16
             )
         self.__btl_cmd_jumpToAddr(jumpAddr)
 
-    def btl_cmd_intf_EraseFlash(self, pageIdx=None, pageN=None):
-        if pageIdx is None or pageN is None:
-            pageIdx = int(input("Input the page idx (0-63): "), base=10)
-            pageN = int(input("Input number of pages to erase: "), base=10)
+    def btl_cmd_intf_EraseFlash(self):
+        pageIdx = int(input("Input the page idx (0-63): "), base=10)
+        pageN = int(input("Input number of pages to erase: "), base=10)
 
-        if pageIdx > 0 and pageN > 0:
-            self.__btl_cmd_eraseFlash(pageIdx, pageN)
-        else:
-            logging.error("Invalid page idx | pageN")
+        self.__btl_cmd_eraseFlash(pageIdx, pageN)
 
     def btl_cmd_intf_FlashApp(self):
         self.__btl_cmd_flashApp()
@@ -497,13 +509,7 @@ class btl_ttl_intf(object):
         default_command = lambda: print("Invalid command")
         command_method = self.__btl_commands.get(command, default_command)
         command_method()
-
-    def cvt_hex2bin(self, hex_fp):
-        if os.path.exists(hex_fp):
-            self.__cvt_hex2bin
-        else:
-            logging.error(f"Invalid hex file path @{hex_fp}")
-            
-if __name__ == "__main__":
-    mybtl = btl_ttl_intf(True, False)
-    mybtl.run()
+    
+# if __name__ == "__main__":
+#     mybtl = btl_ttl_intf(True, False)
+#     mybtl.run()

@@ -160,8 +160,6 @@ class SimpleMQTTClient:
         with open("UpdatedFirmware.hex", "wb") as f:
             for line in firmware:
                 f.write(line.encode('utf-8') + b'\n')
-                
-        self.__vehicle_btl.cvt_hex2bin("./UpdatedFirmware.hex")
         
     def __save_firmwareHash(self, firmwareHash):
         with open("UpdatedFirmwareHash.txt", "w") as f:
@@ -171,20 +169,10 @@ class SimpleMQTTClient:
         if not self.__mqtt_msgsQ.empty():
             oem_msg = self.__mqtt_msgsQ.get()
             return self.__fota_cmd_exec(oem_msg)
-
-    def flash_app_procedure(self):
-        pass
     
-    def run(self):
-        self.__vehicle_btl = btl_ttl_intf(True, False)
-
-        # Setup bootloader cfg
-        self.__vehicle_btl.set_serial_port("/dev/ttyUSB0")
-        self.__vehicle_btl.set_baudrate(115200)
-        self.__vehicle_btl.set_appBinFp("./UpdatedFirmware.bin")
-
-        # self.__vehicle_btl.btl_command_exec(self.__vehicle_btl.BtlCommands.CBL_FLASH_ERASE_CMD.value)
-
+    def run(self):        
+        vehicle_btl = btl_ttl_intf(True, False)
+        
         # Setup mqtt cfg
         mqtt_client.connect()
         time.sleep(1)  # Add a short delay after connecting
@@ -197,7 +185,10 @@ class SimpleMQTTClient:
                 try:
                     status = self.__vehicle_cmd_handle()
                     if status == True:
-                        if True == self.flash_app_procedure():
+                        vehicle_btl.set_serial_port('/dev/ttyUSB0')
+                        vehicle_btl.set_baudrate(115200)
+                        #
+                        if True == vehicle_btl.update_firmware():
                             print(f"Flashed new software succesfully")
                         else:
                             print(f"Error occured while flashing the new software")

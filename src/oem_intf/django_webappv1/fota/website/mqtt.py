@@ -133,21 +133,29 @@ class prj_foem_mysql:
         self.__cursor = self.__cnx.cursor()
 
     def update(self, table_name, id_column, id_value, col, value):
-        self.connect()
-        update_stmt = f"UPDATE {table_name} SET {col} = %s WHERE {id_column} = %s"
-        data = (value, id_value)
-        self.__cursor.execute(update_stmt, data)
-        self.__cnx.commit()
-        self.close()
+        try:
+            self.connect()
+            update_stmt = f"UPDATE {table_name} SET {col} = %s WHERE {id_column} = %s"
+            data = (value, id_value)
+            self.__cursor.execute(update_stmt, data)
+            self.__cnx.commit()
+        except Exception as e:
+            print(f"Error updating database: {e}")
+        finally:
+            self.close()
 
     def insert(self, table_name, value_dict):
-        self.connect()
-        columns = ", ".join(value_dict.keys())
-        placeholders = ", ".join(["%s"] * len(value_dict))
-        insert_query = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
-        self.__cursor.execute(insert_query, tuple(value_dict.values()))
-        self.__cnx.commit()
-        self.close()
+        try:
+            self.connect()
+            columns = ", ".join(value_dict.keys())
+            placeholders = ", ".join(["%s"] * len(value_dict))
+            insert_query = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
+            self.__cursor.execute(insert_query, tuple(value_dict.values()))
+            self.__cnx.commit()
+        except Exception as e:
+            print(f"Error inserting into database: {e}")
+        finally:
+            self.close()
 
     def fetch(self, table_name, id_col, id, col):
         try:
@@ -584,16 +592,19 @@ class prj_foem_mqtt:
                 self.__last_active_job_id = curr_max_id
                 record_status = str(
                     self.__mysql_obj.fetch(
-                        "website_fota_fota", "fota_id", curr_max_id, "status"
+                        "website_fota_fota", "fota_id", self.__last_active_job_id, "status"
                     )
                 )
+                self.__job_done = False
+                self.__job_delayed = False
                 # TODO(Wx): Change logic :'(
                 if curr_max_id is not None and curr_max_id != self.__last_id:
                     self.__last_id = curr_max_id
+                    if record_status == "completed":
+                        self.__job_done = True
                     while (
                         self.__job_done != True
                         or self.__job_delayed != True
-                        or record_status != "completed"
                     ):
                         curr_update_ready = self.__is_update_ready(
                             self.__last_active_job_id

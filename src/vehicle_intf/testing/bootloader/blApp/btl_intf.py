@@ -475,7 +475,7 @@ class btl_ttl_intf(object):
         if os.path.exists(hexfp):
             self.__cvtHex2Bin(self, hexfp)
         else:
-            pass
+            print(f"Invalid file path @{hexfp}")
     
     def btl_cmd_intf_JumpToAddr(self):
         jumpAddr = int(
