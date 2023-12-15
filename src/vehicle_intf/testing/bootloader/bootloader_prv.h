@@ -91,8 +91,8 @@
 #define __BTL_DBG_ST_CAN_HANDLE_DEF()    extern CAN_HandleTypeDef __BTL_DBG_ST_CAN_HANDLE
 #define __BTL_LOG_ST_UART_HANDLE_DEF() 	 extern UART_HandleTypeDef __BTL_LOG_ST_UART_HANDLE
 
-#define PIPE_BUFFER_MAX_SIZE ( (uint8) (255U) )
-#define DBG_BUFFER_MAX_SIZE  ( (uint8) (255U) )
+#define PIPE_BUFFER_MAX_SIZE ( (uint8) (64) )
+#define DBG_BUFFER_MAX_SIZE  ( (uint8) (64) )
 /** @defgroup debugging configurations */
 #define DBG_PORT_UART  ( (0x00U) )
 #define DBG_PORT_CAN   ( (0x01U) )
@@ -247,7 +247,7 @@ extern "c" {
 #endif /* __cplusplus */
 
 #if defined(BL_DBG_PORT)
-__STATIC void __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...);
+__STATIC __NORETURN __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...);
 #endif
 
 #if defined(BL_LOG_PORT)

@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "bootloader_cfg.h": "c",
+    "string.h": "c",
+    "crc.h": "c",
+    "main.h": "c",
+    "sim800_intf.h": "c",
+    "fota.h": "c",
+    "stdio.h": "c",
+    "usart.h": "c",
+    "esp8266.h": "c",
+    "std_types.h": "c",
+    "mqtt.h": "c"
+  }
+}

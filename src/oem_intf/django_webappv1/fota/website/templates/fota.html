@@ -43,7 +43,7 @@
       </form> 
     </div> {% endcomment %}
     <div class="col text-center">
-      <a href="{% url 'update_fota_record' 1%}" class="btn btn-primary">Modify</a>
+      <a href="{% url 'update_fota_record' pk=fotas.fota_id %}" class="btn btn-primary">Modify</a>
     </div>
   </div>
 {% endif %}

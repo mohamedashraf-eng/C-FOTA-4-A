@@ -155,7 +155,7 @@ __STATIC volatile uint8 global_u8StartCountingFlag = FALSE;
 */
 
 #if defined(BL_DBG_PORT)
-__STATIC void __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...) {
+__STATIC __NORETURN __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...) {
 	__STATIC uint8 local_u8DbgBuffer[DBG_BUFFER_MAX_SIZE] = {0};
 
 	// Check if the buffer is large enough before proceeding
@@ -163,7 +163,6 @@ __STATIC void __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...) {
 		// Handle error or truncate the string as needed
 		return;
 	}
-
 	va_list args;
 	va_start(args, pArg_u8StrFormat);
 	

@@ -1,4 +1,4 @@
-'''
+"""
     @author Mohamed Ashraf Wx
     @date 2023 / 13 / 3
     @brief
@@ -6,7 +6,7 @@
     
     @attention
 
-'''
+"""
 
 import yaml
 import json
@@ -24,11 +24,11 @@ log_filename = "main.log"
 log_format = (
     "%(asctime)s - %(levelname)s - %(message)s - %(pathname)s:%(lineno)d - %(funcName)s"
 )
-logging.basicConfig(filename=log_filename,
-                    level=logging.INFO, format=log_format)
+logging.basicConfig(filename=log_filename, level=logging.INFO, format=log_format)
 
 
 PASSIVE_RECONNECT_HANDLER = True
+
 
 class prj_foem_yaml:
     # Class methods
@@ -110,18 +110,26 @@ class prj_foem_yaml:
 # MYSQL - CLASS
 class prj_foem_mysql:
     def __init__(self, yaml_sql_cfg):
-        self.__host = yaml_sql_cfg.get('host', "")
-        self.__username = yaml_sql_cfg.get('username', "")
-        self.__password = yaml_sql_cfg.get('password', "")
-        self.__database = yaml_sql_cfg.get('database', "")
-        self.__firmware_in_hex_fp = yaml_sql_cfg.get('firmware_in_hex_fp', "")
-        self.__cnx = mysql.connector.connect(user=self.__username, password=self.__password,
-                                             host=self.__host, database=self.__database)
+        self.__host = yaml_sql_cfg.get("host", "")
+        self.__username = yaml_sql_cfg.get("username", "")
+        self.__password = yaml_sql_cfg.get("password", "")
+        self.__database = yaml_sql_cfg.get("database", "")
+        self.__firmware_in_hex_fp = yaml_sql_cfg.get("firmware_in_hex_fp", "")
+        self.__cnx = mysql.connector.connect(
+            user=self.__username,
+            password=self.__password,
+            host=self.__host,
+            database=self.__database,
+        )
         self.__cursor = self.__cnx.cursor()
 
     def connect(self):
-        self.__cnx = mysql.connector.connect(user=self.__username, password=self.__password,
-                                             host=self.__host, database=self.__database)
+        self.__cnx = mysql.connector.connect(
+            user=self.__username,
+            password=self.__password,
+            host=self.__host,
+            database=self.__database,
+        )
         self.__cursor = self.__cnx.cursor()
 
     def update(self, table_name, id_column, id_value, col, value):
@@ -134,8 +142,8 @@ class prj_foem_mysql:
 
     def insert(self, table_name, value_dict):
         self.connect()
-        columns = ', '.join(value_dict.keys())
-        placeholders = ', '.join(['%s'] * len(value_dict))
+        columns = ", ".join(value_dict.keys())
+        placeholders = ", ".join(["%s"] * len(value_dict))
         insert_query = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
         self.__cursor.execute(insert_query, tuple(value_dict.values()))
         self.__cnx.commit()
@@ -144,10 +152,9 @@ class prj_foem_mysql:
     def fetch(self, table_name, id_col, id, col):
         try:
             self.connect()
-            fetch_query = f'SELECT {col} FROM {table_name} WHERE {id_col} = %s'
+            fetch_query = f"SELECT {col} FROM {table_name} WHERE {id_col} = %s"
             self.__cursor.execute(fetch_query, (id,))
             data = self.__cursor.fetchone()
-
             if data is not None:
                 return data[0]
             else:
@@ -160,7 +167,6 @@ class prj_foem_mysql:
         finally:
             self.close()
 
-
     def fetch_single_value(self, query):
         self.connect()
         self.__cursor.execute(query)
@@ -172,38 +178,35 @@ class prj_foem_mysql:
         self.__cursor.close()
         self.__cnx.close()
 
+
 #
 #
 #
 #
 
+
 class oem_cmd(Enum):
     DEFAULT = 0xFFFFFFFF
-    UPDATE_REQUEST = 0x00000001
-    
+    UPDATE_REQUEST = "1332"
+    SEND_FIRMWARE_DONE = "50"
+    SEND_FIRMWARE_HASH_DONE = "51"
+
+
 class vehicle_cmd(Enum):
-    #
-    UPDATE_REQUEST_NACK = '0' # 0x00000000
-    UPDATE_REQUEST_ACK = '1' # 0x00000001
-    #
-    INTEGRITY_ACK = '2' # 0x00000002
-    INTEGRITY_NACK = '3' # 0x00000003
-    #
-    AUTHNTECITY_ACK = '4' # 0x00000004
-    AUTHNTECITY_NACK = '5' # 0x00000005
-    #
-    CONFIDENTIALITY_ACK = '6' # 0x00000006
-    CONFIDENTIALITY_NACK = '7' # 0x00000007
-    #
-    ROOT_OF_TRUST_ACK = '9' # 0x00000009
-    ROOT_OF_TRUST_NACK = '10' # 0x0000000A
-    #
+    NACK = "70"
+    ACK = "69"
+    DONE = "99"
+    SEND_FIRMWARE = "30"
+    SEND_FIRMWARE_HASH = "31"
+
 
 def e_v(enum_):
     return enum_.value
 
+
 #
 # MQTT - CLASS
+
 
 class prj_foem_mqtt:
     # Class methods
@@ -219,7 +222,7 @@ class prj_foem_mqtt:
         self.__mqtt_msgsQ = queue.Queue()
         #
         self.__mysql_obj = prj_foem_mysql(yaml_sql_cfg=yaml_mysql_cfg)
-        self.__tablename = 'website_mqtt'
+        self.__tablename = "website_mqtt"
         self.__mqtt_unlock_flag = True
 
     def __repr__(self):
@@ -261,8 +264,8 @@ class prj_foem_mqtt:
             "ka_topic": self.__katopic,
             "pub_topic": self.__pubtopic,
             "sub_topic": self.__subtopic,
-            "out_msg": '',
-            "in_msg": '',
+            "out_msg": "",
+            "in_msg": "",
         }
         self.__mysql_obj.insert(self.__tablename, mqtt_cfg)
 
@@ -287,7 +290,7 @@ class prj_foem_mqtt:
 
         def on_message(client, userdata, msg):
             # Extract the publisher's Client ID from the topic
-            self.__mqtt_currmsg = msg.payload.decode("UTF-8")
+            self.__mqtt_currmsg = msg.payload.decode("utf-8")
             logging.info(
                 f"Received message from topic: `{msg.topic}` msg: `{self.__mqtt_currmsg}`"
             )
@@ -296,7 +299,8 @@ class prj_foem_mqtt:
             )
             # Update value in mysql
             self.__mysql_obj.update(
-                self.__tablename, 'id', 1, 'in_msg', self.__mqtt_currmsg)
+                self.__tablename, "mqtt_id", 1, "in_msg", self.__mqtt_currmsg
+            )
             # Logging message in a queue
             self.__mqtt_msgsQ.put(str(self.__mqtt_currmsg))
 
@@ -315,8 +319,7 @@ class prj_foem_mqtt:
         delay_interval_s = 2
 
         while not self.__pmqtt_client.is_connected() and retries <= max_retries:
-            logging.info(
-                f"Attempting reconnection, retry {retries+1}/{max_retries}")
+            logging.info(f"Attempting reconnection, retry {retries+1}/{max_retries}")
             self.connect()
             time.sleep(delay_interval_s)
             retries += 1
@@ -361,22 +364,20 @@ class prj_foem_mqtt:
                 f"Connection error broker `{self.__brokeraddr}` | code: `{str(e)}`"
             )
             # Handler mechanism
-            logging.info(
-                f"Starting failure handler - calling; `__attempt_reconnect`")
+            logging.info(f"Starting failure handler - calling; `__attempt_reconnect`")
             self.__attempt_reconnect()
 
     def disconnect(self):
         self.__pmqtt_client.disconnect()
 
     def publish(self, msg):
-        assert msg is not None, f'msg must not be None value'
+        assert msg is not None, f"msg must not be None value"
         self.__pmqtt_client.publish(
             topic=self.__pubtopic, qos=self.__qos, retain=self.__retain, payload=msg
         )
         logging.info(f"published: `{msg}` on topic `{self.__pubtopic}`")
         print(f"published: `{msg}` on topic `{self.__pubtopic}`")
-        self.__mysql_obj.update(self.__tablename, "id",
-                                1, 'out_msg', msg)
+        self.__mysql_obj.update(self.__tablename, "mqtt_id", 1, "out_msg", msg)
 
     def subscribe(self):
         logging.info(f"to subscribing to topic: `{self.__subtopic}`")
@@ -386,134 +387,217 @@ class prj_foem_mqtt:
 
     def am_i_connected(self):
         return self.__pmqtt_client.is_connected()
-    
+
     def __is_update_ready(self, last_active_job_id):
         return self.__mysql_obj.fetch(
-                            'website_fota_fota', 'fota_id', last_active_job_id, 'availability_flag')
-#
-# COMM INTF: START
-# HANDLERS
+            "website_fota_fota", "fota_id", last_active_job_id, "availability_flag"
+        )
+
+    #
+    # COMM INTF: START
+    # HANDLERS
     def __loadFirmwareToUpdate(self, fota_record_id):
         try:
-            firmware_id = self.__mysql_obj.fetch('website_fota_fota', 'fota_id', fota_record_id, 'firmware_id')
+            firmware_id = self.__mysql_obj.fetch(
+                "website_fota_fota", "fota_id", fota_record_id, "firmware_id"
+            )
             firmware = []
             BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             firmware_fp = self.__mysql_obj.fetch(
-                'website_fota_firmware', 'firmware_id', firmware_id, 'firmware')
+                "website_fota_firmware", "firmware_id", firmware_id, "firmware"
+            )
             firmware_fp = os.path.join(BASE_DIR, firmware_fp)
-            with open(firmware_fp, 'r') as f:
+            with open(firmware_fp, "r") as f:
                 firmware = [line.strip() for line in f]
-                
+
                 return firmware
         except:
-            raise Exception('Invalid firmware ID')
-        
+            raise Exception("Invalid firmware ID")
+
+    def __loadFirmwareToUpdateHash(self, fota_record_id):
+        try:
+            firmware_id = self.__mysql_obj.fetch(
+                "website_fota_fota", "fota_id", fota_record_id, "firmware_id"
+            )
+
+            firmware_hash = self.__mysql_obj.fetch(
+                "website_fota_firmware", "firmware_id", firmware_id, "`firmware_cmac`"
+            )
+
+            return str(firmware_hash)
+        except:
+            raise Exception("Invalid firmware ID")
+
     def __onVehicleCmd_UpdateRequestAck(self):
-        print(f'{vehicle_cmd.UPDATE_REQUEST_ACK}')
-        print(self.__firmwareToUpload)
+        time.sleep(1)
+
+        if self.__mqtt_currmsg != e_v(vehicle_cmd.SEND_FIRMWARE):
+            return False
+
+        for record in self.__firmwareToUpload:
+            self.publish(record)
+
+        time.sleep(1)
+        self.publish(e_v(oem_cmd.SEND_FIRMWARE_DONE))
+
+        # Wait for ACK
+        time.sleep(8)
+        if self.__mqtt_currmsg != e_v(vehicle_cmd.ACK):
+            return False
+
+        # Send the hash
+        time.sleep(2)
+        if self.__mqtt_currmsg == e_v(vehicle_cmd.SEND_FIRMWARE_HASH):
+            self.publish(self.__firmwareToUploadHash)
+            self.publish(e_v(oem_cmd.SEND_FIRMWARE_HASH_DONE))
+        else:
+            return False
+
+        time.sleep(3)
+
+        # Wait for final ACK
+        if self.__mqtt_currmsg == e_v(vehicle_cmd.ACK):
+            time.sleep(5)
+            if self.__mqtt_currmsg == e_v(vehicle_cmd.DONE):
+                return True
+            else:
+                return False
+        return False
 
     def __onVehicleCmd_UpdateRequestNack(self):
-        print(f'{vehicle_cmd.UPDATE_REQUEST_NACK}')
+        print(f"{e_v(vehicle_cmd.NACK)}")
+
+        return True
 
     def __onVehicleCmd_IntegrityAck(self):
         pass
-    
+
     def __onVehicleCmd_IntegrityNack(self):
         pass
-    
+
     def __onVehicleCmd_AuthAck(self):
         pass
-    
+
     def __onVehicleCmd_AuthNack(self):
         pass
-    
-# TODO(Wx): Implement the commands handlers
-# MAIN HANDLERS
+
+    # TODO(Wx): Implement the commands handlers
+    # MAIN HANDLERS
     def __vehicle_cmd_switch(self, cmd):
         return {
             #
-            e_v(vehicle_cmd.UPDATE_REQUEST_ACK): lambda: self.__onVehicleCmd_UpdateRequestAck(),
-            e_v(vehicle_cmd.UPDATE_REQUEST_NACK): lambda: self.__onVehicleCmd_UpdateRequestNack()
+            e_v(vehicle_cmd.ACK): lambda: self.__onVehicleCmd_UpdateRequestAck(),
+            e_v(vehicle_cmd.NACK): lambda: self.__onVehicleCmd_UpdateRequestNack()
             #
-        }.get(cmd, lambda: (logging.info(f'Invalid received cmd | {cmd}'),
-                            print(f'Invalid received cmd | {cmd}')))()
+        }.get(
+            cmd,
+            lambda: (
+                logging.info(f"Invalid received cmd | {cmd}"),
+                print(f"Invalid received cmd | {cmd}"),
+            ),
+        )()
 
     def __oem_cmd_handle(self):
         #
         # TODO(Wx): Implement the handler
         if not self.__mqtt_msgsQ.empty():
             vehicle_msg = self.__mqtt_msgsQ.get()
-            self.__vehicle_cmd_switch(vehicle_msg)
+            OemCmdDone = self.__vehicle_cmd_switch(vehicle_msg)
         else:
             pass
-#
-# COMM INTF: END
+
+    #
+    # COMM INTF: END
     # Main class sequence runner
     def run(self):
         # Fetch my configurations
         self.__get_cfg()
         # Set Paho-MQTT configurations
         self.__set_pmqtt_cfg()
-        last_id = None
-        last_active_job_id = None
-        job_done = False
-        job_delayed = False
+        self.__last_id = None
+        self.__last_active_job_id = None
+        self.__job_done = False
+        self.__job_delayed = False
+        pending_records = []
         # Save first SQL
         # self.__save_sql_cfg()
         # Get hex file path
-
         # MAIN
         try:
             self.connect()
             self.loop_start()
             #
             while True:
+                # TODO(Wx): Create an algorithm for processing multi fota records
+                # ! IMPORTANT ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                # ! NOTE: For a simple demo, we will use only 1 record to test the functionality flow. (Abstraction)
+                #
                 # Fetch the highest ID in the fota_fota table
                 curr_max_id = self.__mysql_obj.fetch_single_value(
-                    f'SELECT MAX(fota_id) FROM website_fota_fota')
-                last_active_job_id = curr_max_id
-                #
-                if curr_max_id is not None and curr_max_id != last_id:
-                    last_id = curr_max_id
-                    while not job_done and not job_delayed:
-                        curr_update_ready = self.__is_update_ready(last_active_job_id)
+                    f"SELECT MAX(fota_id) FROM website_fota_fota"
+                )
+                self.__last_active_job_id = curr_max_id
+                record_status = str(
+                    self.__mysql_obj.fetch(
+                        "website_fota_fota", "fota_id", curr_max_id, "status"
+                    )
+                )
+                # TODO(Wx): Change logic :'(
+                if curr_max_id is not None and curr_max_id != self.__last_id:
+                    self.__last_id = curr_max_id
+                    while (
+                        self.__job_done != True
+                        or self.__job_delayed != True
+                        or record_status != "completed"
+                    ):
+                        curr_update_ready = self.__is_update_ready(
+                            self.__last_active_job_id
+                        )
                         #
                         if curr_update_ready == 1:
-                            self.__firmwareToUpload = self.__loadFirmwareToUpdate(last_active_job_id)
+                            self.__firmwareToUpload = self.__loadFirmwareToUpdate(
+                                self.__last_active_job_id
+                            )
+                            self.__firmwareToUploadHash = self.__loadFirmwareToUpdateHash(
+                                self.__last_active_job_id
+                            )
                             if self.__mqtt_unlock_flag:
-                                self.publish(
-                                    f'{ e_v(oem_cmd.UPDATE_REQUEST) }')
+                                self.publish(f"{ e_v(oem_cmd.UPDATE_REQUEST) }")
                             # Start handle the incoming vehicle cmd
-                            self.__oem_cmd_handle()
+                            curr_job_status = self.__oem_cmd_handle()
+                            if True == curr_job_status:
+                                self.__job_done = True
+                                # Set FOTA RECORD Status to Completed 
+                                # Assign Start - End Time & Time taken
+                                # Mark this record as done!
                         else:
                             if self.__mqtt_unlock_flag:
-                                self.publish(
-                                    f'{ e_v(oem_cmd.DEFAULT) }')
-                            # print(f'Nothing new | {e_v(oem_cmd.DEFAULT)}')
-                            # Base listner 
-                            self.__oem_cmd_handle()
+                                self.publish(f"{ e_v(oem_cmd.DEFAULT) }")
+                            # Base listner
+                            # self.__oem_cmd_handle()
                         time.sleep(2)
                     #
-                    last_active_job_id = last_id
+                    self.__last_active_job_id = self.__last_id
                 else:
-                    print(f'There is no new FOTA record. last@{last_id}')
+                    print(f"There is no new FOTA record. last@{self.__last_id}")
                 #
-                time.sleep(5) # Comm Speed delay
+                time.sleep(5)
         except KeyboardInterrupt:
             self.disconnect()
             self.loop_stop()
             self.__mysql_obj.close()
 
-if __name__ == '__main__':
-    myyaml = prj_foem_yaml('main.yaml')
+
+if __name__ == "__main__":
+    myyaml = prj_foem_yaml("main.yaml")
     myyaml.run()
 
-    mymqtt = prj_foem_mqtt(yaml_mqtt_cfg=myyaml.get_mqttcfg,
-                           yaml_mysql_cfg=myyaml.get_sqlcfg)
+    mymqtt = prj_foem_mqtt(
+        yaml_mqtt_cfg=myyaml.get_mqttcfg, yaml_mysql_cfg=myyaml.get_sqlcfg
+    )
 
     mymqtt.run()
     # TODO(Wx): Make a recovery handle
-
     try:
         if PASSIVE_RECONNECT_HANDLER:
             # Passive handle in (testing)
@@ -525,4 +609,6 @@ if __name__ == '__main__':
                 mymqtt.run()
     except Exception as e:
         # TODO(Wx): Critical Exception procedure
-        raise Exception("Unkown exception error due to undefined behaviour. [CRITICAL ! ! ]")
+        raise Exception(
+            "Unkown exception error due to undefined behaviour. [CRITICAL ! ! ]"
+        )

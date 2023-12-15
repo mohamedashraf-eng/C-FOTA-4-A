@@ -85,3 +85,13 @@
 2023-10-10 12:23:56,174 - ERROR - Error: File '.\test.hex' not found. - .\firmware_utils.py:107 - __firmware_calculate_size
 2023-10-10 12:24:03,101 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
 2023-10-10 12:24:03,105 - INFO - Conversion successful. Binary file created:.\firmwareToUpload.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
+2023-10-10 15:20:15,886 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
+2023-10-10 15:20:15,913 - INFO - Conversion successful. Binary file created:.\firmwareToUpload.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
+2023-10-14 04:57:22,882 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
+2023-10-14 04:57:22,916 - INFO - Conversion successful. Binary file created:.\bootloaderX3.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
+2023-10-14 12:53:24,832 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
+2023-10-14 12:53:24,849 - INFO - Conversion successful. Binary file created:.\bootloaderX3.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
+2023-12-14 00:08:19,884 - INFO - Fetched the hex file successfully. - firmware_utils.py:40 - __firmware_hex_fetch
+2023-12-14 00:08:19,888 - INFO - Conversion successful. Binary file created:firmwareToUpload.bin - firmware_utils.py:63 - __firmware_cvt2bin
+2023-12-14 20:01:43,010 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
+2023-12-14 20:01:43,013 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\TestAppLedOn\MDK-ARM\TestAppLedOn\TestAppLedOn.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
