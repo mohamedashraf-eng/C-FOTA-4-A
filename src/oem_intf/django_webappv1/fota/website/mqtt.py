@@ -256,6 +256,26 @@ class prj_foem_mqtt:
         self.__retain = self.__mqtt_cfg.get("retain", False)
         logging.info(f"mqtt configuration fetched.")
 
+    def __set_fotaRecord_status(self, status, fota_id):
+        self.__mysql_obj.update(
+            "website_fota_fota", "fota_id", fota_id, "status", status
+        )
+        
+    def __set_fotaRecord_minutesTaken(self, minutes_taken, fota_id):
+        self.__mysql_obj.update(
+            "website_fota_fota", "fota_id", fota_id, "minutes_taken", minutes_taken
+        )
+   
+    def __set_fotaRecord_startTime(self, started_at, fota_id):
+        self.__mysql_obj.update(
+            "website_fota_fota", "fota_id", fota_id, "started_at", started_at
+        )
+        
+    def __set_fotaRecord_endTime(self, completed_at, fota_id):
+        self.__mysql_obj.update(
+            "website_fota_fota", "fota_id", fota_id, "completed_at", completed_at
+        )
+             
     def __save_sql_cfg(self):
         mqtt_cfg = {
             "broker": self.__brokeraddr,
@@ -450,6 +470,7 @@ class prj_foem_mqtt:
         self.publish(e_v(oem_cmd.OEM_NACK))
 
     def __onVehicleCmd_UpdateRequestAck(self):
+        start_time = time.monotonic()
         while (
             not self.__mqtt_msgsQ.empty()
             and self.__mqtt_msgsQ.queue[0] != e_v(vehicle_cmd.DONE)
@@ -479,7 +500,9 @@ class prj_foem_mqtt:
                 
             while self.__mqtt_msgsQ.get() != e_v(vehicle_cmd.VEHICLE_ACK):
                 pass
-            
+        end_time = time.monotonic()
+        self.__uploadingTimeTaken = (end_time - start_time)
+        
         return True
 
     def __onVehicleCmd_UpdateRequestNack(self):
@@ -587,9 +610,10 @@ class prj_foem_mqtt:
                             # Start handle the incoming vehicle cmd
                             if True == curr_job_status:
                                 self.__job_done = True
-                                # Set FOTA RECORD Status to Completed
-                                # Assign Start - End Time & Time taken
-                                # Mark this record as done!
+                                self.__set_fotaRecord_status("completed", self.__last_active_job_id)
+                                self.__set_fotaRecord_minutesTaken(self.__uploadingTimeTaken, self.__last_active_job_id)
+                                self.__set_fotaRecord_startTime("X", self.__last_active_job_id)
+                                self.__set_fotaRecord_endTime("Y", self.__last_active_job_id)
                                 break
                             if self.__mqtt_unlock_flag:
                                 self.publish(f"{ e_v(oem_cmd.UPDATE_REQUEST) }")

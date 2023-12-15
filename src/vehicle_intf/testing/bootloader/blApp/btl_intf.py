@@ -6,6 +6,7 @@ import sys
 import os
 import logging
 from enum import Enum
+from intelhex import IntelHex
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -13,9 +14,7 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
-DUMMY_APP_BIN_FP = r"G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\TestAppLedOn\MDK-ARM\TestAppLedOn\TestAppLedOn.bin"
-
-
+OUTPUT_BIN_FILE_STD = ""
 class btl_ttl_intf(object):
     class BtlCommands(Enum):
         NUM_OF_CMDS = 13
@@ -340,7 +339,13 @@ class btl_ttl_intf(object):
         return Byte_Value
 
     def __cvtHex2Bin(self, hex_fp):
-        pass
+        output = os.path.splitext(os.path.basename(hex_fp))[0]
+        
+        # Load the Intel HEX file
+        ih = IntelHex(hex_fp)
+
+        # Convert to binary and save
+        ih.tobinfile(OUTPUT_BIN_FILE_STD, '/', output,'.bin')
     
     def __print_commands_as_table(self):
         print(
@@ -494,8 +499,7 @@ class btl_ttl_intf(object):
         default_command = lambda: print("Invalid command")
         command_method = self.__btl_commands.get(command, default_command)
         command_method()
-
-
+    
 if __name__ == "__main__":
     mybtl = btl_ttl_intf(True, False)
     mybtl.run()

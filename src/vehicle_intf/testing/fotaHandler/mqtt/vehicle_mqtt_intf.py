@@ -154,11 +154,15 @@ class SimpleMQTTClient:
         # End Of Comm
         self.__sendToOEM(SimpleMQTTClient.FotaVehicleResponse.DONE.value)
 
+        return True
+    
     def __save_firmware(self, firmware):
         with open("UpdatedFirmware.hex", "wb") as f:
             for line in firmware:
                 f.write(line.encode('utf-8') + b'\n')
-
+                
+        self.__vehicle_btl.cvt_hex2bin("./UpdatedFirmware.hex")
+        
     def __save_firmwareHash(self, firmwareHash):
         with open("UpdatedFirmwareHash.txt", "w") as f:
             f.write(firmwareHash)
@@ -168,15 +172,18 @@ class SimpleMQTTClient:
             oem_msg = self.__mqtt_msgsQ.get()
             return self.__fota_cmd_exec(oem_msg)
 
+    def flash_app_procedure(self):
+        pass
+    
     def run(self):
-        vehicle_btl = btl_ttl_intf(True, False)
+        self.__vehicle_btl = btl_ttl_intf(True, False)
 
         # Setup bootloader cfg
-        # vehicle_btl.set_serial_port("/dev/ttyUSB0")
-        # vehicle_btl.set_baudrate(115200)
-        # vehicle_btl.set_appBinFp("./TestAppLedOn.bin")
+        self.__vehicle_btl.set_serial_port("/dev/ttyUSB0")
+        self.__vehicle_btl.set_baudrate(115200)
+        self.__vehicle_btl.set_appBinFp("./UpdatedFirmware.bin")
 
-        # vehicle_btl.btl_command_exec(vehicle_btl.BtlCommands.CBL_FLASH_ERASE_CMD.value)
+        # self.__vehicle_btl.btl_command_exec(self.__vehicle_btl.BtlCommands.CBL_FLASH_ERASE_CMD.value)
 
         # Setup mqtt cfg
         mqtt_client.connect()
@@ -188,13 +195,19 @@ class SimpleMQTTClient:
         try:
             while True:
                 try:
-                    self.__vehicle_cmd_handle()
+                    status = self.__vehicle_cmd_handle()
+                    if status == True:
+                        if True == self.flash_app_procedure():
+                            print(f"Flashed new software succesfully")
+                        else:
+                            print(f"Error occured while flashing the new software")
+                    else:
+                        pass
                 except KeyboardInterrupt:
                     break
         finally:
             mqtt_client.loop_stop()
             mqtt_client.disconnect()
-
 
 # Example usage:
 if __name__ == "__main__":

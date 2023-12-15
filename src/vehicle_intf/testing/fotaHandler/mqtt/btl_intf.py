@@ -6,15 +6,13 @@ import sys
 import os
 import logging
 from enum import Enum
+from intelhex import IntelHex
 
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s [%(levelname)s]: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
-
-DUMMY_APP_BIN_FP = r"G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\TestAppLedOn\MDK-ARM\TestAppLedOn\TestAppLedOn.bin"
-
 
 class btl_ttl_intf(object):
     class BtlCommands(Enum):
@@ -412,6 +410,14 @@ class btl_ttl_intf(object):
         selected_command = self.check_input(selected_command)
         self.btl_command_exec(selected_command - 1)
 
+    def __cvt_hex2bin(self, hex_fp):
+        file_name = os.path.splitext(os.path.basename(hex_fp))[0]
+        # Load the Intel HEX file
+        ih = IntelHex(hex_fp)
+
+        # Convert to binary and save
+        ih.tobinfile(file_name, '.bin')
+        
     def BTL_CLI(self):
         try:
             while True:
@@ -492,7 +498,12 @@ class btl_ttl_intf(object):
         command_method = self.__btl_commands.get(command, default_command)
         command_method()
 
-
+    def cvt_hex2bin(self, hex_fp):
+        if os.path.exists(hex_fp):
+            self.__cvt_hex2bin
+        else:
+            logging.error(f"Invalid hex file path @{hex_fp}")
+            
 if __name__ == "__main__":
     mybtl = btl_ttl_intf(True, False)
     mybtl.run()
