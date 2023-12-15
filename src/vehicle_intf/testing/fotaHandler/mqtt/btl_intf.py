@@ -387,16 +387,16 @@ class btl_ttl_intf(object):
         print(
             "+----------------------------------------------------------------------------------------+"
         )
-    
+
     def check_input(self, input_str):
         try:
             # Check if input is empty or contains only whitespaces
             if not input_str or input_str.isspace():
                 pass
-            
+
             # Remove leading and trailing whitespaces
             input_str = input_str.strip()
-            
+
             # Convert input to integer
             input_value = int(input_str)
 
@@ -405,7 +405,7 @@ class btl_ttl_intf(object):
         except ValueError as e:
             print(e)
             return None
-    
+
     def __interactive_btl_intf(self):
         print("Select a command")
         selected_command = input("[BTL]> ")
@@ -426,7 +426,7 @@ class btl_ttl_intf(object):
         # self.set_serial_port(input("Enter the serial port to connect to: "))
         # self.set_baudrate(input("Enter the baudrate: "))
         # self.set_timeout(input("Enter the timeout: "))
-        self.set_serial_port('/dev/ttyUSB0')
+        self.set_serial_port("/dev/ttyUSB0")
         self.set_baudrate(115200)
 
         if self.__connect_to_port(self.__serial_port, self.__baudrate, self.__timeout):
@@ -466,7 +466,8 @@ class btl_ttl_intf(object):
     def btl_cmd_intf_JumpToAddr(self, jumpAddr=None):
         if jumpAddr is None:
             jumpAddr = int(
-                input("Input flashing address in hex format (e.x 0x08008000): "), base=16
+                input("Input flashing address in hex format (e.x 0x08008000): "),
+                base=16,
             )
         self.__btl_cmd_jumpToAddr(jumpAddr)
 
@@ -474,12 +475,12 @@ class btl_ttl_intf(object):
         if pageIdx is None or pageN is None:
             pageIdx = int(input("Input the page idx (0-63): "), base=10)
             pageN = int(input("Input number of pages to erase: "), base=10)
-            
+
         if pageIdx > 0 and pageN > 0:
             self.__btl_cmd_eraseFlash(pageIdx, pageN)
         else:
             logging.error("Invalid page idx | pageN")
-                
+
     def btl_cmd_intf_FlashApp(self):
         self.__btl_cmd_flashApp()
 

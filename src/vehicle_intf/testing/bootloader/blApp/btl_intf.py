@@ -339,6 +339,9 @@ class btl_ttl_intf(object):
         Byte_Value = WordValue >> (8 * (ByteIdx - 1)) & 0x000000FF
         return Byte_Value
 
+    def __cvtHex2Bin(self, hex_fp):
+        pass
+    
     def __print_commands_as_table(self):
         print(
             "+-------+---------------------------+----------------------------------------------------+"
@@ -463,6 +466,12 @@ class btl_ttl_intf(object):
         else:
             logging.error("Invalid application binary path")
 
+    def cvtHex2Bin(self, hexfp):
+        if os.path.exists(hexfp):
+            self.__cvtHex2Bin(self, hexfp)
+        else:
+            pass
+    
     def btl_cmd_intf_JumpToAddr(self):
         jumpAddr = int(
             input("Input flashing address in hex format (e.x 0x08008000): "), base=16

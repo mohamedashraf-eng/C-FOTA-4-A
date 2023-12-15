@@ -187,14 +187,16 @@ class prj_foem_mysql:
 
 class oem_cmd(Enum):
     DEFAULT = 0xFFFFFFFF
+    OEM_ACK = "40"
+    OEM_NACK = "41"
     UPDATE_REQUEST = "1332"
     SEND_FIRMWARE_DONE = "50"
     SEND_FIRMWARE_HASH_DONE = "51"
 
 
 class vehicle_cmd(Enum):
-    NACK = "70"
-    ACK = "69"
+    VEHICLE_NACK = "70"
+    VEHICLE_ACK = "69"
     DONE = "99"
     SEND_FIRMWARE = "30"
     SEND_FIRMWARE_HASH = "31"
@@ -428,44 +430,60 @@ class prj_foem_mqtt:
         except:
             raise Exception("Invalid firmware ID")
 
+    def __setFotaRecordStatus(self, status):
+        pass
+
+    def __setFotaRecordStartTime(self, startTime):
+        pass
+
+    def __setFotaRecordEndtime(self, endtime):
+        pass
+
+    def __setFotaRecordTimeTaken(self, timeTaken):
+        pass
+
+    ##
+    def __sendAck(self):
+        self.publish(e_v(oem_cmd.OEM_ACK))
+
+    def __sendNack(self):
+        self.publish(e_v(oem_cmd.OEM_NACK))
+
     def __onVehicleCmd_UpdateRequestAck(self):
-        time.sleep(1)
-
-        if self.__mqtt_currmsg != e_v(vehicle_cmd.SEND_FIRMWARE):
-            return False
-
-        for record in self.__firmwareToUpload:
-            self.publish(record)
-
-        time.sleep(1)
-        self.publish(e_v(oem_cmd.SEND_FIRMWARE_DONE))
-
-        # Wait for ACK
-        time.sleep(8)
-        if self.__mqtt_currmsg != e_v(vehicle_cmd.ACK):
-            return False
-
-        # Send the hash
-        time.sleep(2)
-        if self.__mqtt_currmsg == e_v(vehicle_cmd.SEND_FIRMWARE_HASH):
-            self.publish(self.__firmwareToUploadHash)
-            self.publish(e_v(oem_cmd.SEND_FIRMWARE_HASH_DONE))
-        else:
-            return False
-
-        time.sleep(3)
-
-        # Wait for final ACK
-        if self.__mqtt_currmsg == e_v(vehicle_cmd.ACK):
-            time.sleep(5)
-            if self.__mqtt_currmsg == e_v(vehicle_cmd.DONE):
-                return True
-            else:
-                return False
-        return False
+        while (
+            not self.__mqtt_msgsQ.empty()
+            and self.__mqtt_msgsQ.queue[0] != e_v(vehicle_cmd.DONE)
+        ):
+            # Check for the vehicle SEND_FIRMWARE command
+            # time.sleep(1)
+            if self.__mqtt_msgsQ.get() == e_v(vehicle_cmd.SEND_FIRMWARE):
+                self.__sendAck()
+                #
+                # time.sleep(1)
+                #
+                for line in self.__firmwareToUpload:
+                    self.publish(line)
+                    # time.sleep(0.2)
+                self.publish(e_v(oem_cmd.SEND_FIRMWARE_DONE))
+            
+            while self.__mqtt_msgsQ.get() != e_v(vehicle_cmd.VEHICLE_ACK):
+                pass
+            
+            if self.__mqtt_msgsQ.get() == e_v(vehicle_cmd.SEND_FIRMWARE_HASH):
+                self.__sendAck()
+                #
+                # time.sleep(1)
+                #
+                self.publish(self.__firmwareToUploadHash)
+                self.publish(e_v(oem_cmd.SEND_FIRMWARE_HASH_DONE))
+                
+            while self.__mqtt_msgsQ.get() != e_v(vehicle_cmd.VEHICLE_ACK):
+                pass
+            
+        return True
 
     def __onVehicleCmd_UpdateRequestNack(self):
-        print(f"{e_v(vehicle_cmd.NACK)}")
+        print(f"{e_v(vehicle_cmd.VEHICLE_NACK)}")
 
         return True
 
@@ -486,8 +504,12 @@ class prj_foem_mqtt:
     def __vehicle_cmd_switch(self, cmd):
         return {
             #
-            e_v(vehicle_cmd.ACK): lambda: self.__onVehicleCmd_UpdateRequestAck(),
-            e_v(vehicle_cmd.NACK): lambda: self.__onVehicleCmd_UpdateRequestNack()
+            e_v(
+                vehicle_cmd.VEHICLE_ACK
+            ): lambda: self.__onVehicleCmd_UpdateRequestAck(),
+            e_v(
+                vehicle_cmd.VEHICLE_NACK
+            ): lambda: self.__onVehicleCmd_UpdateRequestNack()
             #
         }.get(
             cmd,
@@ -502,7 +524,7 @@ class prj_foem_mqtt:
         # TODO(Wx): Implement the handler
         if not self.__mqtt_msgsQ.empty():
             vehicle_msg = self.__mqtt_msgsQ.get()
-            OemCmdDone = self.__vehicle_cmd_switch(vehicle_msg)
+            return self.__vehicle_cmd_switch(vehicle_msg)
         else:
             pass
 
@@ -561,15 +583,16 @@ class prj_foem_mqtt:
                             self.__firmwareToUploadHash = self.__loadFirmwareToUpdateHash(
                                 self.__last_active_job_id
                             )
-                            if self.__mqtt_unlock_flag:
-                                self.publish(f"{ e_v(oem_cmd.UPDATE_REQUEST) }")
-                            # Start handle the incoming vehicle cmd
                             curr_job_status = self.__oem_cmd_handle()
+                            # Start handle the incoming vehicle cmd
                             if True == curr_job_status:
                                 self.__job_done = True
-                                # Set FOTA RECORD Status to Completed 
+                                # Set FOTA RECORD Status to Completed
                                 # Assign Start - End Time & Time taken
                                 # Mark this record as done!
+                                break
+                            if self.__mqtt_unlock_flag:
+                                self.publish(f"{ e_v(oem_cmd.UPDATE_REQUEST) }")
                         else:
                             if self.__mqtt_unlock_flag:
                                 self.publish(f"{ e_v(oem_cmd.DEFAULT) }")
