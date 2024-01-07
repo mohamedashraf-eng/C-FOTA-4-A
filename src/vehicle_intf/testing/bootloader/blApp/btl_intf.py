@@ -15,6 +15,8 @@ logging.basicConfig(
 )
 
 OUTPUT_BIN_FILE_STD = ""
+DUMMY_APP_BIN_FP = r"G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\TestAppLedOn\MDK-ARM\TestAppLedOn\TestAppLedOn.bin"
+
 class btl_ttl_intf(object):
     class BtlCommands(Enum):
         NUM_OF_CMDS = 13
@@ -265,7 +267,7 @@ class btl_ttl_intf(object):
             print(f"Packet sent ({packet[0]}):")
             self.__write_to_serial_until(packet[0], 1)
 
-            time.sleep(1)
+            # time.sleep(1)
             for Data in packet[1:]:
                 self.__write_to_serial_until(Data, len(packet) - 1)
 
@@ -375,22 +377,7 @@ class btl_ttl_intf(object):
             "+----------------------------------------------------------------------------------------+"
         )
         print(
-            "|                @Team:                                                                  |"
-        )
-        print(
-            "|                  - Mohamed Ashraf                                                      |"
-        )
-        print(
-            "|                  - Saleh Mosaad                                                        |"
-        )
-        print(
-            "|                @Mentor: Dr. Ashraf Sayed Abd Elhalim                                   |"
-        )
-        print(
-            "|                                                                                        |"
-        )
-        print(
-            "|        Faculty Of Engineering - Electronics and Communication Engineering  [CIC]       |"
+            "|                  - Mohamed Ashraf  Wx                                                  |"
         )
         print(
             "+----------------------------------------------------------------------------------------+"
@@ -401,6 +388,9 @@ class btl_ttl_intf(object):
             # Check if input is empty or contains only whitespaces
             if not input_str or input_str.isspace():
                 pass
+            
+            if len(input_str) == 0:
+                return False
             
             # Remove leading and trailing whitespaces
             input_str = input_str.strip()
@@ -418,6 +408,8 @@ class btl_ttl_intf(object):
         print("Select a command")
         selected_command = input("[BTL]> ")
         selected_command = self.check_input(selected_command)
+        if False == selected_command:
+            return False
         self.btl_command_exec(selected_command - 1)
 
     def BTL_CLI(self):
@@ -434,7 +426,7 @@ class btl_ttl_intf(object):
         # self.set_serial_port(input("Enter the serial port to connect to: "))
         # self.set_baudrate(input("Enter the baudrate: "))
         # self.set_timeout(input("Enter the timeout: "))
-        self.set_serial_port('/dev/ttyUSB0')
+        self.set_serial_port('COM3')
         self.set_baudrate(115200)
 
         if self.__connect_to_port(self.__serial_port, self.__baudrate, self.__timeout):
