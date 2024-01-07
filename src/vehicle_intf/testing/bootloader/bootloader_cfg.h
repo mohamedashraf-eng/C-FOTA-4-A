@@ -104,12 +104,12 @@
  *  	@arg DBG_PORT_UART
  *  	@arg DBG_PORT_CAN
 */
-#define BL_DBG_PORT DBG_PORT_UART
+// #define BL_DBG_PORT DBG_PORT_UART
 /** 
  * @brief Light Weight Debugging 
  * @note defining the LWD enables the functionality automatically
 */
-#define LWD
+// #define LWD
 
 // #define BL_LOG_PORT DBG_PORT_UART
 

@@ -15,7 +15,7 @@ logging.basicConfig(
 )
 
 OUTPUT_BIN_FILE_STD = ""
-DUMMY_APP_BIN_FP = r"G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\TestAppLedOn\MDK-ARM\TestAppLedOn\TestAppLedOn.bin"
+DUMMY_APP_BIN_FP = r"G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\fotaHandler\mqtt\UpdatedFirmware.bin"
 
 class btl_ttl_intf(object):
     class BtlCommands(Enum):
@@ -209,7 +209,7 @@ class btl_ttl_intf(object):
                 return 2
         else:
             hex_values = [format(ack_byte, "02X"), format(length_if_data, "02X")]
-            print(f"\nReceived Nack from bootloader err_code@{hex_values[1]}")
+            print(f"\nReceived Nack from bootloader err_code@ {hex_values[1]}")
             return 0
 
     def __btl_cmd_eraseFlash(self, pageIdx: int, pageN: int):
@@ -275,6 +275,7 @@ class btl_ttl_intf(object):
             if 0 == self.__decode_btl_packet("Waiting a reply from bootloader"):
                 print("Failed to program bootloader")
                 sys.exit(1)
+                # pass
 
             Addr += BinFileReadLength
             BinFileSentBytes += BinFileReadLength

@@ -78,7 +78,6 @@ __BTL_COMM_ST_CAN_HANDLE_DEF();
 #			undef (DBG_PORT_UART)
 #		endif /* DBG_PORT_UART */
 __BTL_LOG_ST_UART_HANDLE_DEF();
-__STATIC uint8 global_bl_log_buffer[BL_LOG_BUFFER_SIZE];
 
 #		define BL_LOG_SEND(LOG_LEVEL, LOG_MSG) __bl_vLogWrt(LOG_LEVEL, LOG_MSG)
 #		define __LOG_SEND_OVER_X(__BUFFER, __LEN) HAL_UART_Transmit_DMA(&__BTL_LOG_ST_UART_HANDLE, (__BUFFER), (uint16)(__LEN))
@@ -155,23 +154,17 @@ __STATIC volatile uint8 global_u8StartCountingFlag = FALSE;
 */
 
 #if defined(BL_DBG_PORT)
-__STATIC __NORETURN __bl_vDbgWrt(const uint8 * pArg_u8StrFormat, ...) {
-	__STATIC uint8 local_u8DbgBuffer[DBG_BUFFER_MAX_SIZE] = {0};
-
-	// Check if the buffer is large enough before proceeding
-	if (strlen((const char *)pArg_u8StrFormat) >= DBG_BUFFER_MAX_SIZE) {
-		// Handle error or truncate the string as needed
-		return;
-	}
+__STATIC __NORETURN __bl_vDbgWrt(const uint8 *pArg_u8StrFormat, ...) {
+	uint8 local_u8DbgBuffer[DBG_BUFFER_MAX_SIZE] = {0};
+	/* Create variadic argument */
 	va_list args;
+	/* Enable access to the variadic argument */
 	va_start(args, pArg_u8StrFormat);
-	
-	// Use vsnprintf to limit the buffer size and prevent buffer overflow
-	vsnprintf((char *)local_u8DbgBuffer, DBG_BUFFER_MAX_SIZE, (char *)pArg_u8StrFormat, args);
-	
+	/* Write formatted data from variable argument list to string */
+	vsprintf((char *)local_u8DbgBuffer, pArg_u8StrFormat, args);
+	/* Clean up the instant */
 	va_end(args);
-
-	// Print the message via the channel specified
+	/* Print the message via the channel speicfied */
 	__DBG_SEND_OVER_X(local_u8DbgBuffer, strlen((const char *)local_u8DbgBuffer));
 }
 #endif
@@ -289,42 +282,6 @@ __STATIC __NORETURN __vSendNack(uint8 Arg_u8ErrorCode) {
 	uint8 local_u8NackValue[2u] = {BL_CMD_RESPONSE_NACK, Arg_u8ErrorCode};
 	__vPipeEcho((uint8*)&local_u8NackValue[0], 2u);
 	BL_DBG_SEND("Sent Nack successfully");
-}
-
-#include "stm32f1xx_hal.h"
-
-__LOCAL_INLINE uint32 __u32GetTickCount(void) {
-	return HAL_GetTick();
-}
-
-__LOCAL_INLINE uint8 __u8IsSessionTimeOut(uint32 Arg_u32LastPacketTime) {
-	return (Arg_u32LastPacketTime > PIPE_TIMEOUT_MS) ? TRUE: FALSE;
-}
-
-__LOCAL_INLINE __NORETURN __vResetSessionTimeOutCounter(uint32* pArg_u32LastPacketTime) {
-	(*pArg_u32LastPacketTime) = 0;
-	global_u8StartCountingFlag = FALSE;
-}
-
-__LOCAL_INLINE __NORETURN __vStartSessiontimeOutCount(void) {
-	global_u8StartCountingFlag = TRUE;
-}
-
-void SysTick_Init(void) {
-	HAL_SYSTICK_Config(SystemCoreClock / 1000);  // Generate SysTick interrupt every 1 ms
-	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
-}
-
-// Function to handle SysTick interrupt
-void SysTick_Handler(void) {
-	if(TRUE == global_u8StartCountingFlag) {
-		global_u32LastPacketTime++;
-		if( (TRUE == __u8IsSessionTimeOut(global_u32LastPacketTime)) ) {
-			/* Reset connection */
-			__sw_reset_signal();
-		} else;
-	} else;
-	HAL_IncTick();
 }
 
 __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) {
@@ -478,15 +435,10 @@ __en_blErrStatus_t __enPipeListen(void) {
 		/* Receive the data */
 		local_tPacketSeralized.PacketLength = local_u8PipeListenrBuffer[0];
 		BL_DBG_SEND("Waiting for the packet with length (%d).", local_tPacketSeralized.PacketLength);
-		
-		__vStartSessiontimeOutCount();
-
 		if( (HAL_OK != PIPE_LISTEN((uint8*)&local_u8PipeListenrBuffer[1], local_tPacketSeralized.PacketLength)) ) {
 			BL_DBG_SEND("The pipe listner is not ok.");
 			local_enThisFuncErrStatus = BL_E_NOK;
 		} else {
-			__vResetSessionTimeOutCounter(&global_u32LastPacketTime);
-
 			BL_LOG_SEND(LOGL_INFO, "Got the packet");
 			BL_DBG_SEND("The pipe listner received a packet successfully.");
 			/* Seralize the received packet */
@@ -915,7 +867,6 @@ __LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, cons
   return local_enThisFuncErrStatus;
 }
 
-
 /**
   * @}
   */
@@ -941,7 +892,6 @@ __LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, cons
 __NORETURN BL_enBootManager(void) {
 	BL_LOG_SEND(LOGL_INFO, "Bootloader manager started, looking for a valid application");
 	BL_DBG_SEND("Started the boot manager");
-	SysTick_Init();
 	if( (BL_FRESH == __enGetIsAppToBlFlag()) || (BL_APP_VALID != __enGetIsValidAppFlag()) ||
 			(BL_APP_TO_BL == __enGetIsAppToBlFlag())) {
 		BL_DBG_SEND("Invalid application, waiting for a valid application");
