@@ -1,18 +1,18 @@
 Dependencies for Project 'bootloaderX3', Target 'bootloaderX3': (DO NOT MODIFY !)
 CompilerVersion: 6190000::V6.19::ARMCLANG
-F (startup_stm32f103xb.s)(0x657493B9)(--target=arm-arm-none-eabi -mcpu=cortex-m3 -masm=auto  -Wa,armasm,--diag_suppress=A1950W -c-gdwarf-4 -Wa,armasm,--pd,"__EVAL SETA 1"-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-Wa,armasm,--pd,"__UVISION_VERSION SETA 538" -Wa,armasm,--pd,"_RTE_ SETA 1" -Wa,armasm,--pd,"STM32F10X_MD SETA 1" -Wa,armasm,--pd,"_RTE_ SETA 1"-o bootloaderx3/startup_stm32f103xb.o)
-F (..\..\bootloader\bootloader_prg.c)(0x657A26EF)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/bootloader_prg.o -MD)
-I (..\..\bootloader\bootloader_intf.h)(0x652AC50C)
+F (startup_stm32f103xb.s)(0x658D727C)(--target=arm-arm-none-eabi -mcpu=cortex-m3 -masm=auto  -Wa,armasm,--diag_suppress=A1950W -c-gdwarf-4 -Wa,armasm,--pd,"__EVAL SETA 1"-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-Wa,armasm,--pd,"__UVISION_VERSION SETA 538" -Wa,armasm,--pd,"_RTE_ SETA 1" -Wa,armasm,--pd,"STM32F10X_MD SETA 1" -Wa,armasm,--pd,"_RTE_ SETA 1"-o bootloaderx3/startup_stm32f103xb.o)
+F (..\..\bootloader\bootloader_prg.c)(0x65A03D7D)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/bootloader_prg.o -MD)
+I (..\..\bootloader\bootloader_intf.h)(0x659B2AFC)
 I (..\..\assets\Std_Types.h)(0x64CE56CE)
 I (..\..\assets\Platform_Types.h)(0x64CE5315)
 I (..\..\assets\Compiler.h)(0x652A8F0B)
 I (..\..\assets\Compiler_Cfg.h)(0x64CE51DD)
-I (..\..\bootloader\bootloader_prv.h)(0x657A269E)
-I (..\..\bootloader\bootloader_cfg.h)(0x657732B1)
+I (..\..\bootloader\bootloader_prv.h)(0x65A03F88)
+I (..\..\bootloader\bootloader_cfg.h)(0x65A03F1D)
 I (..\Core\Inc\usart.h)(0x657493B3)
 I (..\Core\Inc\main.h)(0x65267528)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -43,10 +43,10 @@ I (..\Core\Inc\crc.h)(0x65267527)
 I (G:\Kiel5\ARM\ARMCLANG\include\stdio.h)(0x63888F58)
 I (G:\Kiel5\ARM\ARMCLANG\include\stdarg.h)(0x63888F58)
 I (G:\Kiel5\ARM\ARMCLANG\include\string.h)(0x63888F58)
-F (../Core/Src/main.c)(0x65772B0D)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/main.o -MD)
+F (../Core/Src/main.c)(0x65A03921)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/main.o -MD)
 I (..\Core\Inc\main.h)(0x65267528)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -76,7 +76,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 I (..\Core\Inc\crc.h)(0x65267527)
 I (..\Core\Inc\usart.h)(0x657493B3)
 I (..\Core\Inc\gpio.h)(0x65267526)
-I (..\..\bootloader\bootloader_intf.h)(0x652AC50C)
+I (..\..\bootloader\bootloader_intf.h)(0x659B2AFC)
 I (..\..\assets\Std_Types.h)(0x64CE56CE)
 I (..\..\assets\Platform_Types.h)(0x64CE5315)
 I (..\..\assets\Compiler.h)(0x652A8F0B)
@@ -85,7 +85,7 @@ F (../Core/Src/gpio.c)(0x657493B2)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu
 I (..\Core\Inc\gpio.h)(0x65267526)
 I (..\Core\Inc\main.h)(0x65267528)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -116,7 +116,7 @@ F (../Core/Src/crc.c)(0x65267526)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=
 I (..\Core\Inc\crc.h)(0x65267527)
 I (..\Core\Inc\main.h)(0x65267528)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -147,7 +147,7 @@ F (../Core/Src/usart.c)(0x657493B3)(-xc -std=c11 --target=arm-arm-none-eabi -mcp
 I (..\Core\Inc\usart.h)(0x657493B3)
 I (..\Core\Inc\main.h)(0x65267528)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -174,10 +174,10 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_flash.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_flash_ex.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
-F (../Core/Src/stm32f1xx_it.c)(0x65772FF7)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_it.o -MD)
+F (../Core/Src/stm32f1xx_it.c)(0x659B1CB8)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_it.o -MD)
 I (..\Core\Inc\main.h)(0x65267528)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -208,7 +208,7 @@ I (..\Core\Inc\stm32f1xx_it.h)(0x657476C7)
 F (../Core/Src/stm32f1xx_hal_msp.c)(0x65267527)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_msp.o -MD)
 I (..\Core\Inc\main.h)(0x65267528)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -237,7 +237,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_gpio_ex.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -266,7 +266,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_crc.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_crc.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -295,7 +295,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -324,7 +324,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_rcc.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -353,7 +353,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_rcc_ex.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -382,7 +382,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_gpio.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -411,7 +411,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_dma.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -440,7 +440,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_cortex.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -469,7 +469,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_pwr.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -498,7 +498,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_flash.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -527,7 +527,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_flash_ex.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -556,7 +556,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_exti.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -585,7 +585,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_tim.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -614,7 +614,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
 F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_tim_ex.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -641,9 +641,9 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_flash.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_flash_ex.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x64CE3585)
-F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c)(0x64CE3585)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_uart.o -MD)
+F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c)(0x659B1CB8)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Oz -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../../assets -I ../../bootloader-I./RTE/_bootloaderX3-IG:/Keil5ArmPacks/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IG:/Keil5ArmPacks/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o bootloaderx3/stm32f1xx_hal_uart.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x64CE3585)
@@ -682,7 +682,7 @@ I (G:\Kiel5\ARM\ARMCLANG\include\arm_compat.h)(0x63888F58)
 I (G:\Kiel5\ARM\ARMCLANG\include\arm_acle.h)(0x63888F58)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x64CE3585)
-I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x657493B4)
+I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x658D7277)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h)(0x64CE3585)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h)(0x64CE3585)

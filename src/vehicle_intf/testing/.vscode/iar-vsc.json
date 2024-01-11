@@ -1,0 +1,15 @@
+{
+  "workspace": {
+    "path": "${workspaceFolder}\\Application\\TargetApplication\\EWARM\\Project.eww"
+  },
+  "workspaces": {
+    "${workspaceFolder}\\Application\\TargetApplication\\EWARM\\Project.eww": {
+      "configs": {
+        "${workspaceFolder}\\Application\\TargetApplication\\EWARM\\TargetApplication.ewp": "TargetApplication"
+      },
+      "selected": {
+        "path": "${workspaceFolder}\\Application\\TargetApplication\\EWARM\\TargetApplication.ewp"
+      }
+    }
+  }
+}
