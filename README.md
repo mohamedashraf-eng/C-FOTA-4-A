@@ -10,9 +10,6 @@
 
 <p align="center">
   <a href="https://img.shields.io/badge/License-GPL%203.0-blue.svg"><img src="https://img.shields.io/badge/License-GPL%203.0-blue.svg" alt="License"></a>
-  <a href="https://github.com/mohamedashraf-eng/C-FOTA-4-A/pulls"><img src="https://img.shields.io/github/issues-pr/mohamedashraf-eng/C-FOTA-4-A" alt="GitHub Pull Requests"></a>
-  <a href="https://github.com/mohamedashraf-eng/C-FOTA-4-A/contributors"><img src="https://img.shields.io/github/contributors/mohamedashraf-eng/C-FOTA-4-A" alt="Contributors"></a>
-  <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/mohamedashraf-eng/C-FOTA-4-A">
 </p>
 
 </p>
