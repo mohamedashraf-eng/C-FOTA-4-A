@@ -15,7 +15,7 @@ logging.basicConfig(
 )
 
 OUTPUT_BIN_FILE_STD = ""
-DUMMY_APP_BIN_FP = r"G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\fotaHandler\mqtt\UpdatedFirmware.bin"
+DUMMY_APP_BIN_FP = r"./UpdatedFirmware.bin"
 
 class btl_ttl_intf(object):
     class BtlCommands(Enum):
@@ -38,7 +38,7 @@ class btl_ttl_intf(object):
 
     std_baudrates = [9600, 19200, 38400, 57600, 115200, 1500000]
 
-    MAX_DATA_PER_PACKET_LENGTH = 100
+    MAX_DATA_PER_PACKET_LENGTH = 230
 
     def __init__(self, verbose_mode=False, mem_wrt_actv=False):
         self.__verbose_mode = verbose_mode
@@ -107,7 +107,7 @@ class btl_ttl_intf(object):
                     bytesize=8,
                     parity="N",
                     stopbits=1,
-                    timeout=timeout,
+                    timeout=None,
                 )
                 time.sleep(1)
                 if self.__serialObj.is_open:
@@ -150,6 +150,7 @@ class btl_ttl_intf(object):
 
     def __encode_btl_packet(self, packetDict):
         if packetDict is not None:
+            packetExtendedLength = 0
             packetList = []
             #
             PacketType = packetDict["PacketType"]
@@ -157,6 +158,7 @@ class btl_ttl_intf(object):
             #
             data = packetDict["Data"]
             dataLen = len(data)
+
             dataCRC32 = self.__calculate_crc32_04C11DB7(data, dataLen)
             #
             packetList.append(PacketType)
@@ -177,8 +179,13 @@ class btl_ttl_intf(object):
                     dataLen + 8 + i, self.__cvt_value2byte(packetCRC32, i + 1, 1)
                 )
 
-            packetList.insert(0, len(packetList))
-
+            packetLen = len(packetList)
+            # if packetLen > 255:
+            #     packetExtendedLength = packetLen - 255
+                
+            packetList.insert(0, packetLen)
+            # packetList.insert(1, packetExtendedLength)
+            
             hex_list = [hex(item) for item in packetList]
             return packetList
 
@@ -209,7 +216,7 @@ class btl_ttl_intf(object):
                 return 2
         else:
             hex_values = [format(ack_byte, "02X"), format(length_if_data, "02X")]
-            print(f"\nReceived Nack from bootloader err_code@ {hex_values[1]}")
+            print(f"\nReceived Nack from bootloader err_code@{hex_values[1]}")
             return 0
 
     def __btl_cmd_eraseFlash(self, pageIdx: int, pageN: int):
@@ -267,7 +274,7 @@ class btl_ttl_intf(object):
             print(f"Packet sent ({packet[0]}):")
             self.__write_to_serial_until(packet[0], 1)
 
-            # time.sleep(1)
+            # time.sleep(0.4)
             for Data in packet[1:]:
                 self.__write_to_serial_until(Data, len(packet) - 1)
 
@@ -275,7 +282,6 @@ class btl_ttl_intf(object):
             if 0 == self.__decode_btl_packet("Waiting a reply from bootloader"):
                 print("Failed to program bootloader")
                 sys.exit(1)
-                # pass
 
             Addr += BinFileReadLength
             BinFileSentBytes += BinFileReadLength

@@ -78,6 +78,7 @@ __BTL_COMM_ST_CAN_HANDLE_DEF();
 #			undef (DBG_PORT_UART)
 #		endif /* DBG_PORT_UART */
 __BTL_LOG_ST_UART_HANDLE_DEF();
+__STATIC uint8 global_bl_log_buffer[BL_LOG_BUFFER_SIZE];
 
 #		define BL_LOG_SEND(LOG_LEVEL, LOG_MSG) __bl_vLogWrt(LOG_LEVEL, LOG_MSG)
 #		define __LOG_SEND_OVER_X(__BUFFER, __LEN) HAL_UART_Transmit_DMA(&__BTL_LOG_ST_UART_HANDLE, (__BUFFER), (uint16)(__LEN))
@@ -154,17 +155,14 @@ __STATIC volatile uint8 global_u8StartCountingFlag = FALSE;
 */
 
 #if defined(BL_DBG_PORT)
-__STATIC __NORETURN __bl_vDbgWrt(const uint8 *pArg_u8StrFormat, ...) {
+__STATIC __NORETURN __bl_vDbgWrt(const uint8* pArg_u8StrFormat, ...) {
 	uint8 local_u8DbgBuffer[DBG_BUFFER_MAX_SIZE] = {0};
-	/* Create variadic argument */
+
 	va_list args;
-	/* Enable access to the variadic argument */
 	va_start(args, pArg_u8StrFormat);
-	/* Write formatted data from variable argument list to string */
-	vsprintf((char *)local_u8DbgBuffer, pArg_u8StrFormat, args);
-	/* Clean up the instant */
+	vsnprintf((char *)local_u8DbgBuffer, DBG_BUFFER_MAX_SIZE, (char *)pArg_u8StrFormat, args);
 	va_end(args);
-	/* Print the message via the channel speicfied */
+
 	__DBG_SEND_OVER_X(local_u8DbgBuffer, strlen((const char *)local_u8DbgBuffer));
 }
 #endif
@@ -284,6 +282,42 @@ __STATIC __NORETURN __vSendNack(uint8 Arg_u8ErrorCode) {
 	BL_DBG_SEND("Sent Nack successfully");
 }
 
+#include "stm32f1xx_hal.h"
+
+__LOCAL_INLINE uint32 __u32GetTickCount(void) {
+	return HAL_GetTick();
+}
+
+__LOCAL_INLINE uint8 __u8IsSessionTimeOut(uint32 Arg_u32LastPacketTime) {
+	return (Arg_u32LastPacketTime > PIPE_TIMEOUT_MS) ? TRUE: FALSE;
+}
+
+__LOCAL_INLINE __NORETURN __vResetSessionTimeOutCounter(uint32* pArg_u32LastPacketTime) {
+	(*pArg_u32LastPacketTime) = 0;
+	global_u8StartCountingFlag = FALSE;
+}
+
+__LOCAL_INLINE __NORETURN __vStartSessiontimeOutCount(void) {
+	global_u8StartCountingFlag = TRUE;
+}
+
+void SysTick_Init(void) {
+	HAL_SYSTICK_Config(SystemCoreClock / 1000);  // Generate SysTick interrupt every 1 ms
+	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+}
+
+// Function to handle SysTick interrupt
+void SysTick_Handler(void) {
+	if(TRUE == global_u8StartCountingFlag) {
+		global_u32LastPacketTime++;
+		if( (TRUE == __u8IsSessionTimeOut(global_u32LastPacketTime)) ) {
+			/* Reset connection */
+			__sw_reset_signal();
+		} else;
+	} else;
+	HAL_IncTick();
+}
+
 __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	__en_blErrStatus_t local_enCmdHandlerErrStatus = BL_E_NONE;
@@ -386,13 +420,6 @@ __STATIC __NORETURN __vSeralizeReceivedBuffer(packet_t* pArg_tPacket, uint8* pAr
 		BL_DBG_SEND("pArg_tPacket->DataLength: %X", pArg_tPacket->DataLength);
 
 		memcpy((uint8*)pArg_tPacket->Data, (uint8*)&pArg_tReceivedBuffer[3], pArg_tPacket->DataLength);
-#if defined(BL_DBG_PORT)
-		BL_DBG_SEND("pArg_tPacket->Data: "); /* Print the first byte as indication */
-		uint8 local_u8TempCounter = 0;
-		for(local_u8TempCounter = 0; (local_u8TempCounter < pArg_tPacket->DataLength); ++local_u8TempCounter) {
-			BL_DBG_SEND("Byte[%d]: %X", local_u8TempCounter, pArg_tPacket->Data[local_u8TempCounter]);
-		}
-#endif
 
 		memcpy(&pArg_tPacket->DataCRC32, (uint8*)&pArg_tReceivedBuffer[3u + pArg_tPacket->DataLength], sizeof(uint32));
 		pArg_tPacket->DataCRC32 = APPLYDATACONVERSION(pArg_tPacket->DataCRC32);
@@ -426,7 +453,7 @@ __en_blErrStatus_t __enPipeListen(void) {
 	memset(local_u8PipeListenrBuffer, 0, PIPE_BUFFER_MAX_SIZE);
 	
 	/* Start listening for the packet */
-	BL_DBG_SEND("Waiting for the packet length.");
+	BL_DBG_SEND("Waitsing for the packet length.");
 	if( (HAL_OK != PIPE_LISTEN((uint8*)&local_u8PipeListenrBuffer[0], 1u)) ) {
 		BL_LOG_SEND(LOGL_INFO, "Bad message");
 		BL_DBG_SEND("The pipe listner is not ok.");
@@ -435,10 +462,15 @@ __en_blErrStatus_t __enPipeListen(void) {
 		/* Receive the data */
 		local_tPacketSeralized.PacketLength = local_u8PipeListenrBuffer[0];
 		BL_DBG_SEND("Waiting for the packet with length (%d).", local_tPacketSeralized.PacketLength);
+		
+		__vStartSessiontimeOutCount();
+
 		if( (HAL_OK != PIPE_LISTEN((uint8*)&local_u8PipeListenrBuffer[1], local_tPacketSeralized.PacketLength)) ) {
 			BL_DBG_SEND("The pipe listner is not ok.");
 			local_enThisFuncErrStatus = BL_E_NOK;
 		} else {
+			__vResetSessionTimeOutCounter(&global_u32LastPacketTime);
+
 			BL_LOG_SEND(LOGL_INFO, "Got the packet");
 			BL_DBG_SEND("The pipe listner received a packet successfully.");
 			/* Seralize the received packet */
@@ -509,10 +541,6 @@ __LOCAL_INLINE __en_blErrStatus_t __enVerifyPacketCRC32(const uint32 Arg_u32Rece
 	BL_DBG_SEND("Calculating CRC32 for packet");
 	
 	/* CRC32 using standard poly: 0x04C11DB7 */
-
-  // local_u32CalculatedCrc32 = 
-	// 	HAL_CRC_Calculate(&hcrc, (uint8*)(pArg_tReceivedPacket), (pArg_tReceivedPacket->PacketLength - 3u));
-
 	uint8 local_u8Counter = 0;
 	for(local_u8Counter = 0; (local_u8Counter < Arg_u8ReceivedBufferSize); ++local_u8Counter) {
 		uint32 temp = (uint32)pArg_u8ReceivedBuffer[local_u8Counter];
@@ -565,7 +593,7 @@ __STATIC __en_blErrStatus_t __enCmdHandler_CBL_GET_HELP_CMD(void) {
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_OK;
 	
 	__STATIC uint8 local_u8Commands[NUM_OF_CMD] = {
-		[0] = CBL_GET_VER_CMD,
+		[0] = 	CBL_GET_VER_CMD,
 		[1] =	CBL_GET_HELP_CMD,			
 		[2] =	CBL_GET_CID_CMD,				
 		[3] =	CBL_GET_RDP_STATUS_CMD,
@@ -867,6 +895,7 @@ __LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, cons
   return local_enThisFuncErrStatus;
 }
 
+
 /**
   * @}
   */
@@ -892,6 +921,7 @@ __LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, cons
 __NORETURN BL_enBootManager(void) {
 	BL_LOG_SEND(LOGL_INFO, "Bootloader manager started, looking for a valid application");
 	BL_DBG_SEND("Started the boot manager");
+	// SysTick_Init();
 	if( (BL_FRESH == __enGetIsAppToBlFlag()) || (BL_APP_VALID != __enGetIsValidAppFlag()) ||
 			(BL_APP_TO_BL == __enGetIsAppToBlFlag())) {
 		BL_DBG_SEND("Invalid application, waiting for a valid application");
@@ -931,11 +961,3 @@ __NORETURN BL_enBootManager(void) {
 __st_blVersion_t BL_stGetSwVersion(void) {
 	return global_stMyBootLoaderVersion;
 }
-
-
-
-
-
-
-
-

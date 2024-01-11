@@ -109,7 +109,7 @@
  * @brief Light Weight Debugging 
  * @note defining the LWD enables the functionality automatically
 */
-// #define LWD
+#define LWD
 
 // #define BL_LOG_PORT DBG_PORT_UART
 

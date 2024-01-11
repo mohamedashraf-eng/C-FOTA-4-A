@@ -91,8 +91,8 @@
 #define __BTL_DBG_ST_CAN_HANDLE_DEF()    extern CAN_HandleTypeDef __BTL_DBG_ST_CAN_HANDLE
 #define __BTL_LOG_ST_UART_HANDLE_DEF() 	 extern UART_HandleTypeDef __BTL_LOG_ST_UART_HANDLE
 
-#define PIPE_BUFFER_MAX_SIZE ( (uint8) (64) )
-#define DBG_BUFFER_MAX_SIZE  ( (uint8) (128) )
+#define PIPE_BUFFER_MAX_SIZE ( (uint16) (512) )
+#define DBG_BUFFER_MAX_SIZE  ( (uint8) 	(128) )
 /** @defgroup debugging configurations */
 #define DBG_PORT_UART  ( (0x00U) )
 #define DBG_PORT_CAN   ( (0x01U) )
@@ -172,7 +172,7 @@ typedef struct __packetSerialization packet_t;
 typedef boolean flag_t;
 
 typedef uint8* hash_t;
-typedef uint8 sha256_t[256u];
+typedef uint8 sha256_t[32u];
 
 /** @brief Struct container for the bootloader sw version */
 typedef struct __bootloaderVersion __st_blVersion_t;
@@ -198,11 +198,12 @@ struct __bootloaderVersion {
 /** @brief Struct for packet serialization */
 struct __packetSerialization {
 	uint8 PacketLength;
+	uint8 PacketExtendedLength;
 	uint8 PacketType;
 	uint8 Command;
 	uint8 DataLength;
 	/* MTU */
-	uint8 Data[128u];  
+	uint8 Data[512u];  
 	uint32 DataCRC32;
 	uint32 PacketCRC32;
 };
