@@ -50,6 +50,10 @@ extern "c" {
 #define MOTOR_BL  ( (uint8) (4u) )
 #define MOTOR_ALL ( (uint8) (5u) )
 
+#define LED_FR    ( (uint8) (0u) )
+#define LED_FL    ( (uint8) (1u) )
+#define LED_ALL   ( (uint8) (2u) )
+
 /**
  * @defgroup Movements 
  * 
@@ -58,11 +62,15 @@ extern "c" {
 void ControlLedFL(uint16 intensity);
 void ControlLedFR(uint16 intensity);
 
-float32 GetUltraSonicDistance(void);
+uint8 GetUltraSonicDistance(void);
 
-boolean CheckIfDistanceInValidRange(float32 distance);
+boolean CheckIfDistanceInValidRange(uint8 distance);
 
 void ControlMotorSpeed(uint8 motor, uint8 speed);
+
+void vehicle_init(void);
+
+void ControlFrontLeds(uint8 led, uint8 intensity);
 
 #ifdef __cplusplus 
 }

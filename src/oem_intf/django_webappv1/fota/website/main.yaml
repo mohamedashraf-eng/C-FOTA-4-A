@@ -9,11 +9,11 @@ dependencies:
 
 # MQTT cfg
 mqtt_cfg:
-  broker_addr: broker.hivemq.com
+  broker_addr: "broker.hivemq.com"
   port: 1883
   client_id: foemv1
-  username: mashraf
-  password: Gttllee1332
+  username: "mashraf"
+  password: "Gttlleex1332"
   # Topic which oem will send data to vehicle
   pub_topic: foem/db_py_intf/v1_0_0/o2v
   # Topic which oem will receive data from vehicle
@@ -22,7 +22,7 @@ mqtt_cfg:
   ka_topic: foem/db_py_intf/v1_0_0/ka
   keep_alive: 60
   qos: 1
-  encryption: False
+  encryption: True
   retain: False
   timeout: 10
 

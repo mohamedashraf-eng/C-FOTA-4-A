@@ -18,6 +18,7 @@ import time
 import subprocess
 import mysql.connector
 import paho.mqtt.client as mqtt
+import ssl
 
 # Configure logging
 log_filename = "main.log"
@@ -192,6 +193,20 @@ class prj_foem_mysql:
 #
 #
 
+# SSL/TLS
+CLIENT_CERT = r"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/fotaHandler/mqtt/mqtt_certs/client/client2.crt"
+CLIENT_KEY = r"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/fotaHandler/mqtt/mqtt_certs/client/client2.key"
+CA_CERT = r"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/fotaHandler/mqtt/mqtt_certs/ca/ca.crt"
+KEY_PASSPHRASE = "1332"
+
+def set_ssl():
+    ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+    ssl_context.verify_mode = ssl.CERT_REQUIRED
+    ssl_context.load_cert_chain(
+        certfile=CLIENT_CERT, keyfile=CLIENT_KEY, password=KEY_PASSPHRASE
+    )
+    ssl_context.load_verify_locations(cafile=CA_CERT)
+    return ssl_context
 
 class oem_cmd(Enum):
     DEFAULT = 0xFFFFFFFF
@@ -307,8 +322,8 @@ class prj_foem_mqtt:
                 self.subscribe()
             else:
                 logging.info(f"Connected with result code: `{str(rc)}`")
-                self.__attempt_reconnect()
-
+                # self.__attempt_reconnect()
+                
         def on_disconnect(client, userdata, rc):
             logging.info(f"Disconnected with result code: `{str(rc)}`")
 
@@ -333,7 +348,7 @@ class prj_foem_mqtt:
             )
             # Logging message in a queue
             self.__mqtt_msgsQ.put(str(self.__mqtt_currmsg))
-
+        
         self.__pmqtt_client = mqtt.Client()
         self.__pmqtt_client.on_connect = on_connect
         self.__pmqtt_client.on_disconnect = on_disconnect
@@ -342,7 +357,10 @@ class prj_foem_mqtt:
         self.__pmqtt_client.username_pw_set(
             username=self.__username, password=self.__password
         )
-
+        
+        # ssl_context = set_ssl()
+        # self.__pmqtt_client.tls_set_context(ssl_context)
+        
     def __attempt_reconnect(self):
         retries = 0
         max_retries = 5
@@ -395,8 +413,8 @@ class prj_foem_mqtt:
             )
             # Handler mechanism
             logging.info(f"Starting failure handler - calling; `__attempt_reconnect`")
-            self.__attempt_reconnect()
-
+            # self.__attempt_reconnect()
+        
     def disconnect(self):
         self.__pmqtt_client.disconnect()
 

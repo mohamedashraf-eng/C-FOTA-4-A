@@ -150,13 +150,8 @@ __STATIC volatile uint8 global_u8StartCountingFlag = FALSE;
 
 /**
 * ===============================================================================================
-*   > Private Functions Implementation
-* ===============================================================================================
-*/
-
-#if defined(BL_DBG_PORT)
-__STATIC __NORETURN __bl_vDbgWrt(const uint8* pArg_u8StrFormat, ...) {
-	uint8 local_u8DbgBuffer[DBG_BUFFER_MAX_SIZE] = {0};
+__STATIC __NORETURN __bl_vDbgWrt(const uint8* restrict pArg_u8StrFormat, ...) {
+	__STATIC uint8 local_u8DbgBuffer[DBG_BUFFER_MAX_SIZE];
 
 	va_list args;
 	va_start(args, pArg_u8StrFormat);
@@ -164,7 +159,12 @@ __STATIC __NORETURN __bl_vDbgWrt(const uint8* pArg_u8StrFormat, ...) {
 	va_end(args);
 
 	__DBG_SEND_OVER_X(local_u8DbgBuffer, strlen((const char *)local_u8DbgBuffer));
-}
+}*   > Private Functions Implementation
+* ===============================================================================================
+*/
+
+#if defined(BL_DBG_PORT)
+
 #endif
 
 #if defined(BL_LOG_PORT)

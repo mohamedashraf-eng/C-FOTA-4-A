@@ -198,7 +198,8 @@ struct __bootloaderVersion {
 /** @brief Struct for packet serialization */
 struct __packetSerialization {
 	uint8 PacketLength;
-	uint8 PacketExtendedLength;
+	/* Future update */
+	// uint8 PacketExtendedLength;
 	uint8 PacketType;
 	uint8 Command;
 	uint8 DataLength;
@@ -243,6 +244,7 @@ enum __bootloaderErrorStatus {
 *   > Private Functions Declaration
 * ===============================================================================================
 */
+
 #ifdef __cplusplus 
 extern "c" {
 #endif /* __cplusplus */
@@ -279,7 +281,6 @@ __STATIC __NORETURN __vSeralizeReceivedBuffer(packet_t* pArg_tPacket, uint8* pAr
 
 __LOCAL_INLINE __en_blErrStatus_t __enVerifyPacketCRC32(const uint32 Arg_u32ReceivedCrc32, const uint8* pArg_u8ReceivedBuffer, const uint8 Arg_u8ReceivedBufferSize);
 __LOCAL_INLINE __en_blErrStatus_t __enVerifyPacketDataCRC32(const packet_t* pArg_tReceivedPacket);
-
 
 __LOCAL_INLINE __en_blErrStatus_t __enGetMcuRdpLevel(uint8* pArg_u8RdpLevel);
 __STATIC __en_blErrStatus_t __enEraseFlashPages(const uint8 Arg_u8PageIdx, const uint8 Arg_u8NumOfPages);
