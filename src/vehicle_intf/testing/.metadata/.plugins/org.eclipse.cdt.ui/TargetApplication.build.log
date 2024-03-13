@@ -1,0 +1,38 @@
+21:39:37 **** Incremental Build of configuration Debug for project TargetApplication ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/simple_vehicle_ops.c" -mcpu=cortex-m3 -std=c99 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/SimpleVehicleOps/" -I"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/assets" -IC:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc -IC:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -IC:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Device/ST/STM32F1xx/Include -IC:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/simple_vehicle_ops.d" -MT"Core/Src/simple_vehicle_ops.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/simple_vehicle_ops.o"
+../Core/Src/simple_vehicle_ops.c:386:13: warning: 'motors_init' defined but not used [-Wunused-function]
+  386 | static void motors_init(void) {
+      |             ^~~~~~~~~~~
+../Core/Src/simple_vehicle_ops.c:381:13: warning: 'uss_init' defined but not used [-Wunused-function]
+  381 | static void uss_init(void) {
+      |             ^~~~~~~~
+../Core/Src/simple_vehicle_ops.c:375:13: warning: 'buzzer_init' defined but not used [-Wunused-function]
+  375 | static void buzzer_init(void) {
+      |             ^~~~~~~~~~~
+../Core/Src/simple_vehicle_ops.c:366:13: warning: 'front_leds_init' defined but not used [-Wunused-function]
+  366 | static void front_leds_init(void) {
+      |             ^~~~~~~~~~~~~~~
+../Core/Src/simple_vehicle_ops.c:91:21: warning: 'send_log' defined but not used [-Wunused-function]
+   91 | __STATIC __NORETURN send_log(const uint8* restrict pArg_u8StrFormat, ...) {
+      |                     ^~~~~~~~
+arm-none-eabi-gcc -o "TargetApplication.elf" @"objects.list"   -mcpu=cortex-m3 -T"G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\Application\TargetApplication\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="TargetApplication.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: TargetApplication.elf
+ 
+arm-none-eabi-size   TargetApplication.elf 
+arm-none-eabi-objdump -h -S  TargetApplication.elf  > "TargetApplication.list"
+arm-none-eabi-objcopy  -O ihex  TargetApplication.elf  "TargetApplication.hex"
+arm-none-eabi-objcopy  -O binary  TargetApplication.elf  "TargetApplication.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18412	     20	   1804	  20236	   4f0c	TargetApplication.elf
+Finished building: default.size.stdout
+ 
+Finished building: TargetApplication.hex
+Finished building: TargetApplication.bin
+ 
+ 
+Finished building: TargetApplication.list
+ 
+
+21:39:39 Build Finished. 0 errors, 5 warnings. (took 1s.379ms)
+

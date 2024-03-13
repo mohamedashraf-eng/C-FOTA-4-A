@@ -6,7 +6,6 @@
 
     @attention
 """
-import time
 from btl_intf import btl_ttl_intf
 import paho.mqtt.client as mqtt
 from enum import Enum
@@ -17,15 +16,15 @@ import random
 import ssl
 import gzip
 
-BROKER_ADDR = "192.168.1.4"
-PORT = 8883
+BROKER_ADDR = "broker.hivemq.com"
+PORT = 1883
 PUB_TOPIC = "foem/db_py_intf/v1_0_0/v2o"
 SUB_TOPIC = "foem/db_py_intf/v1_0_0/o2v"
 CLIENT_ID = "fvehicle1"
 
 # SSL/TLS
-CLIENT_CERT = r".\mqtt_certs\client\client1.crt"
-CLIENT_KEY = r".\mqtt_certs\client\client1.key"
+CLIENT_CERT = r".\mqtt_certs\client\client2.crt"
+CLIENT_KEY = r".\mqtt_certs\client\client2.key"
 CA_CERT = r".\mqtt_certs\ca\ca.crt"
 KEY_PASSPHRASE = "1332"
 
@@ -38,7 +37,6 @@ def set_ssl():
     )
     ssl_context.load_verify_locations(cafile=CA_CERT)
     return ssl_context
-
 
 def update_credentials():
     # Use current time and random salt to update credentials
@@ -57,7 +55,6 @@ def update_credentials():
     # PWD = hashed_data[-16:]  # Use the last 16 characters for the password
     USERNAME = "mashraf"
     PWD = "Gttlleex1332"
-
 
 class SimpleMQTTClient:
     class FotaCommands(Enum):
@@ -88,8 +85,8 @@ class SimpleMQTTClient:
         self.client = mqtt.Client(client_id)
 
         update_credentials()
-        ssl_context = set_ssl()
-        self.client.tls_set_context(ssl_context)
+        # ssl_context = set_ssl()
+        # self.client.tls_set_context(ssl_context)
 
         # Set callbacks
         self.client.on_connect = self.on_connect
@@ -136,7 +133,7 @@ class SimpleMQTTClient:
                 f"Connected to broker_addr: `{BROKER_ADDR}` with client_id: `{CLIENT_ID}` succesffully | port: {PORT}"
             )
         except Exception as e:
-            print(f"Connected error broker {BROKER_ADDR} error code: {e.error_code}")
+            print(f"Connected error broker {BROKER_ADDR} error code: {e}")
 
     def disconnect(self):
         self.client.disconnect(self.broker_address)
@@ -262,7 +259,8 @@ class SimpleMQTTClient:
 
     def run(self):
         self.__vehicle_btl = btl_ttl_intf(True, False)
-
+        self.__vehicle_btl.set_serial_port("/dev/ttyUSB0")
+        self.__vehicle_btl.set_baudrate(115200)
         # Setup mqtt cfg
         mqtt_client.connect()
         time.sleep(1)  # Add a short delay after connecting
@@ -276,8 +274,6 @@ class SimpleMQTTClient:
                 try:
                     status = self.__vehicle_cmd_handle()
                     if status == True:
-                        self.__vehicle_btl.set_serial_port("/dev/ttyUSB0")
-                        self.__vehicle_btl.set_baudrate(115200)
                         #
                         if True == self.__vehicle_btl.update_firmware():
                             print(f"Flashed new software succesfully")
@@ -290,7 +286,6 @@ class SimpleMQTTClient:
         finally:
             mqtt_client.loop_stop()
             mqtt_client.disconnect()
-
 
 # Example usage:
 if __name__ == "__main__":
