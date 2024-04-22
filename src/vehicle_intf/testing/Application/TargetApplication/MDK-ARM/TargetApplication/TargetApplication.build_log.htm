@@ -22,23 +22,112 @@ Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
 G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\Application\TargetApplication\MDK-ARM\TargetApplication.uvprojx
-Project File Date:  03/10/2024
+Project File Date:  04/17/2024
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.19', folder: 'G:\Kiel5\ARM\ARMCLANG\Bin'
 Build target 'TargetApplication'
-../../../SimpleVehicleOps/simple_vehicle_ops.c(315): warning: passing 'char[10]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-    HAL_UART_Transmit(&huart1, "Worked!\r\n", 7, 50);
-                               ^~~~~~~~~~~~~
-C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc\stm32f1xx_hal_uart.h(749): note: passing argument to parameter 'pData' here
-HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
-                                                                              ^
-1 warning generated.
+compiling stm32f1xx_hal_msp.c...
+../../../SimpleVehicleOps/simple_vehicle_ops.c(267): error: call to undeclared function 'delay_us'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    DELAY_US(10);
+    ^
+../../../SimpleVehicleOps/simple_vehicle_ops.c(257): note: expanded from macro 'DELAY_US'
+#define DELAY_US(_D) delay_us(_D)
+                     ^
+../../../SimpleVehicleOps/simple_vehicle_ops.c(267): note: did you mean 'dely_us'?
+../../../SimpleVehicleOps/simple_vehicle_ops.c(257): note: expanded from macro 'DELAY_US'
+#define DELAY_US(_D) delay_us(_D)
+                     ^
+../../../SimpleVehicleOps/simple_vehicle_ops.c(253): note: 'dely_us' declared here
+static void dely_us(uint32 delay) {
+            ^
+../../../SimpleVehicleOps/simple_vehicle_ops.c(282): warning: passing 'char[43]' to parameter of type 'const uint8 *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+        SEND_LOG("\n I am in the HAL_TIM_IC_CaptureCallback");
+        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../../SimpleVehicleOps/simple_vehicle_ops.c(91): note: expanded from macro 'SEND_LOG'
+#define SEND_LOG(_fmt, ...) send_log(_fmt "\r\n", ##__VA_ARGS__)
+                                     ^~~~~~~~~~~
+../../../SimpleVehicleOps/simple_vehicle_ops.c(93): note: passing argument to parameter 'pArg_u8StrFormat' here
+__STATIC __NORETURN send_log(const uint8* restrict pArg_u8StrFormat, ...) {
+                                                   ^
+../../../SimpleVehicleOps/simple_vehicle_ops.c(321): warning: passing 'char[17]' to parameter of type 'const uint8 *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+          SEND_LOG("\n Distance: %d", g_UssDistance);
+          ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../../SimpleVehicleOps/simple_vehicle_ops.c(91): note: expanded from macro 'SEND_LOG'
+#define SEND_LOG(_fmt, ...) send_log(_fmt "\r\n", ##__VA_ARGS__)
+                                     ^~~~~~~~~~~
+../../../SimpleVehicleOps/simple_vehicle_ops.c(93): note: passing argument to parameter 'pArg_u8StrFormat' here
+__STATIC __NORETURN send_log(const uint8* restrict pArg_u8StrFormat, ...) {
+                                                   ^
+../../../SimpleVehicleOps/simple_vehicle_ops.c(362): error: call to undeclared function 'delay_us'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+                DELAY_MS(2);
+                ^
+../../../SimpleVehicleOps/simple_vehicle_ops.c(258): note: expanded from macro 'DELAY_MS'
+#define DELAY_MS(_D) delay_us(_D)       
+                     ^
+../../../SimpleVehicleOps/simple_vehicle_ops.c(368): error: call to undeclared function 'delay_us'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+        DELAY_MS(30); 
+        ^
+../../../SimpleVehicleOps/simple_vehicle_ops.c(258): note: expanded from macro 'DELAY_MS'
+#define DELAY_MS(_D) delay_us(_D)       
+                     ^
+../../../SimpleVehicleOps/simple_vehicle_ops.c(379): error: call to undeclared function 'delay_us'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+        DELAY_MS(30);
+        ^
+../../../SimpleVehicleOps/simple_vehicle_ops.c(258): note: expanded from macro 'DELAY_MS'
+#define DELAY_MS(_D) delay_us(_D)       
+                     ^
+../../../SimpleVehicleOps/simple_vehicle_ops.c(384): warning: passing 'char[25]' to parameter of type 'const uint8 *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+        SEND_LOG("\n Starting Application");
+        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../../SimpleVehicleOps/simple_vehicle_ops.c(91): note: expanded from macro 'SEND_LOG'
+#define SEND_LOG(_fmt, ...) send_log(_fmt "\r\n", ##__VA_ARGS__)
+                                     ^~~~~~~~~~~
+../../../SimpleVehicleOps/simple_vehicle_ops.c(93): note: passing argument to parameter 'pArg_u8StrFormat' here
+__STATIC __NORETURN send_log(const uint8* restrict pArg_u8StrFormat, ...) {
+                                                   ^
+3 warnings and 4 errors generated.
 compiling simple_vehicle_ops.c...
-linking...
-Program Size: Code=16396 RO-data=320 RW-data=12 ZI-data=1940  
-FromELF: creating hex file...
-"TargetApplication\TargetApplication.axf" - 0 Error(s), 1 Warning(s).
+compiling gpio.c...
+compiling usart.c...
+compiling stm32f1xx_hal.c...
+compiling stm32f1xx_hal_gpio_ex.c...
+compiling stm32f1xx_it.c...
+../Core/Src/main.c(27): warning: In file included from...
+../Core/Inc\simple_vehicle_ops.h(41): warning: In file included from...
+../../../assets\Std_Types.h(40): warning: In file included from...
+../../../assets/Compiler.h(171): warning: '__INLINE' macro redefined [-Wmacro-redefined]
+    #define __INLINE inline
+            ^
+C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Include/cmsis_armclang.h(41): note: previous definition is here
+  #define __INLINE                               __inline
+          ^
+../Core/Src/main.c(27): warning: In file included from...
+../Core/Inc\simple_vehicle_ops.h(41): warning: In file included from...
+../../../assets\Std_Types.h(40): warning: In file included from...
+../../../assets/Compiler.h(199): warning: '__PACKED' macro redefined [-Wmacro-redefined]
+    #define __PACKED    __attribute__((packed))
+            ^
+C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Include/cmsis_armclang.h(59): note: previous definition is here
+  #define __PACKED                               __attribute__((packed, aligned(1)))
+          ^
+2 warnings generated.
+compiling main.c...
+compiling tim.c...
+compiling stm32f1xx_hal_tim_ex.c...
+compiling stm32f1xx_hal_rcc.c...
+compiling stm32f1xx_hal_tim.c...
+compiling stm32f1xx_hal_rcc_ex.c...
+compiling stm32f1xx_hal_gpio.c...
+compiling stm32f1xx_hal_pwr.c...
+compiling stm32f1xx_hal_cortex.c...
+compiling stm32f1xx_hal_flash.c...
+compiling stm32f1xx_hal_dma.c...
+compiling stm32f1xx_hal_exti.c...
+compiling system_stm32f1xx.c...
+compiling stm32f1xx_hal_flash_ex.c...
+compiling stm32f1xx_hal_uart.c...
+"TargetApplication\TargetApplication.axf" - 4 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -62,7 +151,8 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS/Core/Include/tz_context.h
-Build Time Elapsed:  00:00:01
+Target not created.
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>

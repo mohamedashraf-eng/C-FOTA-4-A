@@ -1,0 +1,24 @@
+{
+    "files.associations": {
+        "bootloader_cfg.h": "c",
+        "stdarg.h": "c",
+        "string.h": "c",
+        "bootloader_intf.h": "c",
+        "bootloader_prv.h": "c",
+        "simple_vehicle_ops.h": "c",
+        "stdio.h": "c",
+        "std_types.h": "c",
+        "compiler.h": "c",
+        "platform_types.h": "c",
+        "gpio.h": "c",
+        "tim.h": "c",
+        "usart.h": "c",
+        "istream": "cpp",
+        "memory": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "xlocnum": "cpp",
+        "xutility": "cpp"
+    }
+}

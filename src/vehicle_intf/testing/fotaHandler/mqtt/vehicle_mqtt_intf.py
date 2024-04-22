@@ -15,6 +15,7 @@ import time
 import random
 import ssl
 import gzip
+import serial
 
 BROKER_ADDR = "broker.hivemq.com"
 PORT = 1883
@@ -55,7 +56,7 @@ def update_credentials():
     # PWD = hashed_data[-16:]  # Use the last 16 characters for the password
     USERNAME = "mashraf"
     PWD = "Gttlleex1332"
-
+        
 class SimpleMQTTClient:
     class FotaCommands(Enum):
         UPDATE_REQUEST = "1332"
@@ -194,7 +195,7 @@ class SimpleMQTTClient:
         calculatedHash = str(
             self.__vehicle_btl.calculate_hash_on_app_file("./UpdatedFirmware.bin")
         )
-
+            
         # Start listening for the firmware hash
         self.__sendToOEM(SimpleMQTTClient.FotaVehicleResponse.SEND_FIRMWARE_HASH.value)
         if self.__mqtt_msgsQ.get() == SimpleMQTTClient.fotaOemResponse.OEM_ACK.value:
@@ -231,6 +232,26 @@ class SimpleMQTTClient:
 
         return True
 
+    @staticmethod
+    def _send_jmp_to_btl_sig():
+        # Define the serial port and baudrate
+        port = '/dev/ttyUSB0'
+        baudrate = 115200  # Make sure this matches the baudrate of your device
+        
+        try:
+            # Open the serial connection
+            ser = serial.Serial(port, baudrate, timeout=1)
+            
+            # Send the '#' character
+            ser.write(b'#')
+            
+            # Close the serial connection
+            ser.close()
+            
+            print("Sent '#' signal successfully.")
+        except serial.SerialException as e:
+            print("Error:", e)
+            
     def __save_firmware(self, firmware):
         with open("./UpdatedFirmware.hex", "wb") as f:
             for line in firmware:
@@ -275,7 +296,11 @@ class SimpleMQTTClient:
                     status = self.__vehicle_cmd_handle()
                     if status == True:
                         #
-                        if True == self.__vehicle_btl.update_firmware():
+                        SimpleMQTTClient._send_jmp_to_btl_sig()
+                        time.sleep(1)
+                        #
+                        update_stauts = self.__vehicle_btl.update_firmware()
+                        if True == update_stauts:
                             print(f"Flashed new software succesfully")
                         else:
                             print(f"Error occured while flashing the new software")

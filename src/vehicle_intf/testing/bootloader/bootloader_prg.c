@@ -39,6 +39,7 @@
 #include "usart.h"
 //#include "can.h"
 #include "crc.h"
+#include "rtc.h"
 /** @defgroup STD Libs */
 #include <stdio.h>
 #include <stdarg.h>
@@ -90,7 +91,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
 }
 
 #else
-#		define BL_LOG_SEND(LOG_LEVEL, LOG_MSG) (0)
+#		define BL_LOG_SEND(LOG_LEVEL, LOG_MSG)
 #endif /* BL_LOG_PORT*/
 
 #if defined(BL_DBG_PORT)
@@ -121,7 +122,7 @@ __BTL_DBG_ST_CAN_HANDLE_DEF();
 #		error (" No dbg port interface defined !")
 #	endif /* (BL_DBG_PORT == DBG_PORT_UART) */
 #else
-#		define BL_DBG_SEND(DBG_MSG, ...) (0)
+#		define BL_DBG_SEND(DBG_MSG, ...)
 #endif /* (BL_DBG_PORT > 0x00) */
 
 /**
@@ -139,17 +140,28 @@ __STATIC const __st_blVersion_t global_stMyBootLoaderVersion = {
 	.sw_mpatch_version = BOOTLOADER_SW_PATCH_VERSION
 };
 
-__STATIC flag_t volatile global_tIsValidApp    = FALSE;
-__STATIC flag_t volatile global_tIsValidHash   = FALSE;
-__STATIC flag_t volatile global_tIsFromAppToBl = FALSE;
+#define __FLAG_VALID_APP_ADDR 	RTC_BKP_DR1
+#define __FLAG_VALID_HASH_ADDR  RTC_BKP_DR2
+#define __FLAG_APP_TO_BL_ADDR 	RTC_BKP_DR3
+
+#define __WRITE_FLAG_VALID_APP_ADDR(_FV) HAL_RTCEx_BKUPWrite(&hrtc, __FLAG_VALID_APP_ADDR, _FV)
+#define __READ_FLAG_VALID_APP_ADDR() 	 HAL_RTCEx_BKUPRead(&hrtc, __FLAG_VALID_APP_ADDR)
+
+#define __WRITE_FLAG_VALID_HASH_ADDR(_FV) HAL_RTCEx_BKUPWrite(&hrtc, __FLAG_VALID_HASH_ADDR, _FV)
+#define __READ_FLAG_VALID_HASH_ADDR() 	  HAL_RTCEx_BKUPRead(&hrtc, __FLAG_VALID_HASH_ADDR)
+
+#define __WRITE_FLAG_APP_TO_BL_ADDR(_FV) HAL_RTCEx_BKUPWrite(&hrtc, __FLAG_APP_TO_BL_ADDR, _FV)
+#define __READ_FLAG_APP_TO_BL_ADDR() 	 HAL_RTCEx_BKUPRead(&hrtc, __FLAG_APP_TO_BL_ADDR)
 
 __STATIC sha256_t volatile global_tApplicationHash;
 
-__STATIC uint32 global_u32LastPacketTime = 0;
-__STATIC volatile uint8 global_u8StartCountingFlag = FALSE;
-
 /**
 * ===============================================================================================
+   > Private Functions Implementation
+* ===============================================================================================
+*/
+
+#if defined(BL_DBG_PORT)
 __STATIC __NORETURN __bl_vDbgWrt(const uint8* restrict pArg_u8StrFormat, ...) {
 	__STATIC uint8 local_u8DbgBuffer[DBG_BUFFER_MAX_SIZE];
 
@@ -159,12 +171,7 @@ __STATIC __NORETURN __bl_vDbgWrt(const uint8* restrict pArg_u8StrFormat, ...) {
 	va_end(args);
 
 	__DBG_SEND_OVER_X(local_u8DbgBuffer, strlen((const char *)local_u8DbgBuffer));
-}*   > Private Functions Implementation
-* ===============================================================================================
-*/
-
-#if defined(BL_DBG_PORT)
-
+}
 #endif
 
 #if defined(BL_LOG_PORT)
@@ -183,75 +190,15 @@ __STATIC void __bl_vLogWrt(const uint8 Arg_u8LogLevel, const uint8 * pArg_u8LogM
 		default: break;
 	}
 }
-
 #endif
 
-__LOCAL_INLINE __en_blStatus_t __enGetIsValidAppFlag(void) {
-	__en_blStatus_t local_enThisFuncStatus = BL_E_NONE;
+__STATIC __NORETURN __vCheckForAppValidity(void) {
+	uint32 local_u32ResetVectorAddrValue = *((uint32*)APP_START_ADDR + 4);
 
-	if( (FALSE == global_tIsValidApp) ) {
-		local_enThisFuncStatus = BL_APP_NOT_VALID;
-	} else if( (TRUE == global_tIsValidApp) ) {
-		local_enThisFuncStatus = BL_APP_VALID;
+	if (local_u32ResetVectorAddrValue != 0xFFFFFFFFUL) {
+		__WRITE_FLAG_VALID_APP_ADDR(TRUE);
 	} else {
-		/* UNDEFINED */
-	}
-
-	return local_enThisFuncStatus;
-}
-
-__LOCAL_INLINE __en_blStatus_t __enGetIsValidHashFlag(void) {
-	__en_blStatus_t local_enThisFuncStatus = BL_E_NONE;
-
-	if( (FALSE == global_tIsValidHash) ) {
-		local_enThisFuncStatus = BL_HASH_NOT_VALID;
-	} else if( (TRUE == global_tIsValidHash) ) {
-		local_enThisFuncStatus = BL_HASH_VALID;
-	} else {
-		/* UNDEFINED */
-	}
-
-	return local_enThisFuncStatus;
-}
-
-__LOCAL_INLINE __en_blStatus_t __enGetIsAppToBlFlag(void) {
-	__en_blStatus_t local_enThisFuncStatus = BL_E_NONE;
-
-	if( (FALSE == global_tIsFromAppToBl) ) {
-		local_enThisFuncStatus = BL_FRESH;
-	} else if( (TRUE == global_tIsFromAppToBl) ) {
-		local_enThisFuncStatus = BL_APP_TO_BL;
-	} else {
-		/* UNDEFINED */
-	}
-
-	return local_enThisFuncStatus;
-}
-
-__LOCAL_INLINE __NORETURN __vSetIsValidAppFlag(flag_t volatile Arg_tValue) {
-	if( (Arg_tValue <= 0 || Arg_tValue >= 1) ) {
-		global_tIsValidApp = Arg_tValue;
-	} else {
-		/* INVALID */
-		BL_DBG_SEND("INVALID Arg_tValue: %d", Arg_tValue);
-	}
-}
-
-__LOCAL_INLINE __NORETURN __vSetIsValidHashFlag(flag_t volatile Arg_tValue) {
-	if( (Arg_tValue <= 0 || Arg_tValue >= 1) ) {
-		global_tIsValidHash = Arg_tValue;
-	} else {
-		/* INVALID */
-		BL_DBG_SEND("INVALID Arg_tValue: %d", Arg_tValue);
-	}
-}
-
-__LOCAL_INLINE __NORETURN __vSetIsAppToBlFlag(flag_t volatile Arg_tValue) {
-	if( (Arg_tValue <= 0 || Arg_tValue >= 1) ) {
-		global_tIsFromAppToBl = Arg_tValue;
-	} else {
-		/* INVALID */
-		BL_DBG_SEND("INVALID Arg_tValue: %d", Arg_tValue);
+		__WRITE_FLAG_VALID_APP_ADDR(FALSE);
 	}
 }
 
@@ -280,42 +227,6 @@ __STATIC __NORETURN __vSendNack(uint8 Arg_u8ErrorCode) {
 	uint8 local_u8NackValue[2u] = {BL_CMD_RESPONSE_NACK, Arg_u8ErrorCode};
 	__vPipeEcho((uint8*)&local_u8NackValue[0], 2u);
 	BL_DBG_SEND("Sent Nack successfully");
-}
-
-#include "stm32f1xx_hal.h"
-
-__LOCAL_INLINE uint32 __u32GetTickCount(void) {
-	return HAL_GetTick();
-}
-
-__LOCAL_INLINE uint8 __u8IsSessionTimeOut(uint32 Arg_u32LastPacketTime) {
-	return (Arg_u32LastPacketTime > PIPE_TIMEOUT_MS) ? TRUE: FALSE;
-}
-
-__LOCAL_INLINE __NORETURN __vResetSessionTimeOutCounter(uint32* pArg_u32LastPacketTime) {
-	(*pArg_u32LastPacketTime) = 0;
-	global_u8StartCountingFlag = FALSE;
-}
-
-__LOCAL_INLINE __NORETURN __vStartSessiontimeOutCount(void) {
-	global_u8StartCountingFlag = TRUE;
-}
-
-void SysTick_Init(void) {
-	HAL_SYSTICK_Config(SystemCoreClock / 1000);  // Generate SysTick interrupt every 1 ms
-	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
-}
-
-// Function to handle SysTick interrupt
-void SysTick_Handler(void) {
-	if(TRUE == global_u8StartCountingFlag) {
-		global_u32LastPacketTime++;
-		if( (TRUE == __u8IsSessionTimeOut(global_u32LastPacketTime)) ) {
-			/* Reset connection */
-			__sw_reset_signal();
-		} else;
-	} else;
-	HAL_IncTick();
 }
 
 __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) {
@@ -385,7 +296,19 @@ __STATIC __en_blErrStatus_t __enVerifyAddress(uint32 Arg_u32McuAddressValue) {
 }
 
 __STATIC __NORETURN __vJumpToApplication(void) {
+	__disable_irq();
 	if( (BL_E_INVALID_ADDR != __enVerifyAddress(APP_START_ADDR)) ) {
+		/* Set shared flags */
+		__WRITE_FLAG_APP_TO_BL_ADDR(FALSE);
+		__WRITE_FLAG_VALID_APP_ADDR(TRUE);
+		__WRITE_FLAG_VALID_HASH_ADDR(TRUE);
+		/* Pre Init Jump */
+		memset((uint32*)NVIC->ICER, 0xFF, sizeof(NVIC->ICER));
+		SysTick->CTRL = 0;
+		SCB->ICSR |= SCB_ICSR_PENDSTCLR_Msk;
+		memset((uint32*)NVIC->ICPR, 0xFF, sizeof(NVIC->ICPR));
+		/* Load Vector Table */
+		SCB->VTOR = (uint32)(APP_START_ADDR);
 		/* Read the data stored in the first 4 bytes (Main Stack Pointer) */
 		uint32 local_u32MspValue = *((uint32_t volatile *)(APP_START_ADDR));
 		/* Read the next 4 bytes from the base address (Reset Handler Function) */
@@ -394,6 +317,8 @@ __STATIC __NORETURN __vJumpToApplication(void) {
 		void (*local_vAppResetFunc)(void) = (void*)local_u32ResetHandler;
 		/* Set the MSP for the application */
 		__set_MSP(local_u32MspValue);
+		/* Set stack pointer */
+		__set_CONTROL(0);
 		/* Reset clock before start */
 		HAL_RCC_DeInit();
 		/* Call the reset function to start the application */
@@ -402,7 +327,6 @@ __STATIC __NORETURN __vJumpToApplication(void) {
 	} else {
 		/* Error handle */
 		BL_DBG_SEND("Invalid application address");
-		return;
 	}
 }
 
@@ -463,13 +387,13 @@ __en_blErrStatus_t __enPipeListen(void) {
 		local_tPacketSeralized.PacketLength = local_u8PipeListenrBuffer[0];
 		BL_DBG_SEND("Waiting for the packet with length (%d).", local_tPacketSeralized.PacketLength);
 		
-		__vStartSessiontimeOutCount();
+//		__vStartSessiontimeOutCount();
 
 		if( (HAL_OK != PIPE_LISTEN((uint8*)&local_u8PipeListenrBuffer[1], local_tPacketSeralized.PacketLength)) ) {
 			BL_DBG_SEND("The pipe listner is not ok.");
 			local_enThisFuncErrStatus = BL_E_NOK;
 		} else {
-			__vResetSessionTimeOutCounter(&global_u32LastPacketTime);
+//			__vResetSessionTimeOutCounter(&global_u32LastPacketTime);
 
 			BL_LOG_SEND(LOGL_INFO, "Got the packet");
 			BL_DBG_SEND("The pipe listner received a packet successfully.");
@@ -832,6 +756,7 @@ __STATIC __en_blErrStatus_t __enEraseFlashPages(const uint8 Arg_u8PageIdx, uint8
 }
 
 __LOCAL_INLINE __en_blErrStatus_t __enJumpToAddress(uint32 Arg_u32Address) {
+	__vJumpToApplication();
 	__en_blErrStatus_t local_enThisFuncErrStatus = BL_E_NONE;
 	if( (BL_E_OK != __enVerifyAddress(Arg_u32Address)) ) {
 		local_enThisFuncErrStatus = BL_E_INVALID_ADDR;	
@@ -906,6 +831,7 @@ __LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, cons
 * ===============================================================================================
 */
 
+#define __COMPARE_HASHES strcmp
 /**
  * @brief 
  * @details
@@ -915,38 +841,45 @@ __LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, cons
  * 		 		. Calculate the hash for the exisiting application
  * 					> If it matches the latest received application hash from OEM
  * 			  		then set the BL_APP_VALIDITY && HASH_VALIDITY to True, and jump to the application.
- * 		 	 		> Else Set the BL_APP_VALIDITY && HASH_VALIDITY to False, Start Pipe listner
+ * 		 	 		> Else Set the BL_APP_VALIDITY && HASH_VALIDITY to False, Start Pipe listener
  * 
  */
 __NORETURN BL_enBootManager(void) {
 	BL_LOG_SEND(LOGL_INFO, "Bootloader manager started, looking for a valid application");
 	BL_DBG_SEND("Started the boot manager");
-	// SysTick_Init();
-	if( (BL_FRESH == __enGetIsAppToBlFlag()) || (BL_APP_VALID != __enGetIsValidAppFlag()) ||
-			(BL_APP_TO_BL == __enGetIsAppToBlFlag())) {
+
+	if(FALSE == __READ_FLAG_APP_TO_BL_ADDR()) {
+		__vCheckForAppValidity();
+	} else;
+
+	if( (TRUE == __READ_FLAG_APP_TO_BL_ADDR()) || (FALSE == __READ_FLAG_VALID_APP_ADDR()) ) {
 		BL_DBG_SEND("Invalid application, waiting for a valid application");
 		BL_LOG_SEND(LOGL_INFO, "No valid application found");
-		/* Start listner */
+		/* Start listener */
 		__enPipeListen();
 	} else {
+#if (BL_SECURE_BOOT == BL_SECURE_BOOT_OFF)
+		BL_LOG_SEND(LOGL_INFO, "Found appllication, started to jump");
+		__vJumpToApplication();
+#elif (BL_SECURE_BOOT == BL_SECURE_BOOT_ON)
 		BL_LOG_SEND(LOGL_INFO, "Found appllication, started to validate");
 		BL_DBG_SEND("Validating the existant application");
 		/* Process */
-		if( (BL_APP_VALID == __enGetIsValidAppFlag()) ) {
+		if( (TRUE == __READ_FLAG_VALID_APP_ADDR()) ) {
 			BL_LOG_SEND(LOGL_INFO, "Calculating hash digest");
 			BL_DBG_SEND("Calculating application hash.");
-			__STATIC sha256_t local_tApplicationHash;  
+			__STATIC sha256_t local_tApplicationHash;
+//			__CALCULATE_APP_HASH();
 			/* Calculate hash */
-			if ( (0 == strcmp(local_tApplicationHash, global_tApplicationHash)) ) {
-				__vSetIsValidHashFlag(TRUE);
-				__vSetIsValidAppFlag(TRUE);
+			if ( (TRUE == __COMPARE_HASHES(local_tApplicationHash, global_tApplicationHash)) ) {
 				BL_LOG_SEND(LOGL_INFO, "Applicaton is valid");
 				BL_DBG_SEND("Valid hash");
 				/* Jump to the application */
 				__vJumpToApplication();
 			} else {
-				__vSetIsValidHashFlag(FALSE);
-				__vSetIsValidAppFlag(FALSE);
+				__WRITE_FLAG_APP_TO_BL_ADDR(FALSE);
+				__WRITE_FLAG_VALID_HASH_ADDR(FALSE);
+				__WRITE_FLAG_VALID_APP_ADDR(FALSE);
 				BL_LOG_SEND(LOGL_INFO, "Application not valid, waiting for a valid application");
 				BL_DBG_SEND("Invalid hash");
 				/* Start listner */
@@ -955,6 +888,9 @@ __NORETURN BL_enBootManager(void) {
 		} else {
 			;
 		}
+#else
+#	error "Un supported mode"
+#endif /* BL_SECURE_BOOT */
 	}
 }
 

@@ -15,7 +15,6 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
-
 class btl_ttl_intf(object):
     class BtlCommands(Enum):
         NUM_OF_CMDS = 13
@@ -37,7 +36,7 @@ class btl_ttl_intf(object):
 
     std_baudrates = [9600, 19200, 38400, 57600, 115200, 1500000]
 
-    MAX_DATA_PER_PACKET_LENGTH = 100
+    MAX_DATA_PER_PACKET_LENGTH = 230
 
     def __init__(self, verbose_mode=False, mem_wrt_actv=False):
         self.__verbose_mode = verbose_mode
@@ -339,6 +338,26 @@ class btl_ttl_intf(object):
         Byte_Value = WordValue >> (8 * (ByteIdx - 1)) & 0x000000FF
         return Byte_Value
 
+    @staticmethod
+    def _send_jmp_to_btl_sig():
+        # Define the serial port and baudrate
+        port = '/dev/ttyUSB0'
+        baudrate = 115200  # Make sure this matches the baudrate of your device
+        
+        try:
+            # Open the serial connection
+            ser = serial.Serial(port, baudrate, timeout=1)
+            
+            # Send the '#' character
+            ser.write(b'#')
+            
+            # Close the serial connection
+            ser.close()
+            
+            print("Sent '#' signal successfully.")
+        except serial.SerialException as e:
+            print("Error:", e)
+        
     def __cvtHex2Bin(self, hex_fp):
         # output = os.path.splitext(os.path.basename(hex_fp))[0]
 
@@ -376,22 +395,7 @@ class btl_ttl_intf(object):
             "+----------------------------------------------------------------------------------------+"
         )
         print(
-            "|                @Team:                                                                  |"
-        )
-        print(
             "|                  - Mohamed Ashraf                                                      |"
-        )
-        print(
-            "|                  - Saleh Mosaad                                                        |"
-        )
-        print(
-            "|                @Mentor: Dr. Ashraf Sayed Abd Elhalim                                   |"
-        )
-        print(
-            "|                                                                                        |"
-        )
-        print(
-            "|        Faculty Of Engineering - Electronics and Communication Engineering  [CIC]       |"
         )
         print(
             "+----------------------------------------------------------------------------------------+"
@@ -467,6 +471,9 @@ class btl_ttl_intf(object):
         if self.__connect_to_port(self.__serial_port, self.__baudrate, self.__timeout):
             # self.__cvtHex2Bin('./UpdatedFirmware.hex')
             self.set_appBinFp("./UpdatedFirmware.bin")
+            #
+            # btl_ttl_intf._send_jmp_to_btl_sig()
+            # time.sleep(3)
             #
             self.btl_cmd_intf_FlashApp()
             #

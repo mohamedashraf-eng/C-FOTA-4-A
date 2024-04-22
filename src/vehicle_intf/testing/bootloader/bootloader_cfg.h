@@ -76,7 +76,7 @@
  * @attention DON'T CHANGE THIS LINE !!!!!
  * 
 */
-#define APP_START_ADDR	( (uint32) (0x08008000) )
+#define APP_START_ADDR	( (uint32) (0x08008000UL) )
 
 /** 
  * @brief Communication type for the bootloader
@@ -103,7 +103,7 @@
  *  	@arg DBG_PORT_UART
  *  	@arg DBG_PORT_CAN
 */
-#define BL_DBG_PORT DBG_PORT_UART
+// #define BL_DBG_PORT DBG_PORT_UART
 /** 
  * @brief Light Weight Debugging 
  * @note defining the LWD enables the functionality automatically

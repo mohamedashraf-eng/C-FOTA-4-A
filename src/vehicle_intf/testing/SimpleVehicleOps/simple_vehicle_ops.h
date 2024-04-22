@@ -40,10 +40,9 @@ extern "c" {
 
 #include "Std_Types.h"
 
-/**
- * @defgroup Motors 
- * 
- */
+#define DBG
+
+
 #define MOTOR_FR  ( (uint8) (1u) )
 #define MOTOR_FL  ( (uint8) (2u) )
 #define MOTOR_BR  ( (uint8) (3u) )
@@ -53,6 +52,18 @@ extern "c" {
 #define LED_FR    ( (uint8) (0u) )
 #define LED_FL    ( (uint8) (1u) )
 #define LED_ALL   ( (uint8) (2u) )
+
+/**
+ * @defgroup App Cfgs
+ *
+*/
+
+/* Motors */
+#define MOTORS_SPEED								( (uint8) (25) )
+/* Leds */
+#define FRONT_LEDS_INTENSITY						( (uint8) (10) )
+/* Ultrasonic */
+#define USS_THRESHOLD_DISTANCE_CM					( (uint8) (6) )
 
 /**
  * @defgroup Movements 

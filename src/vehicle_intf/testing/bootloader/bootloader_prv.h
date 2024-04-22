@@ -259,12 +259,7 @@ __STATIC void __bl_vLogWrt(const uint8 Arg_u8LogLevel, const uint8 * pArg_u8LogM
 
 __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket);
 
-__LOCAL_INLINE __en_blStatus_t __enGetIsValidAppFlag(void);
-__LOCAL_INLINE __en_blStatus_t __enGetIsValidHashFlag(void);
-__LOCAL_INLINE __en_blStatus_t __enGetIsAppToBlFlag(void);
-__LOCAL_INLINE __NORETURN __vSetIsValidAppFlag(flag_t volatile Arg_tValue);
-__LOCAL_INLINE __NORETURN __vSetIsValidHashFlag(flag_t volatile Arg_tValue);
-__LOCAL_INLINE __NORETURN __vSetIsAppToBlFlag(flag_t volatile Arg_tValue);
+__STATIC __NORETURN __vCheckForAppValidity(void);
 
 __STATIC __en_blErrStatus_t __enPipeListen(void);
 __STATIC __NORETURN __vPipeEcho(const uint8* pArg_u8TxBuffer, uint8 Arg_u8Length);

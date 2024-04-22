@@ -1,5 +1,5 @@
 Core/Src/simple_vehicle_ops.o: ../Core/Src/simple_vehicle_ops.c \
- G:/WX_CAREER/Grad\ Project/src/vehicle_intf/testing/SimpleVehicleOps/simple_vehicle_ops.h \
+ ../Core/Inc/simple_vehicle_ops.h \
  G:/WX_CAREER/Grad\ Project/src/vehicle_intf/testing/assets/Std_Types.h \
  G:/WX_CAREER/Grad\ Project/src/vehicle_intf/testing/assets/Platform_Types.h \
  G:/WX_CAREER/Grad\ Project/src/vehicle_intf/testing/assets/Compiler.h \
@@ -27,12 +27,14 @@ Core/Src/simple_vehicle_ops.o: ../Core/Src/simple_vehicle_ops.c \
  C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
+ C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h \
+ C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc_ex.h \
  C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Core/Inc/tim.h ../Core/Inc/main.h ../Core/Inc/usart.h \
- ../Core/Inc/gpio.h
-G:/WX_CAREER/Grad\ Project/src/vehicle_intf/testing/SimpleVehicleOps/simple_vehicle_ops.h:
+ ../Core/Inc/gpio.h ../Core/Inc/rtc.h
+../Core/Inc/simple_vehicle_ops.h:
 G:/WX_CAREER/Grad\ Project/src/vehicle_intf/testing/assets/Std_Types.h:
 G:/WX_CAREER/Grad\ Project/src/vehicle_intf/testing/assets/Platform_Types.h:
 G:/WX_CAREER/Grad\ Project/src/vehicle_intf/testing/assets/Compiler.h:
@@ -60,6 +62,8 @@ C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Dr
 C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
 C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
+C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h:
+C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc_ex.h:
 C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
@@ -67,3 +71,4 @@ C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Dr
 ../Core/Inc/main.h:
 ../Core/Inc/usart.h:
 ../Core/Inc/gpio.h:
+../Core/Inc/rtc.h:

@@ -15,7 +15,8 @@ logging.basicConfig(
 )
 
 OUTPUT_BIN_FILE_STD = ""
-DUMMY_APP_BIN_FP = r"./UpdatedFirmware.bin"
+DUMMY_APP_BIN_FP = r"G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\Application\TargetApplication\Debug\TargetApplication.bin"
+# DUMMY_APP_BIN_FP = r"./TargetApplication.bin"
 
 class btl_ttl_intf(object):
     class BtlCommands(Enum):
@@ -95,7 +96,8 @@ class btl_ttl_intf(object):
                 logging.info(f"- {port}: {desc} [{hwid}]")
 
     def __check_serial_port(self, port):
-        available_ports = [p.device for p in serial.tools.list_ports.comports()]
+        available_ports = [
+            p.device for p in serial.tools.list_ports.comports()]
         return port in available_ports
 
     def __connect_to_port(self, port, br=115200, timeout=None):
@@ -111,13 +113,15 @@ class btl_ttl_intf(object):
                 )
                 time.sleep(1)
                 if self.__serialObj.is_open:
-                    logging.info(f"Connected to port {port}@{br}:N:1 successfully")
+                    logging.info(
+                        f"Connected to port {port}@{br}:N:1 successfully")
                     return True
                 else:
                     logging.error(f"Failed to open port {port}")
                     return False
             else:
-                logging.error(f"Port {port} does not exist or is not available")
+                logging.error(
+                    f"Port {port} does not exist or is not available")
                 self.__available_ports()
                 return False
         except Exception as e:
@@ -173,19 +177,21 @@ class btl_ttl_intf(object):
                 )
 
             # Calculate Packet CRC32 and insert into packetList
-            packetCRC32 = self.__calculate_crc32_04C11DB7(packetList, len(packetList))
+            packetCRC32 = self.__calculate_crc32_04C11DB7(
+                packetList, len(packetList))
             for i in range(4):
                 packetList.insert(
-                    dataLen + 8 + i, self.__cvt_value2byte(packetCRC32, i + 1, 1)
+                    dataLen + 8 +
+                    i, self.__cvt_value2byte(packetCRC32, i + 1, 1)
                 )
 
             packetLen = len(packetList)
             # if packetLen > 255:
             #     packetExtendedLength = packetLen - 255
-                
+
             packetList.insert(0, packetLen)
             # packetList.insert(1, packetExtendedLength)
-            
+
             hex_list = [hex(item) for item in packetList]
             return packetList
 
@@ -215,7 +221,8 @@ class btl_ttl_intf(object):
                 print("\nNothing to wait from bootloader")
                 return 2
         else:
-            hex_values = [format(ack_byte, "02X"), format(length_if_data, "02X")]
+            hex_values = [format(ack_byte, "02X"),
+                          format(length_if_data, "02X")]
             print(f"\nReceived Nack from bootloader err_code@{hex_values[1]}")
             return 0
 
@@ -248,7 +255,6 @@ class btl_ttl_intf(object):
         BinFileSentBytes = 0
         BinFileRemainingBytes = File_Total_Len - BinFileSentBytes
         while BinFileRemainingBytes:
-            """ Read 128 bytes from the binary file each time """
             if BinFileRemainingBytes >= btl_ttl_intf.MAX_DATA_PER_PACKET_LENGTH:
                 BinFileReadLength = btl_ttl_intf.MAX_DATA_PER_PACKET_LENGTH
             else:
@@ -286,7 +292,8 @@ class btl_ttl_intf(object):
             Addr += BinFileReadLength
             BinFileSentBytes += BinFileReadLength
             BinFileRemainingBytes = File_Total_Len - BinFileSentBytes
-            print("\n   Bytes sent to the bootloader :{0}".format(BinFileSentBytes))
+            print("\n   Bytes sent to the bootloader :{0}".format(
+                BinFileSentBytes))
         end_time = time.monotonic()
         print(f"Flashing done.")
         print(f"Time taken to flash application: {end_time - start_time}")
@@ -349,18 +356,19 @@ class btl_ttl_intf(object):
 
     def __cvtHex2Bin(self, hex_fp):
         output = os.path.splitext(os.path.basename(hex_fp))[0]
-        
+
         # Load the Intel HEX file
         ih = IntelHex(hex_fp)
 
         # Convert to binary and save
-        ih.tobinfile(OUTPUT_BIN_FILE_STD, '/', output,'.bin')
-    
+        ih.tobinfile(OUTPUT_BIN_FILE_STD, '/', output, '.bin')
+
     def __print_commands_as_table(self):
         print(
             "+-------+---------------------------+----------------------------------------------------+"
         )
-        print("| {:<5} | {:<25} | {:<50} |".format("Index", "Command", "Description"))
+        print("| {:<5} | {:<25} | {:<50} |".format(
+            "Index", "Command", "Description"))
         print(
             "+-------+---------------------------+----------------------------------------------------+"
         )
@@ -368,7 +376,8 @@ class btl_ttl_intf(object):
         for i, (command, description) in enumerate(
             self.__btl_available_commands.items(), start=1
         ):
-            print("| {:<5} | {:<25} | {:<50} |".format(i, command, description))
+            print("| {:<5} | {:<25} | {:<50} |".format(
+                i, command, description))
             print(
                 "+-------+---------------------------+----------------------------------------------------+"
             )
@@ -389,19 +398,19 @@ class btl_ttl_intf(object):
         print(
             "+----------------------------------------------------------------------------------------+"
         )
-    
+
     def check_input(self, input_str):
         try:
             # Check if input is empty or contains only whitespaces
             if not input_str or input_str.isspace():
                 pass
-            
+
             if len(input_str) == 0:
                 return False
-            
+
             # Remove leading and trailing whitespaces
             input_str = input_str.strip()
-            
+
             # Convert input to integer
             input_value = int(input_str)
 
@@ -410,7 +419,7 @@ class btl_ttl_intf(object):
         except ValueError as e:
             print(e)
             return None
-    
+
     def __interactive_btl_intf(self):
         print("Select a command")
         selected_command = input("[BTL]> ")
@@ -433,7 +442,7 @@ class btl_ttl_intf(object):
         # self.set_serial_port(input("Enter the serial port to connect to: "))
         # self.set_baudrate(input("Enter the baudrate: "))
         # self.set_timeout(input("Enter the timeout: "))
-        self.set_serial_port('COM3')
+        self.set_serial_port('COM4')
         self.set_baudrate(115200)
 
         if self.__connect_to_port(self.__serial_port, self.__baudrate, self.__timeout):
@@ -453,7 +462,8 @@ class btl_ttl_intf(object):
         if int(value) in btl_ttl_intf.std_baudrates:
             self.__baudrate = value
         else:
-            logging.error("Invalid baudrate specified, list of available baudrates:")
+            logging.error(
+                "Invalid baudrate specified, list of available baudrates:")
             for i in range(len(btl_ttl_intf.std_baudrates)):
                 logging.info(btl_ttl_intf.std_baudrates[i])
             raise ValueError("Invalid baudrte value")
@@ -475,7 +485,7 @@ class btl_ttl_intf(object):
             self.__cvtHex2Bin(self, hexfp)
         else:
             print(f"Invalid file path @{hexfp}")
-    
+
     def btl_cmd_intf_JumpToAddr(self):
         jumpAddr = int(
             input("Input flashing address in hex format (e.x 0x08008000): "), base=16
@@ -495,10 +505,11 @@ class btl_ttl_intf(object):
         self.__btl_cmd_swReboot()
 
     def btl_command_exec(self, command):
-        default_command = lambda: print("Invalid command")
+        def default_command(): return print("Invalid command")
         command_method = self.__btl_commands.get(command, default_command)
         command_method()
-    
+
+
 if __name__ == "__main__":
     mybtl = btl_ttl_intf(True, False)
     mybtl.run()

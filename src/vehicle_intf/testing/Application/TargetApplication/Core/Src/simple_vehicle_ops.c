@@ -38,6 +38,7 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
+#include "rtc.h"
 
 /** @defgroup STD Libs */
 #include <stdio.h>
@@ -50,6 +51,10 @@
 
 #define BOOTLOADER_START_ADDR 		( (uint32) (0x08000000UL) )
 
+#define __WRITE_FLAG_APP_TO_BL_ADDR(_FV) HAL_RTCEx_BKUPWrite(&hrtc, __FLAG_APP_TO_BL_ADDR, _FV)
+#define __READ_FLAG_APP_TO_BL_ADDR() 	 HAL_RTCEx_BKUPRead(&hrtc, __FLAG_APP_TO_BL_ADDR)
+#define __FLAG_APP_TO_BL_ADDR 	RTC_BKP_DR3
+
 /**
  * @defgroup Communication
  * 
@@ -57,20 +62,36 @@
  *      1. Prepare UART1 to handle the incoming msg [RESET SIGNAL] to jump to bootloader
  *      2. Characther '#' received => DeInit application, Jump to 0 Address [Bootloader]
  */
-
 __STATIC __NORETURN __vJumpToBootloader(void) {
+	__disable_irq();
+	/* Pre Init Jump */
+	memset((uint32*)NVIC->ICER, 0xFF, sizeof(NVIC->ICER));
+	SysTick->CTRL = 0;
+	SCB->ICSR |= SCB_ICSR_PENDSTCLR_Msk;
+	memset((uint32*)NVIC->ICPR, 0xFF, sizeof(NVIC->ICPR));
+	/* Load Vector Table */
+	SCB->VTOR = (uint32)(BOOTLOADER_START_ADDR);
 	/* Read the data stored in the first 4 bytes (Main Stack Pointer) */
-	uint32 local_u32MspValue = *((uint32 volatile *)(BOOTLOADER_START_ADDR));
+	uint32 local_u32MspValue = *((uint32_t volatile *)(BOOTLOADER_START_ADDR));
 	/* Read the next 4 bytes from the base address (Reset Handler Function) */
-	uint32 local_u32ResetHandler = *((uint32 volatile *) (BOOTLOADER_START_ADDR + 4u));
+	uint32 local_u32ResetHandler = *((uint32_t volatile *) (BOOTLOADER_START_ADDR + 4u));
 	/* Set the reset handler as function */
-	void (*local_vBlResetFunc)(void) = (void*)local_u32ResetHandler;
+	void (*local_vAppResetFunc)(void) = (void*)local_u32ResetHandler;
 	/* Set the MSP for the application */
 	__set_MSP(local_u32MspValue);
+	/* Set stack pointer */
+	__set_CONTROL(0);
+	/* Activate APP_TO_BL flag */
+	__WRITE_FLAG_APP_TO_BL_ADDR(TRUE);
 	/* Reset clock before start */
 	HAL_RCC_DeInit();
+
 	/* Call the reset function to start the application */
-	local_vBlResetFunc();
+#ifdef DIRECT_BOOTLOADER_JUMP
+	local_vAppResetFunc();
+#else
+	HAL_NVIC_SystemReset();
+#endif /* DIRECT_BOOTLOADER_JUMP */
 }
 
 static uint8 rx_data = 0;
@@ -84,11 +105,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	}
 }
 
-//#define __DBG_SEND_OVER_X(__BUFFER, __LEN) HAL_UART_Transmit(&huart2, (uint8*)(&__BUFFER[0]), (uint16)(__LEN), HAL_MAX_DELAY)
-#define __DBG_SEND_OVER_X(__BUFFER, __LEN)
-#define DBG_BUFFER_MAX_SIZE ( (uint8) (128) )
+#ifdef DBG
+# define __DBG_SEND_OVER_X(__BUFFER, __LEN) HAL_UART_Transmit(&huart2, (uint8*)(&__BUFFER[0]), (uint16)(__LEN), HAL_MAX_DELAY)
+#	define DBG_BUFFER_MAX_SIZE ( (uint8) (128) )
 
-__STATIC __NORETURN send_log(const uint8* restrict pArg_u8StrFormat, ...) {
+#define SEND_LOG(_fmt, ...) send_log(_fmt "\r\n", ##__VA_ARGS__)
+
+void static send_log(const uint8* restrict pArg_u8StrFormat, ...) {
 	__STATIC uint8 local_u8DbgBuffer[DBG_BUFFER_MAX_SIZE];
 
 	va_list args;
@@ -98,6 +121,9 @@ __STATIC __NORETURN send_log(const uint8* restrict pArg_u8StrFormat, ...) {
 
 	__DBG_SEND_OVER_X(local_u8DbgBuffer, strlen((const char *)local_u8DbgBuffer));
 }
+#else
+#	define SEND_LOG(_fmt, ...)
+#endif /* DBG */
 
 /**
  * @defgroup Motors 
@@ -191,12 +217,12 @@ void ControlMotorSpeed(uint8 motor, uint8 speed) {
 #define BUZZER_PORT     (BUZZER_GPIO_Port)  
 
 void BuzzerUUUUUH(void) {
-    // send_log("Buzzer ON");
+    // SEND_LOG("Buzzer ON");
     HAL_GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_PIN_SET);
 }
 
 void BuzzerNO(void) {
-    // send_log("Buzzer OFF");
+    // SEND_LOG("Buzzer OFF");
     HAL_GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_PIN_RESET);
 }
 
@@ -245,73 +271,62 @@ void ControlFrontLeds(uint8 led, uint8 intensity) {
  *
  */
 
-#define SYSTICK_LOAD (SystemCoreClock / 1000000U)
-#define DELAY_US(us)                   \
-    do                                 \
-    {                                  \
-        uint32_t start = SysTick->VAL; \
-        uint32_t target = start - us * SYSTICK_LOAD; \
-        if (target > start)            \
-        {                              \
-            while (SysTick->VAL > target); \
-        }                              \
-        else                           \
-        {                              \
-            while (SysTick->VAL > 0);  \
-            while (SysTick->VAL > target); \
-        }                              \
-    } while (0)
+static void delay_us(uint16 delay) {
+    __HAL_TIM_SET_COUNTER(&htim4, 0);
+    while(__HAL_TIM_GET_COUNTER(&htim4) < delay);
+}
 
+#define DELAY_US(_D) delay_us(_D)
+#define DELAY_MS(_D) for(uint16 i = 0; i < 1000u; ++i) delay_us(_D)
 
 #define USS_TRIGGER_PORT    (USS_TRIGGER_GPIO_Port)
 #define USS_TRIGGER_PIN     (USS_TRIGGER_Pin)
-#define USS_ECHO_PORT       (VEHICLE_FRONT_LEDS_GPIO_Port)
-#define USS_ECHO_PIN        (USS_ECHO_Pin)
 
 static void uss_trigger(void) {
     HAL_GPIO_WritePin(USS_TRIGGER_PORT, USS_TRIGGER_PIN, GPIO_PIN_RESET);
-    // DELAY_US(20);
-    HAL_Delay(2);
+    DELAY_US(10);
     HAL_GPIO_WritePin(USS_TRIGGER_PORT, USS_TRIGGER_PIN, GPIO_PIN_SET);
-    HAL_Delay(1);
-    // DELAY_US(10);
+    DELAY_US(10);
     HAL_GPIO_WritePin(USS_TRIGGER_PORT, USS_TRIGGER_PIN, GPIO_PIN_RESET);
-    HAL_Delay(2);
-    // DELAY_US(20);
-    __HAL_TIM_ENABLE_IT(&htim2, TIM_IT_CC2);
+
+    __HAL_TIM_ENABLE_IT(&htim2, TIM_IT_CC3);
 }
 
-static uint8 g_UssDistance = 0;
+static uint8 g_UssDistance = USS_THRESHOLD_DISTANCE_CM + 1u;
 static boolean IsFirstCaptured = FALSE;
 static uint32 IcuCapturedVal1 = 0;
 static uint32 IcuCapturedVal2 = 0;
 static uint32 Diff = 0;
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
-	if (htim == &htim2 && htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2) {
-	    if (!IsFirstCaptured) {
-	        IcuCapturedVal1 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
-	        IsFirstCaptured = TRUE;
-	        __HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_2, TIM_INPUTCHANNELPOLARITY_FALLING);
-	    } else {
-	        IcuCapturedVal2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
-	        __HAL_TIM_SET_COUNTER(htim, 0);
+    if (htim == &htim2 && htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
+        if (!IsFirstCaptured) {
+            IcuCapturedVal1 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_3);
+            IsFirstCaptured = TRUE;
+            __HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_3, TIM_INPUTCHANNELPOLARITY_FALLING);
+        } else {
+            IcuCapturedVal2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_3);
+            __HAL_TIM_SET_COUNTER(htim, 0);
 
-	        if (IcuCapturedVal2 > IcuCapturedVal1) {
-	            Diff = (IcuCapturedVal2 - IcuCapturedVal1);
-	        } else {
-	            // Handle timer overflow case
-	            Diff = (0xFFFFU - IcuCapturedVal1) + IcuCapturedVal2;
-	        }
+            if (IcuCapturedVal2 > IcuCapturedVal1) {
+                Diff = (IcuCapturedVal2 - IcuCapturedVal1);
+            } else if (IcuCapturedVal2 < IcuCapturedVal1) {
+                // Handle timer overflow case
+                Diff = (0xFFFFU - IcuCapturedVal1) + IcuCapturedVal2 + 1; // Add 1 to account for timer overflow
+            } else {
+                // Equal values, should not occur in normal operation
+                SEND_LOG("Error: Equal capture values received");
+            }
 
-	        // Calculate distance based on the pulse duration
-	        g_UssDistance = (uint8)(0.017 * Diff) + 1U;
+            // Calculate distance based on the pulse duration
+            g_UssDistance = (uint8_t)(0.017 * Diff) + 1U;
+            SEND_LOG("g_UssDistance = %d cm", g_UssDistance);
 
-	        IsFirstCaptured = FALSE;
-	        __HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_2, TIM_INPUTCHANNELPOLARITY_RISING);
-	        __HAL_TIM_DISABLE_IT(htim, TIM_IT_CC2);
-	    }
-	}
+            IsFirstCaptured = FALSE;
+            __HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_3, TIM_INPUTCHANNELPOLARITY_RISING);
+            __HAL_TIM_DISABLE_IT(htim, TIM_IT_CC3);
+        }
+    }
 }
 
 uint8 GetUltraSonicDistance(void) {
@@ -329,23 +344,25 @@ uint8 GetUltraSonicDistance(void) {
     return g_UssDistance;
 }
 
-#define USS_THRESHOLD_DISTANCE_MIN_IN_CM     ( (uint8) (20) )
-#define USS_THRESHOLD_DISTANCE_MAX_IN_CM     ( (uint8) (30) )
-
 /**
  * @todo To be tested and accepted 
  */
 boolean CheckIfDistanceInValidRange(uint8 distance) {
-    if( (distance <= USS_THRESHOLD_DISTANCE_MIN_IN_CM) &&
+	boolean motors_is_stopped = FALSE;
+
+    if( (distance <= USS_THRESHOLD_DISTANCE_CM) &&
     	(distance >= 0) ) {
         BuzzerUUUUUH();
-        if( (distance <= (uint8)((USS_THRESHOLD_DISTANCE_MIN_IN_CM * 0.50f) + 1u)) &&
-        	(distance >= 0) ) {
+        if( (distance <= (uint8)((USS_THRESHOLD_DISTANCE_CM * 0.50f) + 1u)) &&
+        	(distance >= 0) && FALSE == motors_is_stopped) {
         	ControlMotorSpeed(MOTOR_ALL, 0u);
+        	motors_is_stopped = TRUE;
         }
         return FALSE;
     } else {
+    	ControlMotorSpeed(MOTOR_ALL, MOTORS_SPEED);
         BuzzerNO();
+    	motors_is_stopped = FALSE;
         return TRUE;
     }
 }
@@ -368,14 +385,45 @@ static void front_leds_init(void) {
 	for(; (i <= 100); ++i) {
 		ControlLedFL(i);
 		ControlLedFR(i);
-		HAL_Delay(2);
+		DELAY_MS(2);
 	}
 }
 
-static void buzzer_init(void) {
-	BuzzerUUUUUH();
-	HAL_Delay(30);
-	BuzzerNO();
+typedef struct {
+    uint16 tone;
+    uint16 duration;
+} RingtoneStep;
+
+// Nokia ringtone sequence
+static RingtoneStep nokiaRingtone[] = {
+    {2637, 200},
+    {0, 100},
+    {2637, 200},
+    {0, 100},
+    {2637, 200},
+    {0, 100},
+    {3136, 200},
+    {0, 100},
+    {2349, 200},
+    {0, 100},
+    {2217, 200},
+    {0, 100},
+    {2349, 200},
+    {0, 100},
+    {0, 500}
+};
+
+static void buzzer_init(RingtoneStep *ringtone, uint16 steps) {
+	uint16 i = 0;
+    for (i = 0; i < steps; i++) {
+        if (ringtone[i].tone == 0) {
+        	DELAY_MS(25);
+        } else {
+            BuzzerUUUUUH();
+            DELAY_MS(50);
+            BuzzerNO();
+        }
+    }
 }
 
 static void uss_init(void) {
@@ -385,22 +433,24 @@ static void uss_init(void) {
 
 static void motors_init(void) {
 	ControlMotorSpeed(MOTOR_ALL, 10);
-	HAL_Delay(30);
+	DELAY_MS(30);
 	ControlMotorSpeed(MOTOR_ALL, 0);
 }
 
 void vehicle_init(void) {
-//	/* Init front leds */
-//	front_leds_init();
-//	/* Init buzzer */
-//	buzzer_init();
-//	/* Init ultrasonic */
-//	uss_init();
-//	/* Init motors */
-//	motors_init();
-//
-//	ControlFrontLeds(LED_ALL, 10);
-//	ControlMotorSpeed(MOTOR_ALL, 25);
+	SEND_LOG("\n Starting Application with VTOR: 0x%x", SCB->VTOR);
+	__WRITE_FLAG_APP_TO_BL_ADDR(FALSE);
+	/* Init front leds */
+	front_leds_init();
+	/* Init buzzer */
+	buzzer_init(nokiaRingtone, sizeof(nokiaRingtone) / sizeof(nokiaRingtone[0]));
+	/* Init ultrasonic */
+	uss_init();
+	/* Init motors */
+	motors_init();
+
+	ControlFrontLeds(LED_ALL, FRONT_LEDS_INTENSITY);
+	ControlMotorSpeed(MOTOR_ALL, MOTORS_SPEED);
 
 	HAL_UART_Receive_IT(&huart1, &rx_data, 1u);
 }
