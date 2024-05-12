@@ -117,7 +117,7 @@ int main(void)
   while (1)
   { 
 	  CheckIfDistanceInValidRange(GetUltraSonicDistance());
-	  _DELAY_MS(300);
+//	  _DELAY_MS(5);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

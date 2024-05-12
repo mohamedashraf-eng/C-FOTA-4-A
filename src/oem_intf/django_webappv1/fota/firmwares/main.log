@@ -95,3 +95,37 @@
 2023-12-14 00:08:19,888 - INFO - Conversion successful. Binary file created:firmwareToUpload.bin - firmware_utils.py:63 - __firmware_cvt2bin
 2023-12-14 20:01:43,010 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
 2023-12-14 20:01:43,013 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\TestAppLedOn\MDK-ARM\TestAppLedOn\TestAppLedOn.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
+2024-04-22 13:26:38,329 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:40 - __firmware_hex_fetch
+2024-04-22 13:26:38,368 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\oem_intf\django_webappv1\fota\firmwares\TargetApplication.bin - .\firmware_utils.py:63 - __firmware_cvt2bin
+2024-04-22 13:29:11,339 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:41 - __firmware_hex_fetch
+2024-04-22 13:29:11,349 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\oem_intf\django_webappv1\fota\firmwares\TargetApplication.bin - .\firmware_utils.py:64 - __firmware_cvt2bin
+2024-04-22 13:30:03,084 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:41 - __firmware_hex_fetch
+2024-04-22 13:30:03,094 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\oem_intf\django_webappv1\fota\firmwares\TargetApplication.bin - .\firmware_utils.py:64 - __firmware_cvt2bin
+2024-04-22 13:30:10,240 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:41 - __firmware_hex_fetch
+2024-04-22 13:30:10,250 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\oem_intf\django_webappv1\fota\firmwares\TargetApplication.bin - .\firmware_utils.py:64 - __firmware_cvt2bin
+2024-04-22 13:30:12,488 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:41 - __firmware_hex_fetch
+2024-04-22 13:30:12,498 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\oem_intf\django_webappv1\fota\firmwares\TargetApplication.bin - .\firmware_utils.py:64 - __firmware_cvt2bin
+2024-04-22 13:30:19,500 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:41 - __firmware_hex_fetch
+2024-04-22 13:30:19,510 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\oem_intf\django_webappv1\fota\firmwares\TargetApplication.bin - .\firmware_utils.py:64 - __firmware_cvt2bin
+2024-04-22 15:21:12,479 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:41 - __firmware_hex_fetch
+2024-04-22 15:21:12,492 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\Application\TargetApplication\Debug\TargetApplication.bin - .\firmware_utils.py:64 - __firmware_cvt2bin
+2024-04-22 15:24:08,215 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:41 - __firmware_hex_fetch
+2024-04-22 15:24:08,223 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\Application\TargetApplication\Debug\TargetApplication.bin - .\firmware_utils.py:64 - __firmware_cvt2bin
+2024-04-22 15:24:10,713 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:41 - __firmware_hex_fetch
+2024-04-22 15:24:10,721 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\Application\TargetApplication\Debug\TargetApplication.bin - .\firmware_utils.py:64 - __firmware_cvt2bin
+2024-04-22 15:24:11,515 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:41 - __firmware_hex_fetch
+2024-04-22 15:24:11,523 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\Application\TargetApplication\Debug\TargetApplication.bin - .\firmware_utils.py:64 - __firmware_cvt2bin
+2024-04-22 15:46:42,719 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:41 - __firmware_hex_fetch
+2024-04-22 15:46:42,728 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\Application\TargetApplication\Debug\TargetApplication.bin - .\firmware_utils.py:64 - __firmware_cvt2bin
+2024-04-22 15:47:09,155 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:41 - __firmware_hex_fetch
+2024-04-22 15:47:09,163 - INFO - Conversion successful. Binary file created:G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\Application\TargetApplication\Debug\TargetApplication.bin - .\firmware_utils.py:64 - __firmware_cvt2bin
+2024-04-22 15:49:50,158 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:42 - __firmware_hex_fetch
+2024-04-22 15:50:55,039 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:42 - __firmware_hex_fetch
+2024-04-22 15:52:21,184 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:42 - __firmware_hex_fetch
+2024-04-22 15:53:29,836 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:42 - __firmware_hex_fetch
+2024-04-22 16:03:42,996 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:42 - __firmware_hex_fetch
+2024-04-22 16:04:02,760 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:42 - __firmware_hex_fetch
+2024-04-24 01:57:52,949 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:42 - __firmware_hex_fetch
+2024-04-24 02:13:59,273 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:42 - __firmware_hex_fetch
+2024-04-24 02:53:23,319 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:42 - __firmware_hex_fetch
+2024-04-24 02:54:56,490 - INFO - Fetched the hex file successfully. - .\firmware_utils.py:42 - __firmware_hex_fetch

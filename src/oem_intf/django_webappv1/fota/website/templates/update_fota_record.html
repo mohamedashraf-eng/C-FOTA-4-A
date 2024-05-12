@@ -35,16 +35,16 @@
                 <label for="{{ form.status.id_for_label }}" class="form-label">Status:</label>
                 {{ form.status }}
               </div>
-              <div class="mb-3">
+              {% comment %} <div class="mb-3">
                 <label for="{{ form.started_at.id_for_label }}" class="form-label">Started At:</label>
                 {{ form.started_at }}
-              </div>
-              <div class="mb-3">
+              </div> {% endcomment %}
+              {% comment %} <div class="mb-3">
                 <label for="{{ form.completed_at.id_for_label }}" class="form-label">Completed At:</label>
                 {{ form.completed_at }}
-              </div>
+              </div> {% endcomment %}
               <div class="mb-3">
-                <label for="{{ form.minutes_taken.id_for_label }}" class="form-label">Time Taken (minutes):</label>
+                <label for="{{ form.minutes_taken.id_for_label }}" class="form-label">Time Taken (seconds):</label>
                 {{ form.minutes_taken }}
               </div>
               <button type="submit" class="btn btn-primary">Update</button>

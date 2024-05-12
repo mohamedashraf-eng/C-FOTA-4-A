@@ -14,9 +14,9 @@
           <th class="text-center" scope="col">Availability Flag</th>
           {% comment %} <th class="text-center" scope="col">Update Ready Flag</th> {% endcomment %}
           <th class="text-center" scope="col">Status</th>
-          <th class="text-center" scope="col">Started at</th>
-          <th class="text-center" scope="col">Completed at</th>
-          <th class="text-center" scope="col">Time taken (minutes)</th>
+          {% comment %} <th class="text-center" scope="col">Started at</th>
+          <th class="text-center" scope="col">Completed at</th> {% endcomment %}
+          <th class="text-center" scope="col">Time taken (seconds)</th>
         </tr>
       </thead>
       <tbody>
@@ -28,8 +28,8 @@
           <td class="text-center">{{ fotas.availability_flag }}</td>
           {% comment %} <td class="text-center">{{ fotas.update_ready_flag }}</td> {% endcomment %}
           <td class="text-center">{{ fotas.status }}</td>
-          <td class="text-center">{{ fotas.started_at }}</td>
-          <td class="text-center">{{ fotas.completed_at }}</td>
+          {% comment %} <td class="text-center">{{ fotas.started_at }}</td>
+          <td class="text-center">{{ fotas.completed_at }}</td> {% endcomment %}
           <td class="text-center">{{ fotas.minutes_taken }}</td>
         </tr>
       </tbody>

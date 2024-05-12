@@ -76,7 +76,9 @@ __STATIC __NORETURN __vJumpToBootloader(void) {
 	/* Read the next 4 bytes from the base address (Reset Handler Function) */
 	uint32 local_u32ResetHandler = *((uint32_t volatile *) (BOOTLOADER_START_ADDR + 4u));
 	/* Set the reset handler as function */
+#ifdef DIRECT_BOOTLOADER_JUMP
 	void (*local_vAppResetFunc)(void) = (void*)local_u32ResetHandler;
+#endif /* DIRECT_BOOTLOADER_JUMP */
 	/* Set the MSP for the application */
 	__set_MSP(local_u32MspValue);
 	/* Set stack pointer */
@@ -96,10 +98,16 @@ __STATIC __NORETURN __vJumpToBootloader(void) {
 
 static uint8 rx_data = 0;
 
+void start_gp_procedure(void);
+void stop_gp_procedure(void);
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	if( (&huart1 == huart) ) {
-		if( ('#' == rx_data) ) {
-			__vJumpToBootloader();
+		switch(rx_data) {
+			case '#': __vJumpToBootloader(); break;
+			case 's': start_gp_procedure();  break;
+			case 'S': stop_gp_procedure();   break;
+			default: break;
 		}
 		HAL_UART_Receive_IT(&huart1, &rx_data, 1u);
 	}
@@ -136,18 +144,26 @@ void static send_log(const uint8* restrict pArg_u8StrFormat, ...) {
 #define COMMON_PWM_MOTOR_SPEED_O_PORT    (GPIOA) 
 #define COMMON_PWM_MOTOR_SPEED_O_PIN     (TIM_CHANNEL_2) 
 
+#define MOTOR_1_PORT_P      (0u)
+#define MOTOR_1_PORT_N      (0u)
 #define MOTOR_1_PIN_P       (0u)
 #define MOTOR_1_PIN_N       (0u)
 #define MOTOR_1_PIN_E       (COMMON_PWM_MOTOR_SPEED_O_PIN)
 
+#define MOTOR_2_PORT_P      (0u)
+#define MOTOR_2_PORT_N      (0u)
 #define MOTOR_2_PIN_P       (0u)
 #define MOTOR_2_PIN_N       (0u)
 #define MOTOR_2_PIN_E       (COMMON_PWM_MOTOR_SPEED_O_PIN)
 
+#define MOTOR_3_PORT_P      (0u)
+#define MOTOR_3_PORT_N      (0u)
 #define MOTOR_3_PIN_P       (0u)
 #define MOTOR_3_PIN_N       (0u)
 #define MOTOR_3_PIN_E       (COMMON_PWM_MOTOR_SPEED_O_PIN)
 
+#define MOTOR_4_PORT_P      (0u)
+#define MOTOR_4_PORT_N      (0u)
 #define MOTOR_4_PIN_P       (0u)
 #define MOTOR_4_PIN_N       (0u)
 #define MOTOR_4_PIN_E       (COMMON_PWM_MOTOR_SPEED_O_PIN)
@@ -168,11 +184,53 @@ void ControlMotorBL(uint16 speed) {
     __HAL_TIM_SET_COMPARE(&__TIM3_HANDLE, MOTOR_4_PIN_E, speed);
 }
 
+void SetRotateCW_FR(void) {
+	HAL_GPIO_WritePin(MOTOR_4_PORT_P, MOTOR_1_PIN_P, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(MOTOR_4_PORT_N, MOTOR_1_PIN_N, GPIO_PIN_RESET);
+
+}
+
+void SetRotateCW_FL(void) {
+	HAL_GPIO_WritePin(MOTOR_4_PORT_P, MOTOR_2_PIN_P, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(MOTOR_4_PORT_N, MOTOR_2_PIN_N, GPIO_PIN_RESET);
+}
+
+void SetRotateCW_BR(void) {
+	HAL_GPIO_WritePin(MOTOR_4_PORT_P, MOTOR_3_PIN_P, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(MOTOR_4_PORT_N, MOTOR_3_PIN_N, GPIO_PIN_RESET);
+}
+
+void SetRotateCW_BL(void) {
+	HAL_GPIO_WritePin(MOTOR_4_PORT_P, MOTOR_4_PIN_P, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(MOTOR_4_PORT_N, MOTOR_4_PIN_N, GPIO_PIN_RESET);
+}
+
+void SetRotateCCW_FR(void) {
+	HAL_GPIO_WritePin(MOTOR_4_PORT_N, MOTOR_1_PIN_N, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(MOTOR_4_PORT_P, MOTOR_1_PIN_P, GPIO_PIN_RESET);
+
+}
+
+void SetRotateCCW_FL(void) {
+	HAL_GPIO_WritePin(MOTOR_4_PORT_N, MOTOR_2_PIN_N, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(MOTOR_4_PORT_P, MOTOR_2_PIN_P, GPIO_PIN_RESET);
+}
+
+void SetRotateCCW_BR(void) {
+	HAL_GPIO_WritePin(MOTOR_4_PORT_N, MOTOR_3_PIN_N, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(MOTOR_4_PORT_P, MOTOR_3_PIN_P, GPIO_PIN_RESET);
+}
+
+void SetRotateCCW_BL(void) {
+	HAL_GPIO_WritePin(MOTOR_4_PORT_N, MOTOR_4_PIN_N, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(MOTOR_4_PORT_P, MOTOR_4_PIN_P, GPIO_PIN_RESET);
+}
+
 void StopAllMotors(void) {
-    __HAL_TIM_SET_COMPARE(&__TIM3_HANDLE, MOTOR_1_PIN_E, 1u);
-    __HAL_TIM_SET_COMPARE(&__TIM3_HANDLE, MOTOR_2_PIN_E, 1u);
-    __HAL_TIM_SET_COMPARE(&__TIM3_HANDLE, MOTOR_3_PIN_E, 1u);
-    __HAL_TIM_SET_COMPARE(&__TIM3_HANDLE, MOTOR_4_PIN_E, 1u);
+    __HAL_TIM_SET_COMPARE(&__TIM3_HANDLE, MOTOR_1_PIN_E, 0u);
+    __HAL_TIM_SET_COMPARE(&__TIM3_HANDLE, MOTOR_2_PIN_E, 0u);
+    __HAL_TIM_SET_COMPARE(&__TIM3_HANDLE, MOTOR_3_PIN_E, 0u);
+    __HAL_TIM_SET_COMPARE(&__TIM3_HANDLE, MOTOR_4_PIN_E, 0u);
 }
 
 void ControlMotorSpeed(uint8 motor, uint8 speed) {
@@ -192,11 +250,14 @@ void ControlMotorSpeed(uint8 motor, uint8 speed) {
                     ControlMotorBL(cvtd_speed);
                 break;
             case MOTOR_ALL:
-            		(0u == speed) ? StopAllMotors() : NULL;
-                    ControlMotorFR(cvtd_speed);
-                    ControlMotorFL(cvtd_speed);
-                    ControlMotorBR(cvtd_speed);
-                    ControlMotorBL(cvtd_speed);
+            		if( (0u == speed) ) {
+            			StopAllMotors();
+            		} else {
+                        ControlMotorFR(cvtd_speed);
+                        ControlMotorFL(cvtd_speed);
+                        ControlMotorBR(cvtd_speed);
+                        ControlMotorBL(cvtd_speed);
+            		}
                 break;
             default:
                 break;
@@ -270,14 +331,22 @@ void ControlFrontLeds(uint8 led, uint8 intensity) {
  * @todo
  *
  */
+static uint8 uss_work_flag = FALSE;
 
 static void delay_us(uint16 delay) {
-    __HAL_TIM_SET_COUNTER(&htim4, 0);
-    while(__HAL_TIM_GET_COUNTER(&htim4) < delay);
+	if(0 != delay) {
+	    __HAL_TIM_SET_COUNTER(&htim4, 0);
+	    while(__HAL_TIM_GET_COUNTER(&htim4) < delay);
+	}
 }
 
 #define DELAY_US(_D) delay_us(_D)
-#define DELAY_MS(_D) for(uint16 i = 0; i < 1000u; ++i) delay_us(_D)
+#define DELAY_MS(_D) do { 										 	 \
+							if (0 != _D) {							 \
+								for (uint16_t i = 0; i < 1000u; ++i) \
+									delay_us(_D); 					 \
+							} 										 \
+                    	} while(0)
 
 #define USS_TRIGGER_PORT    (USS_TRIGGER_GPIO_Port)
 #define USS_TRIGGER_PIN     (USS_TRIGGER_Pin)
@@ -344,28 +413,44 @@ uint8 GetUltraSonicDistance(void) {
     return g_UssDistance;
 }
 
-/**
- * @todo To be tested and accepted 
- */
-boolean CheckIfDistanceInValidRange(uint8 distance) {
-	boolean motors_is_stopped = FALSE;
+void buzzerngy(uint8_t distance) {
+    static uint8 delay = 15;
 
-    if( (distance <= USS_THRESHOLD_DISTANCE_CM) &&
-    	(distance >= 0) ) {
+    if(distance <= (USS_THRESHOLD_DISTANCE_CM + 10u)) delay = 10;
+    else if(distance <= (USS_THRESHOLD_DISTANCE_CM + 8u))  delay = 8;
+    else if(distance <= (USS_THRESHOLD_DISTANCE_CM + 6u))  delay = 6;
+    else if(distance <= (USS_THRESHOLD_DISTANCE_CM + 4u))  delay = 4;
+    else if(distance <= (USS_THRESHOLD_DISTANCE_CM + 2u))  delay = 2;
+    else if(distance <= (USS_THRESHOLD_DISTANCE_CM - 1u))  delay = 0;
+
+	if (distance <= (USS_THRESHOLD_DISTANCE_CM + 10u)) {
         BuzzerUUUUUH();
-        if( (distance <= (uint8)((USS_THRESHOLD_DISTANCE_CM * 0.50f) + 1u)) &&
-        	(distance >= 0) && FALSE == motors_is_stopped) {
-        	ControlMotorSpeed(MOTOR_ALL, 0u);
-        	motors_is_stopped = TRUE;
-        }
-        return FALSE;
+        DELAY_MS(delay);
+        (0 != delay) ? BuzzerNO() : 0;
     } else {
-    	ControlMotorSpeed(MOTOR_ALL, MOTORS_SPEED);
         BuzzerNO();
-    	motors_is_stopped = FALSE;
-        return TRUE;
     }
 }
+
+boolean CheckIfDistanceInValidRange(uint8 distance) {
+    boolean motors_are_stopped = FALSE;
+    if( (TRUE == uss_work_flag) ) {
+		if (distance >= 0 && distance <= USS_THRESHOLD_DISTANCE_CM) {
+			buzzerngy(distance);
+			if (distance <= (uint8)((USS_THRESHOLD_DISTANCE_CM * 0.50f) + 1u) && !motors_are_stopped) {
+				ControlMotorSpeed(MOTOR_ALL, 0u);
+				motors_are_stopped = TRUE;
+			}
+			return FALSE;
+		} else {
+	//        ControlMotorSpeed(MOTOR_ALL, MOTORS_SPEED);
+			BuzzerNO();
+			motors_are_stopped = FALSE;
+			return TRUE;
+		}
+    }
+}
+
 
 /**
  * @defgroup Movements 
@@ -373,11 +458,17 @@ boolean CheckIfDistanceInValidRange(uint8 distance) {
  */
 
 void VehicleMoveFwd(void) {
-
+	SetRotateCW_FL();
+	SetRotateCW_FR();
+	SetRotateCW_BR();
+	SetRotateCW_BL();
 }
 
 void VehicleMoveBwd(void) {
-
+	SetRotateCCW_FL();
+	SetRotateCCW_FR();
+	SetRotateCCW_BR();
+	SetRotateCCW_BL();
 }
 
 static void front_leds_init(void) {
@@ -441,16 +532,28 @@ void vehicle_init(void) {
 	SEND_LOG("\n Starting Application with VTOR: 0x%x", SCB->VTOR);
 	__WRITE_FLAG_APP_TO_BL_ADDR(FALSE);
 	/* Init front leds */
-	front_leds_init();
+//	front_leds_init();
 	/* Init buzzer */
 	buzzer_init(nokiaRingtone, sizeof(nokiaRingtone) / sizeof(nokiaRingtone[0]));
 	/* Init ultrasonic */
-	uss_init();
+//	uss_init();
 	/* Init motors */
-	motors_init();
+//	motors_init();
 
-	ControlFrontLeds(LED_ALL, FRONT_LEDS_INTENSITY);
-	ControlMotorSpeed(MOTOR_ALL, MOTORS_SPEED);
+//	ControlFrontLeds(LED_ALL, FRONT_LEDS_INTENSITY);
+//	ControlMotorSpeed(MOTOR_ALL, MOTORS_SPEED);
 
 	HAL_UART_Receive_IT(&huart1, &rx_data, 1u);
+}
+
+void start_gp_procedure(void) {
+	uss_work_flag = TRUE;
+	ControlMotorSpeed(MOTOR_ALL, MOTORS_SPEED);
+	ControlFrontLeds(LED_ALL, FRONT_LEDS_INTENSITY);
+}
+
+void stop_gp_procedure(void) {
+	uss_work_flag = FALSE;
+	ControlMotorSpeed(MOTOR_ALL, 0);
+	ControlFrontLeds(LED_ALL, 0);
 }

@@ -8,6 +8,8 @@ import argparse
 from Crypto.Cipher import AES
 from Crypto.Hash import CMAC, HMAC, SHA256, SHA512
 from Crypto.Protocol.KDF import PBKDF2
+import hashlib
+from intelhex import IntelHex
 
 # Configure logging
 log_filename = "main.log"
@@ -42,38 +44,29 @@ class prj_foem_firmware:
             logging.error(f"Error: File '{self.__firmware_fp}' not found.")
 
     def __firmware_cvt2bin(self):
-        # Sup function
-        def hex_to_binary(hex_string):
-            # Function to convert a string of hex characters to binary data
-            hex_string = "".join(
-                c for c in hex_string if c.isdigit() or c.lower() in "abcdef"
-            )
-            if len(hex_string) % 2 != 0:
-                hex_string = "0" + hex_string
-            return bytes.fromhex(hex_string)
+        # output = os.path.splitext(os.path.basename(hex_fp))[0]
 
-        try:
-            with open(self.__firmware_fp, "r") as hex_file:
-                hex_data = hex_file.read().replace("\n", "")
-                binary_data = hex_to_binary(hex_data)
-                with open(
-                    f"{os.path.splitext(self.__firmware_fp)[0]}.bin", "wb"
-                ) as binary_file:
-                    binary_file.write(binary_data)
-            logging.info(
-                f"Conversion successful. Binary file created:{os.path.splitext(self.__firmware_fp)[0]}.bin"
-            )
-            self.__firmware_in_bin = binary_data
-        except FileNotFoundError:
-            logging.error("Error: The specified hex file was not found.")
+        # Load the Intel HEX file
+        ih = IntelHex(self.__firmware_fp)
 
+        # Convert to binary and save
+        ih.tobinfile("UpdatedFirmware.bin")
+        self.__firmware_fp_bin = "./UpdatedFirmware.bin"
+    # def __calculate_sha256(self):
+    #     sha256_obj = SHA256.new()
+    #     #sha256_hash = hashlib.sha256(self.__firmware_in_bin).digest()
+    #     for line in self.__firmware_hex:
+    #         sha256_obj.update(str(line).encode('utf-8'))
+
+    #     return sha256_obj.digest()
+    
     def __calculate_sha256(self):
-        sha256_obj = SHA256.new()
-        #sha256_hash = hashlib.sha256(self.__firmware_in_bin).digest()
-        for line in self.__firmware_hex:
-            sha256_obj.update(str(line).encode('utf-8'))
-
-        return sha256_obj.digest()
+        sha256_hash = hashlib.sha256()
+        with open(self.__firmware_fp_bin, "rb") as f:
+            # Read the file in chunks of 4096 bytes
+            for byte_block in iter(lambda: f.read(4096), b""):
+                sha256_hash.update(byte_block)
+        return str(sha256_hash.hexdigest())
 
     def __calculate_cmac(self):
         sha256_hash = self.__calculate_sha256()
@@ -139,6 +132,6 @@ if __name__ == '__main__':
 
     myFirmware = prj_foem_firmware(file_path)
     print(f'size: {myFirmware.get_size()}')
-    print(f'SHA256-Hash: {myFirmware.get_sha256().hex()}')
-    print(f'CMAC Of Hash: {myFirmware.get_cmac()}')
-    print(f'HMAC Of Hash: {myFirmware.get_hmac().hex()}')
+    print(f'SHA256-Hash: {myFirmware.get_sha256()}')
+    # print(f'CMAC Of Hash: {myFirmware.get_cmac()}')
+    # print(f'HMAC Of Hash: {myFirmware.get_hmac().hex()}')

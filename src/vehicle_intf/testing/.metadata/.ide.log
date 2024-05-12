@@ -24054,3 +24054,128 @@
 2024-04-17 23:44:51,303 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 2024-04-17 23:44:51,304 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Defaulting to no-operation (NOP) logger implementation
 2024-04-17 23:44:51,306 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2024-04-22 15:18:59,064 [INFO] Activator:177 - 
+
+
+2024-04-22 15:18:59,066 [INFO] Activator:178 - !SESSION log4j initialized
+2024-04-22 15:19:36,551 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2024-04-22 15:19:36,552 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Defaulting to no-operation (NOP) logger implementation
+2024-04-22 15:19:36,553 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2024-04-23 10:35:21,706 [INFO] Activator:177 - 
+
+
+2024-04-23 10:35:21,727 [INFO] Activator:178 - !SESSION log4j initialized
+2024-04-23 10:35:57,980 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2024-04-23 10:35:57,980 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Defaulting to no-operation (NOP) logger implementation
+2024-04-23 10:35:57,982 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2024-04-26 23:28:32,594 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.debug.1583187090 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:28:32,599 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.debug.922896097 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:28:32,603 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objdump.app.debug.1853468288 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:28:32,607 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.size.app.debug.1648544109 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:28:32,610 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.avrdude.app.debug.335353780 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:28:32,629 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release.1121492039 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:28:32,633 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.release.695282312 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:28:32,637 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objdump.app.release.895591860 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:28:32,641 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.size.app.release.1505027636 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:28:32,645 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.avrdude.app.release.601684922 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:09,931 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.debug.1583187090 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:09,936 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.debug.922896097 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:09,940 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objdump.app.debug.1853468288 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:09,945 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.size.app.debug.1648544109 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:09,949 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.avrdude.app.debug.335353780 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:09,952 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] org.eclipse.cdt.managedbuilder.core.BuildException: No toolchain option in toolchain configuration de.innot.avreclipse.toolchain.winavr.app.debug.1931051324: 
+2024-04-26 23:29:09,954 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at com.st.stm32cube.ide.mcu.toolchain.ToolChainHelper.getToolChainId(ToolChainHelper.java:159)
+2024-04-26 23:29:09,956 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at com.st.stm32cube.ide.mcu.toolchain.ToolChainHelper.getToolChainInfo(ToolChainHelper.java:106)
+2024-04-26 23:29:09,958 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at com.st.stm32cube.ide.mcu.toolchain.ui.unmanaged.ToolSettingsTab.createControls(ToolSettingsTab.java:147)
+2024-04-26 23:29:09,960 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.cdt.ui.newui.AbstractCPropertyTab.createControls(AbstractCPropertyTab.java:139)
+2024-04-26 23:29:09,961 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.cdt.ui.newui.AbstractPage.loadTab(AbstractPage.java:1189)
+2024-04-26 23:29:09,963 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.cdt.ui.newui.AbstractPage.loadExtensionsSynchronized(AbstractPage.java:1133)
+2024-04-26 23:29:09,965 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.cdt.ui.newui.AbstractPage.createWidgets(AbstractPage.java:364)
+2024-04-26 23:29:09,966 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.cdt.ui.newui.AbstractPage.contentForCDT(AbstractPage.java:350)
+2024-04-26 23:29:09,968 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.cdt.ui.newui.AbstractPage.createContents(AbstractPage.java:247)
+2024-04-26 23:29:09,969 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.preference.PreferencePage.createControl(PreferencePage.java:244)
+2024-04-26 23:29:09,971 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.preference.PreferenceDialog.createPageControl(PreferenceDialog.java:1433)
+2024-04-26 23:29:09,973 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.preference.PreferenceDialog$8.run(PreferenceDialog.java:1196)
+2024-04-26 23:29:09,974 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+2024-04-26 23:29:09,975 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:174)
+2024-04-26 23:29:09,977 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.preference.PreferenceDialog.showPage(PreferenceDialog.java:1188)
+2024-04-26 23:29:09,979 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.ui.internal.dialogs.FilteredPreferenceDialog.showPage(FilteredPreferenceDialog.java:630)
+2024-04-26 23:29:09,981 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.preference.PreferenceDialog$5.lambda$0(PreferenceDialog.java:660)
+2024-04-26 23:29:09,982 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:74)
+2024-04-26 23:29:09,984 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.preference.PreferenceDialog$5.selectionChanged(PreferenceDialog.java:657)
+2024-04-26 23:29:09,985 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.viewers.StructuredViewer$3.run(StructuredViewer.java:821)
+2024-04-26 23:29:09,987 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+2024-04-26 23:29:09,988 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:174)
+2024-04-26 23:29:09,990 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.viewers.StructuredViewer.firePostSelectionChanged(StructuredViewer.java:818)
+2024-04-26 23:29:09,991 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.viewers.StructuredViewer.setSelection(StructuredViewer.java:1661)
+2024-04-26 23:29:09,993 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.viewers.TreeViewer.setSelection(TreeViewer.java:1090)
+2024-04-26 23:29:09,995 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.preference.PreferenceDialog.selectSavedItem(PreferenceDialog.java:990)
+2024-04-26 23:29:09,997 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.ui.internal.dialogs.FilteredPreferenceDialog.selectSavedItem(FilteredPreferenceDialog.java:680)
+2024-04-26 23:29:09,998 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.preference.PreferenceDialog.lambda$0(PreferenceDialog.java:348)
+2024-04-26 23:29:10,000 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:74)
+2024-04-26 23:29:10,001 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.preference.PreferenceDialog.createContents(PreferenceDialog.java:345)
+2024-04-26 23:29:10,002 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.window.Window.create(Window.java:431)
+2024-04-26 23:29:10,004 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.dialogs.Dialog.create(Dialog.java:1094)
+2024-04-26 23:29:10,005 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.ui.internal.dialogs.PropertyDialog.createDialogOn(PropertyDialog.java:84)
+2024-04-26 23:29:10,007 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.ui.dialogs.PropertyDialogAction.createDialog(PropertyDialogAction.java:169)
+2024-04-26 23:29:10,008 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.ui.dialogs.PropertyDialogAction.run(PropertyDialogAction.java:151)
+2024-04-26 23:29:10,010 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.action.Action.runWithEvent(Action.java:474)
+2024-04-26 23:29:10,011 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.action.ActionContributionItem.handleWidgetSelection(ActionContributionItem.java:580)
+2024-04-26 23:29:10,013 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.jface.action.ActionContributionItem.lambda$4(ActionContributionItem.java:414)
+2024-04-26 23:29:10,014 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+2024-04-26 23:29:10,015 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4243)
+2024-04-26 23:29:10,016 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1063)
+2024-04-26 23:29:10,018 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4060)
+2024-04-26 23:29:10,019 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3632)
+2024-04-26 23:29:10,020 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+2024-04-26 23:29:10,022 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+2024-04-26 23:29:10,023 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+2024-04-26 23:29:10,025 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+2024-04-26 23:29:10,026 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+2024-04-26 23:29:10,027 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+2024-04-26 23:29:10,029 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+2024-04-26 23:29:10,030 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+2024-04-26 23:29:10,032 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+2024-04-26 23:29:10,033 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+2024-04-26 23:29:10,035 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+2024-04-26 23:29:10,036 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+2024-04-26 23:29:10,038 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+2024-04-26 23:29:10,039 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+2024-04-26 23:29:10,040 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+2024-04-26 23:29:10,042 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+2024-04-26 23:29:10,044 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+2024-04-26 23:29:10,045 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+2024-04-26 23:29:10,046 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
+2024-04-26 23:29:10,047 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
+2024-04-26 23:29:10,048 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+2024-04-26 23:29:10,106 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release.1121492039 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:10,110 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.release.695282312 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:10,115 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objdump.app.release.895591860 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:10,119 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.size.app.release.1505027636 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:10,123 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.avrdude.app.release.601684922 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:28,386 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.debug.1583187090 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:28,391 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.debug.922896097 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:28,394 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.objdump.app.debug.1853468288 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:28,399 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.size.app.debug.1648544109 uses a null category that is invalid in its context. The option was ignored.
+2024-04-26 23:29:28,403 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] Managed Build system manifest file error: Option de.innot.avreclipse.toolchain.options.toolchain.avrdude.app.debug.335353780 uses a null category that is invalid in its context. The option was ignored.
+2024-04-27 13:24:30,026 [INFO] Activator:177 - 
+
+
+2024-04-27 13:24:30,028 [INFO] Activator:178 - !SESSION log4j initialized
+2024-04-27 13:25:14,184 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2024-04-27 13:25:14,185 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Defaulting to no-operation (NOP) logger implementation
+2024-04-27 13:25:14,186 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2024-05-05 19:24:06,307 [INFO] Activator:177 - 
+
+
+2024-05-05 19:24:06,315 [INFO] Activator:178 - !SESSION log4j initialized
+2024-05-05 19:24:47,566 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2024-05-05 19:24:47,567 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Defaulting to no-operation (NOP) logger implementation
+2024-05-05 19:24:47,570 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2024-05-07 13:11:05,444 [INFO] Activator:177 - 
+
+
+2024-05-07 13:11:05,456 [INFO] Activator:178 - !SESSION log4j initialized
+2024-05-07 13:11:46,441 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2024-05-07 13:11:46,442 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Defaulting to no-operation (NOP) logger implementation
+2024-05-07 13:11:46,444 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.

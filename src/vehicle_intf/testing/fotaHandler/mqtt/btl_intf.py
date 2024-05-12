@@ -239,7 +239,7 @@ class btl_ttl_intf(object):
         BinFileSentBytes = 0
         BinFileRemainingBytes = File_Total_Len - BinFileSentBytes
         while BinFileRemainingBytes:
-            """ Read 128 bytes from the binary file each time """
+            """ Read <MTU> bytes from the binary file each time """
             if BinFileRemainingBytes >= btl_ttl_intf.MAX_DATA_PER_PACKET_LENGTH:
                 BinFileReadLength = btl_ttl_intf.MAX_DATA_PER_PACKET_LENGTH
             else:
@@ -265,7 +265,7 @@ class btl_ttl_intf(object):
             print(f"Packet sent ({packet[0]}):")
             self.__write_to_serial_until(packet[0], 1)
 
-            time.sleep(1)
+            # time.sleep(1)
             for Data in packet[1:]:
                 self.__write_to_serial_until(Data, len(packet) - 1)
 
@@ -283,7 +283,7 @@ class btl_ttl_intf(object):
         print(f"Time taken to flash application: {end_time - start_time}")
 
     def __btl_cmd_jumpToAddr(self, applicationAddress=None):
-        assert applicationAddress is not None, sys.exit(-1)
+        assert applicationAddress is not None, "Application address must be provided"
 
         data = list(struct.pack("<I", applicationAddress))
 
@@ -300,9 +300,15 @@ class btl_ttl_intf(object):
         for Data in packet[1:]:
             self.__write_to_serial_until(Data, len(packet) - 1)
 
-        if 0 == self.__decode_btl_packet("Nothing to wait from bootloader"):
-            print("Failed to jump to application")
-            sys.exit(1)
+        # try:
+        #     if self.__decode_btl_packet("Nothing to wait from bootloader") == 0:
+        #         print("Failed to jump to application")
+        #         # Return False to indicate failure
+        # except Exception as e:
+        #     return False
+
+        # Return True to indicate success
+        return True
 
     def __btl_cmd_swReboot(self):
         data = []
@@ -523,19 +529,19 @@ class btl_ttl_intf(object):
                 input("Input flashing address in hex format (e.x 0x08008000): "),
                 base=16,
             )
-        self.__btl_cmd_jumpToAddr(jumpAddr)
+        return self.__btl_cmd_jumpToAddr(jumpAddr)
 
     def btl_cmd_intf_EraseFlash(self):
         pageIdx = int(input("Input the page idx (0-63): "), base=10)
         pageN = int(input("Input number of pages to erase: "), base=10)
 
-        self.__btl_cmd_eraseFlash(pageIdx, pageN)
+        return self.__btl_cmd_eraseFlash(pageIdx, pageN)
 
     def btl_cmd_intf_FlashApp(self):
-        self.__btl_cmd_flashApp()
+        return self.__btl_cmd_flashApp()
 
     def btl_cmd_intf_Reboot(self):
-        self.__btl_cmd_swReboot()
+        return self.__btl_cmd_swReboot()
 
     def btl_command_exec(self, command):
         default_command = lambda: print("Invalid command")

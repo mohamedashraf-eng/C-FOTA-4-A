@@ -278,6 +278,19 @@ class SimpleMQTTClient:
             oem_msg = self.__mqtt_msgsQ.get()
             return self.__fota_cmd_exec(oem_msg)
 
+    @staticmethod
+    def remove_update_files(file_path=None):
+        import os
+        if os.path.exists(file_path):
+            # Attempt to remove the file
+            try:
+                os.remove(file_path)
+                print(f"File '{file_path}' removed successfully.")
+            except OSError as e:
+                print(f"Error: {e.strerror}")
+        else:
+            print(f"File '{file_path}' does not exist.")
+        
     def run(self):
         self.__vehicle_btl = btl_ttl_intf(True, False)
         self.__vehicle_btl.set_serial_port("/dev/ttyUSB0")
@@ -288,7 +301,11 @@ class SimpleMQTTClient:
 
         mqtt_client.loop_start()
 
-        status = False
+        status = False 
+        
+        SimpleMQTTClient.remove_update_files("./UpdatedFirmware.bin")
+        SimpleMQTTClient.remove_update_files("./UpdatedFirmware.hex")
+        SimpleMQTTClient.remove_update_files("./UpdatedFirmwareHash.txt")
         # Start the channel
         try:
             while True:
@@ -301,9 +318,9 @@ class SimpleMQTTClient:
                         #
                         update_stauts = self.__vehicle_btl.update_firmware()
                         if True == update_stauts:
-                            print(f"Flashed new software succesfully")
+                            print(f"\n\nFlashed new software succesfully")
                         else:
-                            print(f"Error occured while flashing the new software")
+                            print(f"\n\nError occured while flashing the new software")
                     else:
                         pass
                 except KeyboardInterrupt:

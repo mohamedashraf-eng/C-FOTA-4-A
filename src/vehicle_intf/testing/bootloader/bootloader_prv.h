@@ -135,7 +135,7 @@
 #define BTL_FIRMWARE_LAST_ADDR				(FLASH_BASE | BTL_FIRMWARE_SIZE)
 
 /** @defgroup Commands */
-#define NUM_OF_CMD 										( (uint8) (13u) )
+#define NUM_OF_CMD 										( (uint8) (15u) )
 #define	CBL_GET_VER_CMD								( (uint8) (0) )
 #define	CBL_GET_HELP_CMD							( (uint8) (1) )
 #define	CBL_GET_CID_CMD								( (uint8) (2) )

@@ -249,7 +249,7 @@ __STATIC __en_blErrStatus_t __bl_enExecuteCommand(const packet_t* pArg_tPacket) 
 		case CBL_GET_RDP_STATUS_CMD		:	BL_DBG_SEND("Executing Command: CBL_GET_RDP_STATUS_CMD");	
 			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_GET_RDP_STATUS_CMD();
 			break;
-		case CBL_GO_TO_ADDR_CMD				:	BL_DBG_SEND("Executing Command: CBL_GO_TO_ADDR_CMD");	
+		case CBL_GO_TO_ADDR_CMD				:	BL_DBG_SEND("Executing Command: CBL_GO_TO_ADDR_CMD");
 			local_enCmdHandlerErrStatus = __enCmdHandler_CBL_GO_TO_ADDR_CMD(pArg_tPacket->Data);
 			break;
 		case CBL_FLASH_ERASE_CMD			:	BL_DBG_SEND("Executing Command: CBL_FLASH_ERASE_CMD");	
@@ -352,7 +352,6 @@ __STATIC __NORETURN __vSeralizeReceivedBuffer(packet_t* pArg_tPacket, uint8* pAr
 		memcpy(&pArg_tPacket->PacketCRC32, (uint8*)&pArg_tReceivedBuffer[7u + pArg_tPacket->DataLength], sizeof(uint32));
 		pArg_tPacket->PacketCRC32 = APPLYDATACONVERSION(pArg_tPacket->PacketCRC32);
 		BL_DBG_SEND("pArg_tPacket->PacketCRC32: %X", pArg_tPacket->PacketCRC32);
-
 	}
 	return;
 }
@@ -360,8 +359,8 @@ __STATIC __NORETURN __vSeralizeReceivedBuffer(packet_t* pArg_tPacket, uint8* pAr
 /**
  * @details
  * 	Packet structure format:
- * 					[Packet length] | [Packet Type] | [Command] | [Data Length] | [Data]		[Data CRC] | [Packet CRC]
- * 					[1 Byte]				| [1 Byte] 			| [1 Byte]  | [1 Byte] 			| [n Byte]	[4 Byte] 	 | [4 Byte]
+ * 					[Packet length] | [Packet Type] | [Command] | [Data Length] | [Data]	[Data CRC] | [Packet CRC]
+ * 					[1 Byte]	   | [1 Byte] 	    | [1 Byte]  | [1 Byte] 	    | [n Byte]	[4 Byte]   | [4 Byte]
  * 
  * Max Packet length (Excluding Length): 12 + n Bytes
  * Min Packet length (Excluding Length): 12 Bytes
@@ -831,7 +830,34 @@ __LOCAL_INLINE __en_blErrStatus_t __enWriteToAddr(const uint8* pArg_u8Data, cons
 * ===============================================================================================
 */
 
+#define __SHA256_BUFFER_SIZE ( (uint8) (256u) )
 #define __COMPARE_HASHES strcmp
+
+/**
+ * @brief Function to use WOLFCRYPT (WC) library to calculate SHA256 hash on existant application
+ * @param[1] LDCB256 (Local Digest Buffer Context for SHA256)
+ *
+ */
+#if (BL_SECURE_BOOT == BL_SECURE_BOOT_ON)
+#	include "wolfssl/wolfcrypt/sha256.h"
+#	define __SHA_CONTUPDATE_BUFFER() do {                                              \
+			uint32_t local_u32FlashAddrIterator = APP_START_ADDR;                      \
+			uint8_t local_u8Sha256Buffer[__SHA256_BUFFER_SIZE];	                       \
+			while (*(uint32_t*)local_u32FlashAddrIterator != 0xFFFFFFFFUL) {           \
+				for (uint8_t local_u8ChunkIterator = 0; local_u8ChunkIterator < __SHA256_BUFFER_SIZE; ++local_u8ChunkIterator) { \
+					local_u8Sha256Buffer[local_u8ChunkIterator] = *(uint8_t*)local_u32FlashAddrIterator++; \
+				}                                                                      					   \
+				wc_Sha256Update(&local_tSha256Ctx, local_u8Sha256Buffer, sizeof(local_u8Sha256Buffer));    \
+			}                                                                          					   \
+		} while (0)
+#	define __CALCULATE_APP_HASH(_LDCB256) ({                                            \
+			wc_Sha256 local_tSha256Ctx;                                                 \
+			wc_InitSha256(&local_tSha256Ctx);                                           \
+			__SHA_CONTUPDATE_BUFFER();                                                  \
+			wc_Sha256Final(&local_tSha256Ctx, _LDCB256);                                \
+		})
+#endif /* BL_SECURE_BOOT */
+
 /**
  * @brief 
  * @details
@@ -869,7 +895,7 @@ __NORETURN BL_enBootManager(void) {
 			BL_LOG_SEND(LOGL_INFO, "Calculating hash digest");
 			BL_DBG_SEND("Calculating application hash.");
 			__STATIC sha256_t local_tApplicationHash;
-//			__CALCULATE_APP_HASH();
+			__CALCULATE_APP_HASH(local_tApplicationHash);
 			/* Calculate hash */
 			if ( (TRUE == __COMPARE_HASHES(local_tApplicationHash, global_tApplicationHash)) ) {
 				BL_LOG_SEND(LOGL_INFO, "Applicaton is valid");
@@ -888,8 +914,6 @@ __NORETURN BL_enBootManager(void) {
 		} else {
 			;
 		}
-#else
-#	error "Un supported mode"
 #endif /* BL_SECURE_BOOT */
 	}
 }

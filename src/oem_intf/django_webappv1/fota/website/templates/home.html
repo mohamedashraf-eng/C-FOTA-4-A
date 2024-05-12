@@ -1,10 +1,33 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
 <div class="col-md-6 offset-md-3">
     {% if user.is_authenticated %}
-        <h1> Welcome </h1>
+      <body>
+          <div style="text-align: center;">
+            <img src="{% static 'img/logo.ico' %}" alt="Logo" style="max-width: 100%; height: auto;">
+          </div>
+          <div style="text-align: center;">
+          <h1>Introduction to FOTA in Automotive</h1>
+          <p>Firmware Over-The-Air (FOTA) updates are essential for modern automotive technology, providing the capability to update a vehicle's software or firmware remotely, without requiring physical access to the vehicle.</p>
+          </div>
+          <h2>Importance of FOTA in Automotive</h2>
+          <ul>
+              <li>Continuous Improvement: Allows automakers to continually improve vehicle performance, functionality, and security throughout the vehicle's lifecycle.</li>
+              <li>Bug Fixes and Security Patches: Enables the deployment of bug fixes, security patches, and updates to address vulnerabilities or issues discovered after vehicles are on the road.</li>
+              <li>Feature Enhancements: Provides the ability to add new features, services, and functionalities to vehicles without requiring physical visits to service centers.</li>
+              <li>Cost Savings: Reduces the need for expensive and time-consuming recalls by addressing software-related issues remotely.</li>
+              <li>Customer Satisfaction: Enhances customer satisfaction by ensuring that vehicles remain up-to-date with the latest software features and improvements.</li>
+          </ul>
+          
+          <h2>Implementation</h2>
+          <ul>
+              <li>TCU (Raspberry Pi 3B+) </li>
+              <li>Target (STM32F103C8T6) </li>
+              <li>Connectiivty Wifi-(MQTT Protocol)</li>
+          </ul>
+      </body>
     {% else %}
     <h1> Login </h1> <br> </br>
     <form method="POST" action="{% url 'home' %}">

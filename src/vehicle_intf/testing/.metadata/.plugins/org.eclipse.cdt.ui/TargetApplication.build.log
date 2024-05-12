@@ -1,47 +1,10 @@
-16:02:14 **** Incremental Build of configuration Debug for project TargetApplication ****
+22:14:58 **** Incremental Build of configuration Debug for project TargetApplication ****
 make -j12 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/assets" -IC:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc -IC:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -IC:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Device/ST/STM32F1xx/Include -IC:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Include -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc "../Core/Src/simple_vehicle_ops.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I"G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/assets" -IC:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc -IC:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -IC:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Device/ST/STM32F1xx/Include -IC:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Include -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/simple_vehicle_ops.d" -MT"Core/Src/simple_vehicle_ops.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/simple_vehicle_ops.o"
-In file included from G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/assets/Std_Types.h:40,
-                 from ../Core/Inc/simple_vehicle_ops.h:41,
-                 from ../Core/Src/main.c:28:
-G:/WX_CAREER/Grad Project/src/vehicle_intf/testing/assets/Compiler.h:199: warning: "__PACKED" redefined
-  199 |     #define __PACKED __attribute__((packed))
-      | 
-In file included from C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Include/cmsis_compiler.h:48,
-                 from C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Include/core_cm3.h:115,
-                 from C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h:131,
-                 from C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h:130,
-                 from C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h:29,
-                 from C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h:27,
-                 from ../Core/Inc/stm32f1xx_hal_conf.h:238,
-                 from C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:29,
-                 from ../Core/Inc/main.h:30,
-                 from ../Core/Src/main.c:20:
-C:/Users/Wx/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.5/Drivers/CMSIS/Include/cmsis_gcc.h:62: note: this is the location of the previous definition
-   62 |   #define __PACKED                               __attribute__((packed, aligned(1)))
-      | 
-../Core/Src/simple_vehicle_ops.c: In function '__vJumpToBootloader':
-../Core/Src/simple_vehicle_ops.c:79:9: warning: unused variable 'local_vAppResetFunc' [-Wunused-variable]
-   79 |  void (*local_vAppResetFunc)(void) = (void*)local_u32ResetHandler;
-      |         ^~~~~~~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "TargetApplication.elf" @"objects.list"   -mcpu=cortex-m3 -T"G:\WX_CAREER\Grad Project\src\vehicle_intf\testing\Application\TargetApplication\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="TargetApplication.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: TargetApplication.elf
- 
 arm-none-eabi-size   TargetApplication.elf 
-arm-none-eabi-objdump -h -S  TargetApplication.elf  > "TargetApplication.list"
-arm-none-eabi-objcopy  -O ihex  TargetApplication.elf  "TargetApplication.hex"
    text	   data	    bss	    dec	    hex	filename
-  15220	     84	   1964	  17268	   4374	TargetApplication.elf
-arm-none-eabi-objcopy  -O binary  TargetApplication.elf  "TargetApplication.bin"
+  15260	     84	   1964	  17308	   439c	TargetApplication.elf
 Finished building: default.size.stdout
  
-Finished building: TargetApplication.hex
-Finished building: TargetApplication.bin
- 
- 
-Finished building: TargetApplication.list
- 
 
-16:02:15 Build Finished. 0 errors, 2 warnings. (took 1s.131ms)
+22:15:01 Build Finished. 0 errors, 0 warnings. (took 3s.138ms)
 
