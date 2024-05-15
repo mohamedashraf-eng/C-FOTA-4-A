@@ -1,0 +1,6 @@
+../Core/Src/bootloader_prg.c:298:21:__vJumpToApplication	8	static,ignoring_inline_asm
+../Core/Src/bootloader_prg.c:205:21:__vPipeEcho.part.0	16	static
+../Core/Src/bootloader_prg.c:220:21:__vSendAck	16	static
+../Core/Src/bootloader_prg.c:370:20:__enPipeListen.isra	824	static,ignoring_inline_asm
+../Core/Src/bootloader_prg.c:874:12:BL_enBootManager	8	static
+../Core/Src/bootloader_prg.c:922:18:BL_stGetSwVersion	0	static
